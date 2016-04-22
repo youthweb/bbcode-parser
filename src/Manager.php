@@ -27,19 +27,6 @@ class Manager
 	protected $config = null;
 
 	/**
-	 * @var \Psr\Cache\CacheItemPoolInterface
-	 */
-	 protected $cache;
-
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		$this->cache = new \Cache_Adapter_Fuelphp;
-	}
-
-	/**
 	 * parst einen Text mit BBCode-Regeln
 	 *
 	 * Zur Anwendung kann HtmlParser::parse() verwendet werden
