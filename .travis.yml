@@ -15,7 +15,7 @@ before_install:
 
 install:
 - travis_retry composer install --no-interaction --prefer-source
-- if [[ "$COLLECT_COVERAGE" == "true" ]]; composer require satooshi/php-coveralls --dev; fi
+- composer require satooshi/php-coveralls --dev
 
 script:
 - if [[ "$COLLECT_COVERAGE" == "true" ]]; then php vendor/phpunit/phpunit/phpunit --coverage-clover build/logs/clover.xml; else php vendor/phpunit/phpunit/phpunit; fi
