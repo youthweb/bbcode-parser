@@ -77,6 +77,39 @@ class ListOptionTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @test
 	 */
+	public function testAsHtmlWithParamAAsArray()
+	{
+		$text     = '[*]Hello World!
+[*]foobar';
+		$expected = '<!-- no_p --><ol type="a">'.PHP_EOL.
+"\t".'<li>Hello World!</li>'.PHP_EOL.
+"\t".'<li>foobar</li>'.PHP_EOL.
+'</ol>'.PHP_EOL.
+'<!-- no_p -->';
+
+		$child = $this->getMockBuilder('JBBCode\TextNode')
+			->setConstructorArgs([$text])
+			->setMethods(null)
+			->getMock();
+
+		$elementNode = $this->getMockBuilder('JBBCode\ElementNode')
+			->setMethods(['getAttribute', 'getChildren'])
+			->getMock();
+
+		$elementNode->method('getAttribute')
+			->willReturn(['a']);
+
+		$elementNode->method('getChildren')
+			->willReturn([$child]);
+
+		$listDefinition = new ListOption();
+
+		$this->assertSame($expected, $listDefinition->asHtml($elementNode));
+	}
+
+	/**
+	 * @test
+	 */
 	public function testAsHtmlWithParamCapitalA()
 	{
 		$text     = '[*]Hello World!

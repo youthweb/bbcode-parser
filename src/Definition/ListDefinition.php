@@ -44,7 +44,9 @@ class ListDefinition extends CodeDefinition
 			$content .= $child->getAsHTML();
 		}
 
-		if ( trim($content) == '' )
+		$content = trim($content);
+
+		if ( $content == '' )
 		{
 			return '';
 		}
@@ -83,10 +85,13 @@ class ListDefinition extends CodeDefinition
 		}
 
 		$delimiter = '[*]';
-		$text = substr_replace( trim($content), '', 0, strlen($delimiter) );
+		if ( substr($content, 0, strlen($delimiter)) === $delimiter )
+		{
+			$content = substr_replace( $content, '', 0, strlen($delimiter) );
+		}
 
 		//Text in Lines aufteilen; jede Line ist ein neuer Listenpunkt
-		$lines = explode($delimiter, $text);
+		$lines = explode($delimiter, $content);
 
 		$items = array();
 
