@@ -5,36 +5,18 @@ namespace Youthweb\BBCodeParser\Tests\Unit\Definition;
 use JBBCode\ElementNode;
 use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\ListOption;
+use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
 
 class ListOptionTest extends \PHPUnit_Framework_TestCase
 {
+	use MockerTrait;
+
 	/**
-	 * @test
+	 * @dataProvider dataProvider
 	 */
-	public function testAsHtmlWithoutParam()
+	public function testAsHtml($text, $attribute, $expected)
 	{
-		$text     = '[*]Hello World!
-[*]foobar';
-		$expected = '<!-- no_p --><ul type="disc">'.PHP_EOL.
-"\t".'<li>Hello World!</li>'.PHP_EOL.
-"\t".'<li>foobar</li>'.PHP_EOL.
-'</ul>'.PHP_EOL.
-'<!-- no_p -->';
-
-		$child = $this->getMockBuilder('JBBCode\TextNode')
-			->setConstructorArgs([$text])
-			->setMethods(null)
-			->getMock();
-
-		$elementNode = $this->getMockBuilder('JBBCode\ElementNode')
-			->setMethods(['getAttribute', 'getChildren'])
-			->getMock();
-
-		$elementNode->method('getAttribute')
-			->willReturn(null);
-
-		$elementNode->method('getChildren')
-			->willReturn([$child]);
+		$elementNode = $this->buildElementNodeMock($text, $attribute);
 
 		$listDefinition = new ListOption();
 
@@ -42,200 +24,81 @@ class ListOptionTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @test
+	 * data provider
 	 */
-	public function testAsHtmlWithParamA()
+	public function dataProvider()
 	{
-		$text     = '[*]Hello World!
-[*]foobar';
-		$expected = '<!-- no_p --><ol type="a">'.PHP_EOL.
-"\t".'<li>Hello World!</li>'.PHP_EOL.
-"\t".'<li>foobar</li>'.PHP_EOL.
-'</ol>'.PHP_EOL.
-'<!-- no_p -->';
-
-		$child = $this->getMockBuilder('JBBCode\TextNode')
-			->setConstructorArgs([$text])
-			->setMethods(null)
-			->getMock();
-
-		$elementNode = $this->getMockBuilder('JBBCode\ElementNode')
-			->setMethods(['getAttribute', 'getChildren'])
-			->getMock();
-
-		$elementNode->method('getAttribute')
-			->willReturn('a');
-
-		$elementNode->method('getChildren')
-			->willReturn([$child]);
-
-		$listDefinition = new ListOption();
-
-		$this->assertSame($expected, $listDefinition->asHtml($elementNode));
-	}
-
-	/**
-	 * @test
-	 */
-	public function testAsHtmlWithParamAAsArray()
-	{
-		$text     = '[*]Hello World!
-[*]foobar';
-		$expected = '<!-- no_p --><ol type="a">'.PHP_EOL.
-"\t".'<li>Hello World!</li>'.PHP_EOL.
-"\t".'<li>foobar</li>'.PHP_EOL.
-'</ol>'.PHP_EOL.
-'<!-- no_p -->';
-
-		$child = $this->getMockBuilder('JBBCode\TextNode')
-			->setConstructorArgs([$text])
-			->setMethods(null)
-			->getMock();
-
-		$elementNode = $this->getMockBuilder('JBBCode\ElementNode')
-			->setMethods(['getAttribute', 'getChildren'])
-			->getMock();
-
-		$elementNode->method('getAttribute')
-			->willReturn(['a']);
-
-		$elementNode->method('getChildren')
-			->willReturn([$child]);
-
-		$listDefinition = new ListOption();
-
-		$this->assertSame($expected, $listDefinition->asHtml($elementNode));
-	}
-
-	/**
-	 * @test
-	 */
-	public function testAsHtmlWithParamCapitalA()
-	{
-		$text     = '[*]Hello World!
-[*]foobar';
-		$expected = '<!-- no_p --><ol type="A">'.PHP_EOL.
-"\t".'<li>Hello World!</li>'.PHP_EOL.
-"\t".'<li>foobar</li>'.PHP_EOL.
-'</ol>'.PHP_EOL.
-'<!-- no_p -->';
-
-		$child = $this->getMockBuilder('JBBCode\TextNode')
-			->setConstructorArgs([$text])
-			->setMethods(null)
-			->getMock();
-
-		$elementNode = $this->getMockBuilder('JBBCode\ElementNode')
-			->setMethods(['getAttribute', 'getChildren'])
-			->getMock();
-
-		$elementNode->method('getAttribute')
-			->willReturn('A');
-
-		$elementNode->method('getChildren')
-			->willReturn([$child]);
-
-		$listDefinition = new ListOption();
-
-		$this->assertSame($expected, $listDefinition->asHtml($elementNode));
-	}
-
-	/**
-	 * @test
-	 */
-	public function testAsHtmlWithParamI()
-	{
-		$text     = '[*]Hello World!
-[*]foobar';
-		$expected = '<!-- no_p --><ol type="i">'.PHP_EOL.
-"\t".'<li>Hello World!</li>'.PHP_EOL.
-"\t".'<li>foobar</li>'.PHP_EOL.
-'</ol>'.PHP_EOL.
-'<!-- no_p -->';
-
-		$child = $this->getMockBuilder('JBBCode\TextNode')
-			->setConstructorArgs([$text])
-			->setMethods(null)
-			->getMock();
-
-		$elementNode = $this->getMockBuilder('JBBCode\ElementNode')
-			->setMethods(['getAttribute', 'getChildren'])
-			->getMock();
-
-		$elementNode->method('getAttribute')
-			->willReturn('i');
-
-		$elementNode->method('getChildren')
-			->willReturn([$child]);
-
-		$listDefinition = new ListOption();
-
-		$this->assertSame($expected, $listDefinition->asHtml($elementNode));
-	}
-
-	/**
-	 * @test
-	 */
-	public function testAsHtmlWithParamCapitalI()
-	{
-		$text     = '[*]Hello World!
-[*]foobar';
-		$expected = '<!-- no_p --><ol type="I">'.PHP_EOL.
-"\t".'<li>Hello World!</li>'.PHP_EOL.
-"\t".'<li>foobar</li>'.PHP_EOL.
-'</ol>'.PHP_EOL.
-'<!-- no_p -->';
-
-		$child = $this->getMockBuilder('JBBCode\TextNode')
-			->setConstructorArgs([$text])
-			->setMethods(null)
-			->getMock();
-
-		$elementNode = $this->getMockBuilder('JBBCode\ElementNode')
-			->setMethods(['getAttribute', 'getChildren'])
-			->getMock();
-
-		$elementNode->method('getAttribute')
-			->willReturn('I');
-
-		$elementNode->method('getChildren')
-			->willReturn([$child]);
-
-		$listDefinition = new ListOption();
-
-		$this->assertSame($expected, $listDefinition->asHtml($elementNode));
-	}
-
-	/**
-	 * @test
-	 */
-	public function testAsHtmlWithParamNumber()
-	{
-		$text     = '[*]Hello World!
-[*]foobar';
-		$expected = '<!-- no_p --><ol start="5">'.PHP_EOL.
-"\t".'<li>Hello World!</li>'.PHP_EOL.
-"\t".'<li>foobar</li>'.PHP_EOL.
-'</ol>'.PHP_EOL.
-'<!-- no_p -->';
-
-		$child = $this->getMockBuilder('JBBCode\TextNode')
-			->setConstructorArgs([$text])
-			->setMethods(null)
-			->getMock();
-
-		$elementNode = $this->getMockBuilder('JBBCode\ElementNode')
-			->setMethods(['getAttribute', 'getChildren'])
-			->getMock();
-
-		$elementNode->method('getAttribute')
-			->willReturn('5');
-
-		$elementNode->method('getChildren')
-			->willReturn([$child]);
-
-		$listDefinition = new ListOption();
-
-		$this->assertSame($expected, $listDefinition->asHtml($elementNode));
+		return [
+			[
+				'[*]Hello World!
+[*]foobar',
+				null,
+				'<!-- no_p --><ul type="disc">'.PHP_EOL.
+				"\t".'<li>Hello World!</li>'.PHP_EOL.
+				"\t".'<li>foobar</li>'.PHP_EOL.
+				'</ul>'.PHP_EOL.
+				'<!-- no_p -->',
+			],
+			[
+				'[*]Hello World!
+[*]foobar',
+				'a',
+				'<!-- no_p --><ol type="a">'.PHP_EOL.
+				"\t".'<li>Hello World!</li>'.PHP_EOL.
+				"\t".'<li>foobar</li>'.PHP_EOL.
+				'</ol>'.PHP_EOL.
+				'<!-- no_p -->',
+			],
+			[
+				'[*]Hello World!
+[*]foobar',
+				['a'],
+				'<!-- no_p --><ol type="a">'.PHP_EOL.
+				"\t".'<li>Hello World!</li>'.PHP_EOL.
+				"\t".'<li>foobar</li>'.PHP_EOL.
+				'</ol>'.PHP_EOL.
+				'<!-- no_p -->',
+			],
+			[
+				'[*]Hello World!
+[*]foobar',
+				'A',
+				'<!-- no_p --><ol type="A">'.PHP_EOL.
+				"\t".'<li>Hello World!</li>'.PHP_EOL.
+				"\t".'<li>foobar</li>'.PHP_EOL.
+				'</ol>'.PHP_EOL.
+				'<!-- no_p -->',
+			],
+			[
+				'[*]Hello World!
+[*]foobar',
+				'i',
+				'<!-- no_p --><ol type="i">'.PHP_EOL.
+				"\t".'<li>Hello World!</li>'.PHP_EOL.
+				"\t".'<li>foobar</li>'.PHP_EOL.
+				'</ol>'.PHP_EOL.
+				'<!-- no_p -->',
+			],
+			[
+				'[*]Hello World!
+[*]foobar',
+				'I',
+				'<!-- no_p --><ol type="I">'.PHP_EOL.
+				"\t".'<li>Hello World!</li>'.PHP_EOL.
+				"\t".'<li>foobar</li>'.PHP_EOL.
+				'</ol>'.PHP_EOL.
+				'<!-- no_p -->',
+			],
+			[
+				'[*]Hello World!
+[*]foobar',
+				'5',
+				'<!-- no_p --><ol start="5">'.PHP_EOL.
+				"\t".'<li>Hello World!</li>'.PHP_EOL.
+				"\t".'<li>foobar</li>'.PHP_EOL.
+				'</ol>'.PHP_EOL.
+				'<!-- no_p -->',
+			],
+		];
 	}
 }
