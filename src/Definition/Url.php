@@ -58,6 +58,8 @@ class Url extends CodeDefinition
 			return '';
 		}
 
+		$short_url = $this->config->get('callbacks.url_content.short_url');
+
 		// Url finden
 		if ( $param == '' )
 		{
@@ -71,7 +73,7 @@ class Url extends CodeDefinition
 		{
 			// Die Url steht im Parameter
 			$url = $param;
-			$this->config->set('callbacks.url_content.short_url', false);
+			$short_url = false;
 
 			$content = '';
 
@@ -81,7 +83,7 @@ class Url extends CodeDefinition
 			}
 		}
 
-		// http:// voranstellen, wenn nicht angegeben
+		// http:// voranstellen, wenn nichts angegeben
 		if ( ! preg_match('~^[a-z]+://~i', $url) )
 		{
 			$url = "http://" . $url;
@@ -94,7 +96,7 @@ class Url extends CodeDefinition
 		}
 
 		// Lange URLs ggf. kürzen
-		if ( $this->config->get('callbacks.url_content.short_url') )
+		if ( $short_url === true )
 		{
 			// Mindestlänge: 20
 			$max_length = max(20, $this->config->get('callbacks.url_content.short_url_length'));
@@ -123,9 +125,12 @@ class Url extends CodeDefinition
 		$attr = array();
 
 		// Soll ein Target-Attribut gesetzt werden?
-		if ( ! is_null($this->config->get('callbacks.url_content.target')) )
+		$target = $this->config->get('callbacks.url_content.target');
+
+		if ( ! is_null($target) )
 		{
 			// target Attribut nicht ändern, wenn wir nach youthweb.net verlinken
+			// TODO: In Config verschieben
 			$delimiter = '://youthweb.net';
 
 			if ( stripos($url, $delimiter) !== false )
@@ -134,12 +139,12 @@ class Url extends CodeDefinition
 
 				if ( $protocol !== 'https' and $protocol !== 'http' )
 				{
-					$attr['target'] = $this->config->get('callbacks.url_content.target');
+					$attr['target'] = $target;
 				}
 			}
 			else
 			{
-				$attr['target'] = $this->config->get('callbacks.url_content.target');
+				$attr['target'] = $target;
 			}
 		}
 

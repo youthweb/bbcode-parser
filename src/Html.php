@@ -365,7 +365,7 @@ class Html
 		{
 			$contant_name = 'HTTP_URL_STRIP_' . strtoupper($key);
 
-			if ( $flags & (int) $$contant_name )
+			if ( $flags & (int) $contant_name )
 			{
 				unset($parse_url[$key]);
 			}
