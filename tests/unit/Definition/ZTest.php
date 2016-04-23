@@ -18,9 +18,9 @@ class ZTest extends \PHPUnit_Framework_TestCase
 	{
 		$elementNode = $this->buildElementNodeMock($text, $attribute);
 
-		$listDefinition = new Z();
+		$definition = new Z();
 
-		$this->assertSame($expected, $listDefinition->asHtml($elementNode));
+		$this->assertSame($expected, $definition->asHtml($elementNode));
 	}
 
 	/**

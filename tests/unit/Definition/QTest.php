@@ -18,9 +18,9 @@ class QTest extends \PHPUnit_Framework_TestCase
 	{
 		$elementNode = $this->buildElementNodeMock($text, $attribute);
 
-		$listDefinition = new Q();
+		$definition = new Q();
 
-		$this->assertSame($expected, $listDefinition->asHtml($elementNode));
+		$this->assertSame($expected, $definition->asHtml($elementNode));
 	}
 
 	/**
