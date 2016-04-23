@@ -80,7 +80,7 @@ class Html
 
 		$subject and $subject = '?subject='.$subject;
 
-		$attr = array_to_attr($attr);
+		$attr = static::array_to_attr($attr);
 		$attr = ($attr == '' ? '' : ' ').$attr;
 
 		$output = '<script type="text/javascript">';
