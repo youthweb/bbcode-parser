@@ -4,10 +4,10 @@ namespace Youthweb\BBCodeParser\Tests\Unit\Definition;
 
 use JBBCode\ElementNode;
 use JBBCode\TextNode;
-use Youthweb\BBCodeParser\Definition\Q;
+use Youthweb\BBCodeParser\Definition\Quote;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
 
-class QTest extends \PHPUnit_Framework_TestCase
+class QuoteTest extends \PHPUnit_Framework_TestCase
 {
 	use MockerTrait;
 
@@ -18,7 +18,7 @@ class QTest extends \PHPUnit_Framework_TestCase
 	{
 		$elementNode = $this->buildElementNodeMock($text, $attribute);
 
-		$listDefinition = new Q();
+		$listDefinition = new Quote();
 
 		$this->assertSame($expected, $listDefinition->asHtml($elementNode));
 	}
