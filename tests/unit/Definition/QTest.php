@@ -39,6 +39,16 @@ class QTest extends \PHPUnit_Framework_TestCase
 				'someone',
 				'<blockquote title="Zitat"><cite>someone</cite>quote content</blockquote>',
 			],
+			[
+				'quote content',
+				['someone'],
+				'<blockquote title="Zitat"><cite>someone</cite>quote content</blockquote>',
+			],
+			[
+				'<blockquote title="Zitat"><cite>first</cite>content 1</blockquote>content 2',
+				'second',
+				'<blockquote title="Zitat"><blockquote title="Zitat"><cite>first</cite>content 1</blockquote><cite>second</cite>content 2</blockquote>',
+			],
 		];
 	}
 }
