@@ -74,7 +74,7 @@ class Image extends CodeDefinition
 		$url = trim($content);
 
 		// Wenn die URL nicht gültig ist, zeigen wir nur den Text
-		if ( ! Validation::check($url, 'valid_url') )
+		if ( $url === '' or ! Validation::check($url, 'valid_url') )
 		{
 			return $content;
 		}
@@ -107,7 +107,7 @@ class Image extends CodeDefinition
 			return $img_code;
 		}
 
-		return '<a href="' . $url . '" target="_blank">' . $img_code . '</a>';
+		return Html::anchor($url, $img_code, ['target' => '_blank']);
 	}
 
 }
