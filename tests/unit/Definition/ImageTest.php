@@ -152,9 +152,9 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testAsHtmlWithForceCheck()
 	{
-		$text = 'http://example.org/image.jpg';
+		$text = 'http://example.org/not-an-image.txt';
 		$attribute = null;
-		$expected = '<img class="img-responsive" border="0" src="http://example.org/image.jpg" alt="image" />';
+		$expected = 'http://example.org/not-an-image.txt';
 		$elementNode = $this->buildElementNodeMock($text, $attribute);
 
 		$elementNode->expects($this->any())
@@ -166,7 +166,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 
 		$validation->expects($this->any())
 			->method('isValidImageUrl')
-			->willReturn(true);
+			->willReturn(false);
 
 		$validation->expects($this->any())
 			->method('isValidUrl')
@@ -198,16 +198,16 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @test
 	 */
-	public function testAsHtmlWithForceCheckAndInvalidImageUrl()
+	public function testAsHtmlWithForceCheckAndAnchor()
 	{
 		$text = 'http://example.org/not-an-image.txt';
 		$attribute = null;
-		$expected = 'http://example.org/not-an-image.txt';
+		$expected = '<a href="http://example.org/not-an-image.txt">http://example.org/not-an-image.txt</a>';
 		$elementNode = $this->buildElementNodeMock($text, $attribute);
 
 		$elementNode->expects($this->any())
 			->method('closestParentOfType')
-			->willReturn(true);
+			->willReturn(false);
 
 		$validation = $this->getMockBuilder('Youthweb\BBCodeParser\ValidationInterface')
 			->getMock();
