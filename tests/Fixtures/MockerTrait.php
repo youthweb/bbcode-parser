@@ -18,7 +18,7 @@ trait MockerTrait
 			->getMock();
 
 		$elementNode = $this->getMockBuilder('JBBCode\ElementNode')
-			->setMethods(['getAttribute', 'getChildren'])
+			->setMethods(['getAttribute', 'getChildren', 'closestParentOfType'])
 			->getMock();
 
 		$elementNode->method('getAttribute')
