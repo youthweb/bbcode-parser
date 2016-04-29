@@ -13,6 +13,7 @@ namespace Youthweb\BBCodeParser\Definition;
 use JBBCode\CodeDefinition;
 use JBBCode\ElementNode;
 use Youthweb\BBCodeParser\Config;
+use Youthweb\BBCodeParser\Html;
 
 /**
  * Implements a [size] code definition that provides the following syntax:
@@ -51,7 +52,7 @@ class Size extends CodeDefinition
 
 		$param = trim($param);
 
-		if ( $content == '' and $param == '' )
+		if ( $content == '' )
 		{
 			return '';
 		}
@@ -69,7 +70,7 @@ class Size extends CodeDefinition
 		// Maximale Größe: 150%
 		$size = min($size, $this->config->get('callbacks.size_param.max_size'));
 
-		return '<span style="font-size:'.$size.'%">'.$content.'</span>';
+		return Html::span($content, ['style' => 'font-size:' . $size . '%;']);
 	}
 
 }
