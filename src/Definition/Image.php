@@ -73,6 +73,12 @@ class Image extends CodeDefinition
 		// Mögliche Leerzeichen trimmen
 		$url = trim($content);
 
+		// URL Schema voranstellen, wenn nichts angegeben wurde
+		if ( $url !== '' and parse_url($url, PHP_URL_SCHEME) === null )
+		{
+			$url = 'http://' . $url;
+		}
+
 		// Wenn die URL nicht gültig ist, zeigen wir nur den Text
 		if ( $url === '' or ! $this->config->getValidation()->isValidUrl($url) )
 		{

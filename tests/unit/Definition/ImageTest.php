@@ -255,6 +255,11 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 				'<a target="_blank" href="http://example.org/image.jpg"><img class="img-responsive" border="0" src="http://example.org/image.jpg" alt="image" /></a>',
 			],
 			[
+				'example.org/image.jpg',
+				null,
+				'<a target="_blank" href="http://example.org/image.jpg"><img class="img-responsive" border="0" src="http://example.org/image.jpg" alt="image" /></a>',
+			],
+			[
 				'invalid url',
 				null,
 				'invalid url',
