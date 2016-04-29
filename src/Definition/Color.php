@@ -13,6 +13,7 @@ namespace Youthweb\BBCodeParser\Definition;
 use JBBCode\CodeDefinition;
 use JBBCode\ElementNode;
 use Youthweb\BBCodeParser\Config;
+use Youthweb\BBCodeParser\Html;
 
 /**
  * Implements a [color] code definition that provides the following syntax:
@@ -76,7 +77,7 @@ class Color extends CodeDefinition
 		}
 
 		// Ansonsten ist der Farbnamen gülig
-		return '<span style="color:'.$color.';">'.$content.'</span>';
+		return Html::span($content, ['style' => 'color:' . $color . ';']);
 	}
 
 }

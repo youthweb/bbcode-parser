@@ -143,6 +143,18 @@ class Html
 	}
 
 	/**
+	 * Creates a html span tag
+	 *
+	 * @param	string	the content
+	 * @param	array	the attributes array
+	 * @return	string	the span tag
+	 */
+	public static function span($content, $attr = array())
+	{
+		return static::html_tag('span', $attr, $content);
+	}
+
+	/**
 	 * Generates the html for the list methods
 	 *
 	 * @param	string	list type (ol or ul)

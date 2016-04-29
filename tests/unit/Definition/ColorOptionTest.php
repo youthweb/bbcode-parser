@@ -56,6 +56,11 @@ class ColorOptionTest extends \PHPUnit_Framework_TestCase
 			],
 			[
 				'some text',
+				['yellow'],
+				'<span style="color:Yellow;">some text</span>',
+			],
+			[
+				'some text',
 				'unknown',
 				'<span style="color:Red;">some text</span>',
 			],
