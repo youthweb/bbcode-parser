@@ -148,6 +148,102 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 * @test
+	 */
+	public function testAsHtmlWithForceCheck()
+	{
+		$text = 'http://example.org/image.jpg';
+		$attribute = null;
+		$expected = '<img class="img-responsive" border="0" src="http://example.org/image.jpg" alt="image" />';
+		$elementNode = $this->buildElementNodeMock($text, $attribute);
+
+		$elementNode->expects($this->any())
+			->method('closestParentOfType')
+			->willReturn(true);
+
+		$validation = $this->getMockBuilder('Youthweb\BBCodeParser\ValidationInterface')
+			->getMock();
+
+		$validation->expects($this->any())
+			->method('isValidImageUrl')
+			->willReturn(true);
+
+		$validation->expects($this->any())
+			->method('isValidUrl')
+			->willReturn(true);
+
+		$config = $this->getMockBuilder('Youthweb\BBCodeParser\Config')
+			->setMethods(['get', 'getValidation'])
+			->getMock();
+
+		$config->expects($this->any())
+			->method('getValidation')
+			->willReturn($validation);
+
+		$config->expects($this->any())
+			->method('get')
+			->will(
+				$this->returnValueMap(
+					array(
+						array('callbacks.image.force_check', null, true),
+					)
+				)
+			);
+
+		$definition = new Image($config);
+
+		$this->assertSame($expected, $definition->asHtml($elementNode));
+	}
+
+	/**
+	 * @test
+	 */
+	public function testAsHtmlWithForceCheckAndInvalidImageUrl()
+	{
+		$text = 'http://example.org/not-an-image.txt';
+		$attribute = null;
+		$expected = 'http://example.org/not-an-image.txt';
+		$elementNode = $this->buildElementNodeMock($text, $attribute);
+
+		$elementNode->expects($this->any())
+			->method('closestParentOfType')
+			->willReturn(true);
+
+		$validation = $this->getMockBuilder('Youthweb\BBCodeParser\ValidationInterface')
+			->getMock();
+
+		$validation->expects($this->any())
+			->method('isValidImageUrl')
+			->willReturn(false);
+
+		$validation->expects($this->any())
+			->method('isValidUrl')
+			->willReturn(true);
+
+		$config = $this->getMockBuilder('Youthweb\BBCodeParser\Config')
+			->setMethods(['get', 'getValidation'])
+			->getMock();
+
+		$config->expects($this->any())
+			->method('getValidation')
+			->willReturn($validation);
+
+		$config->expects($this->any())
+			->method('get')
+			->will(
+				$this->returnValueMap(
+					array(
+						array('callbacks.image.force_check', null, true),
+					)
+				)
+			);
+
+		$definition = new Image($config);
+
+		$this->assertSame($expected, $definition->asHtml($elementNode));
+	}
+
+	/**
 	 * data provider
 	 */
 	public function dataProvider()

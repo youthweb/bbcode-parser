@@ -87,7 +87,6 @@ class Email extends CodeDefinition
 			return $content;
 		}
 
-
 		// Mail vor Bots schützen?
 		if ( $this->config->get('callbacks.email_content.protect_email') )
 		{
@@ -95,7 +94,6 @@ class Email extends CodeDefinition
 		}
 
 		return Html::mail_to($email, $content);
-
 	}
 
 }
