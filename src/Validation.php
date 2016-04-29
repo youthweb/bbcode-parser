@@ -14,7 +14,7 @@ namespace Youthweb\BBCodeParser;
  * Einfache Validation-Klasse, angelehnt an Fuel\Core\Validation
  */
 
-class Validation
+class Validation implements ValidationInterface
 {
 
 	/**
@@ -23,49 +23,12 @@ class Validation
 	protected static $_valid_img_url_counter = 0;
 
 	/**
-	 * Checkt einen Content mit einem bestimmten Filter
-	 *
-	 * @param mixed $value Der zu prüfende Content
-	 * @param mixed $rule Der zu verwendende Filter oder gültige Callback
-	 * @return bool true, wenn der Content die Prüfung bestanden hat, sonst false
-	 */
-	public static function check($value, $rule)
-	{
-		if ( is_null($value) )
-		{
-			return false;
-		}
-
-		$callback_method = '_validation_' . strval($rule);
-
-		$callback_class = new static;
-
-		if ( ! method_exists($callback_class, $callback_method) )
-		{
-			throw new \InvalidArgumentException('"' . strval($rule) . '" isn\'t a valid rule for validation.');
-		}
-
-		return $callback_class->$callback_method($value);
-	}
-
-	/**
-	 * Special empty method because 0 and '0' are non-empty values
-	 *
-	 * @param   mixed
-	 * @return  bool
-	 */
-	public function _empty($val)
-	{
-		return ($val === false or $val === null or $val === '' or $val === array());
-	}
-
-	/**
 	 * Validate email using PHP's filter_var()
 	 *
 	 * @param   string
 	 * @return  bool
 	 */
-	public function _validation_valid_email($val)
+	public function isValidEmail($val)
 	{
 		return $this->_empty($val) || filter_var($val, FILTER_VALIDATE_EMAIL);
 	}
@@ -76,7 +39,7 @@ class Validation
 	 * @param   string
 	 * @return  bool
 	 */
-	public function _validation_valid_url($val)
+	public function isValidUrl($val)
 	{
 		return $this->_empty($val) || filter_var($val, FILTER_VALIDATE_URL);
 	}
@@ -84,7 +47,7 @@ class Validation
 	/**
 	 * Validierung einer URL zu einem Bild
 	 */
-	public function _validation_valid_img_url($val, $force_check = true)
+	public function isValidImageUrl($val, $force_check = true)
 	{
 		$cache_identifier = 'img_urls.' . md5($val);
 
@@ -156,6 +119,17 @@ class Validation
 		}
 
 		return $is_valid;
+	}
+
+	/**
+	 * Special empty method because 0 and '0' are non-empty values
+	 *
+	 * @param   mixed
+	 * @return  bool
+	 */
+	protected function _empty($val)
+	{
+		return ($val === false or $val === null or $val === '' or $val === array());
 	}
 
 }

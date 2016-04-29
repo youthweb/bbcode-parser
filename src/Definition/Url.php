@@ -90,7 +90,7 @@ class Url extends CodeDefinition
 		}
 
 		// Wenn die URL nicht gültig ist, zeigen wir nur den Text
-		if ( ! Validation::check($url, 'valid_url') )
+		if ( ! $this->config->getValidation()->isValidUrl($url) )
 		{
 			return $content;
 		}

@@ -74,14 +74,14 @@ class Image extends CodeDefinition
 		$url = trim($content);
 
 		// Wenn die URL nicht gültig ist, zeigen wir nur den Text
-		if ( $url === '' or ! Validation::check($url, 'valid_url') )
+		if ( $url === '' or ! $this->config->getValidation()->isValidUrl($url) )
 		{
 			return $content;
 		}
 
 		// Prüfen, ob die URL wirklich auf ein Bild zeigt
 		// Wenn es kein Bild ist, nicht einbetten, sondern nur verlinken
-		if ( $this->config->get('callbacks.image.force_check') and ! Validation::check($url, 'valid_img_url') )
+		if ( $this->config->get('callbacks.image.force_check') and ! $this->config->getValidation()->isValidImageUrl($url) )
 		{
 			// Bild nicht verlinken
 			if ( ! $use_anchor )

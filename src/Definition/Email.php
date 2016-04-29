@@ -82,7 +82,7 @@ class Email extends CodeDefinition
 		}
 
 		// Nur Content anzeigen, wenn keine gültige Email angegeben wurde
-		if ( ! Validation::check($email, 'valid_email') )
+		if ( ! $this->config->getValidation()->isValidEmail($email) )
 		{
 			return $content;
 		}

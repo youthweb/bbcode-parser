@@ -22,7 +22,13 @@ class Config implements ArrayAccess
 	/**
 	 * @var array The config data
 	 */
-	public $data = [];
+	protected $data = [];
+
+	/**
+	 * @var ValidationInterface The validation class
+	 */
+	protected $validation;
+
 
 	/**
 	 * @var array default config
@@ -103,6 +109,8 @@ class Config implements ArrayAccess
 	public function __construct()
 	{
 		$this->data = $this->default_config;
+
+		$this->validation = new Validation;
 	}
 
 	/**
@@ -191,6 +199,16 @@ class Config implements ArrayAccess
 		while ($keys);
 
 		return $default;
+	}
+
+	/**
+	 * Returns the validation class
+	 *
+	 * @return ValidationInterface The validation class
+	 */
+	public function getValidation()
+	{
+		return $this->validation;
 	}
 
 	/**
