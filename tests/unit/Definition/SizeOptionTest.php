@@ -51,6 +51,11 @@ class SizeOptionTest extends \PHPUnit_Framework_TestCase
 			],
 			[
 				'some text',
+				['100'],
+				'<span style="font-size:100%;">some text</span>',
+			],
+			[
+				'some text',
 				'NaN',
 				'<span style="font-size:100%;">some text</span>',
 			],
