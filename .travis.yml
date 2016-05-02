@@ -10,12 +10,16 @@ matrix:
 
 sudo: false
 
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 before_install:
 - travis_retry composer self-update
 
 install:
-- travis_retry composer install --no-interaction --prefer-source
-- composer require satooshi/php-coveralls --dev
+- travis_retry composer install --no-interaction --prefer-dist
+- composer require satooshi/php-coveralls --dev --prefer-dist
 
 script:
 - if [[ "$COLLECT_COVERAGE" == "true" ]]; then php vendor/phpunit/phpunit/phpunit --coverage-clover build/logs/clover.xml; else php vendor/phpunit/phpunit/phpunit; fi
