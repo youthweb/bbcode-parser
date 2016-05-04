@@ -29,8 +29,8 @@ $config = ['parse_headlines' => true];
 
 echo $parser->parse($text, $config);
 
-// ""<h1>Hello World!</h1>
-<p>This is a <i>simple</i> test to demonstrate the <b>BBCodeParser</b>.</p>"
+// "<h1>Hello World!</h1>
+//  <p>This is a <i>simple</i> test to demonstrate the <b>BBCodeParser</b>.</p>"
 ```
 
 ## Changelog
