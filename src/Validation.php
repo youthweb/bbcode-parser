@@ -10,6 +10,9 @@
 
 namespace Youthweb\BBCodeParser;
 
+use Cache\Adapter\Void\VoidCachePool;
+use Psr\Cache\CacheItemPoolInterface;
+
 /**
  * Einfache Validation-Klasse, angelehnt an Fuel\Core\Validation
  */
@@ -21,6 +24,20 @@ class Validation implements ValidationInterface
 	 * @var int Counter for image url checks
 	 */
 	protected static $_valid_img_url_counter = 0;
+
+	/** CacheItemPoolInterface $cache CacheItemPool */
+	protected $cache;
+
+	/**
+	 * construct
+	 *
+	 * @param Cache
+	 * @return {11:return type}
+	 */
+	public function __construct(CacheItemPoolInterface $cache = null)
+	{
+		$this->cache = ($cache === null) ? new VoidCachePool() : $cache;
+	}
 
 	/**
 	 * Validate email using PHP's filter_var()
@@ -51,13 +68,10 @@ class Validation implements ValidationInterface
 	{
 		$cache_identifier = 'img_urls.' . md5($val);
 
-		// try to retrieve the cache and save to $is_valid var
-		try
-		{
-			// TODO: PSR-6 Cache verwenden
-			$is_valid = \Cache::get($cache_identifier);
-		}
-		catch (\CacheNotFoundException $e)
+		$cache_item = $this->cache->getItem($cache_identifier);
+
+		// try to retrieve from cache and save to $is_valid var
+		if ( ! $cache_item->isHit() )
 		{
 			$is_valid = false;
 
@@ -68,7 +82,7 @@ class Validation implements ValidationInterface
 			}
 
 			// Prüfen, ob es einen gültige URL ist
-			if( $this->_validation_valid_url($val) )
+			if( $this->isValidUrl($val) )
 			{
 				$is_valid = true;
 			}
@@ -115,10 +129,13 @@ class Validation implements ValidationInterface
 			}
 
 			//Ergebnis für eine Woche cachen
-			\Cache::set($cache_identifier, $is_valid, 604800);
+			$cache_item->set($is_valid);
+			$cache_item->expiresAfter(604800);
+
+			$this->cache->saveDeferred($cache_item);
 		}
 
-		return $is_valid;
+		return $cache_item->get();
 	}
 
 	/**

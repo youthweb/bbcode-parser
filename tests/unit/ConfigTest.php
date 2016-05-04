@@ -1,6 +1,6 @@
 <?php
 
-namespace Youthweb\BBCodeParser\Tests\Unit\Config;
+namespace Youthweb\BBCodeParser\Tests\Unit;
 
 use Youthweb\BBCodeParser\Config;
 
