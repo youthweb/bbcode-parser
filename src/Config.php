@@ -16,7 +16,7 @@ use ArrayAccess;
  * Diese Klasse verwaltet die Config
  */
 
-class Config implements ArrayAccess
+class Config
 {
 
 	/**
@@ -224,54 +224,6 @@ class Config implements ArrayAccess
 		$this->data = array_replace_recursive($this->data, $config);
 
 		return $this;
-	}
-
-	/**
-	 * Whether an offset exists
-	 *
-	 * @param mixed $offset
-	 * @return boolean
-	 */
-	public function offsetExists($offset)
-	{
-		return isset($this->data[$offset]);
-	}
-
-	/**
-	 * Offset to retrieve
-	 *
-	 * @param mixed $offset
-	 * @return mixed
-	 */
-	public function offsetGet($offset)
-	{
-		return $this->get($offset, null);
-	}
-
-	/**
-	 * Assign a value to the specified offset
-	 *
-	 * @param mixed $offset
-	 * @param mixed $value
-	 * @return mixed
-	 */
-	public function offsetSet($offset, $value)
-	{
-		return $this->set($offset, $value);
-	}
-
-	/**
-	 * Unset an offset
-	 *
-	 * @param mixed $offset
-	 * @return mixed
-	 */
-	public function offsetUnset($offset)
-	{
-		if ( $this->offsetExists($offset) )
-		{
-			unset($this->data[$offset]);
-		}
 	}
 
 }
