@@ -82,16 +82,15 @@ class Validation implements ValidationInterface
 			}
 
 			// Prüfen, ob es einen gültige URL ist
-			if( $this->isValidUrl($val) )
+			if ( $this->isValidUrl($val) )
 			{
 				$is_valid = true;
 			}
 
 			// FIXME: Bilderüberprüfung kann bei vielen Bildern zu langen Ladezeiten führen. Kennt jemand eine bessere Idee?
-			if( $is_valid && $force_check )
+			if ( $is_valid and $force_check )
 			{
-				//via (@link http://stackoverflow.com/questions/676949/best-way-to-determine-if-a-url-is-an-image-in-php), thanks!
-
+				// via http://stackoverflow.com/questions/676949/best-way-to-determine-if-a-url-is-an-image-in-php, thanks!
 				$is_valid = false;
 				$params = array('http' => array('method' => 'HEAD', 'timeout' => 5.0));
 				$ctx = stream_context_create($params);
