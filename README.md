@@ -7,16 +7,46 @@
 
 A BBCode-to-HTML parser for youthweb.net
 
+## Install
+
+Via Composer
+
+``` bash
+$ composer require youthweb/bbcode-parser
+```
+
 ## Usage
 
 ```php
 use Youthweb\BBCodeParser\Manager;
 
-$text = '[b]Hello World![/b]';
+$text = '[h1]Hello World![/h1]
+
+This is a [i]simple[/i] test to demonstrate the [b]BBCodeParser[/b].';
 
 $parser = new Manager();
+$config = ['parse_headlines' => true];
 
-echo $parser->parse($text);
+echo $parser->parse($text, $config);
 
-// "<b>Hello World!</b>"
+// ""<h1>Hello World!</h1>
+<p>This is a <i>simple</i> test to demonstrate the <b>BBCodeParser</b>.</p>"
 ```
+
+## Changelog
+
+Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+
+## Testing
+
+``` bash
+$ phpunit
+```
+
+## Contributing
+
+Please feel free to submit bugs or to fork and sending Pull Requests.
+
+## License
+
+GPL3. Please see [License File](LICENSE.md) for more information.
