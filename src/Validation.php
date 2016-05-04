@@ -38,7 +38,7 @@ class Validation implements ValidationInterface
 	{
 		$cache = $config->get('cacheitempool');
 
-		$this->cache = ($cache === null) ? new VoidCachePool() : $cache;
+		$this->cache = ( ! is_object($cache) or ! $cache instanceof CacheItemPoolInterface ) ? new VoidCachePool() : $cache;
 	}
 
 	/**
