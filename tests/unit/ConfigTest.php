@@ -39,6 +39,24 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 				null,
 				'baz',
 			],
+			[
+				'foo.0.bar',
+				null,
+				'baz',
+			],
 		];
+	}
+
+	/**
+	 * @test
+	 */
+	public function testGetter()
+	{
+		$validation = $this->getMockBuilder('Youthweb\BBCodeParser\ValidationInterface')
+			->getMock();
+
+		$config = new Config($validation);
+
+		$this->assertSame('default', $config->get('foo.bar', 'default'));
 	}
 }
