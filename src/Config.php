@@ -10,8 +10,6 @@
 
 namespace Youthweb\BBCodeParser;
 
-use ArrayAccess;
-
 /**
  * Diese Klasse verwaltet die Config
  */
@@ -106,11 +104,11 @@ class Config
 	/**
 	 * Constructor
 	 */
-	public function __construct()
+	public function __construct(ValidationInterface $validation = null)
 	{
 		$this->data = $this->default_config;
 
-		$this->validation = new Validation;
+		$this->validation = ($validation === null) ? new Validation : $validation;
 	}
 
 	/**
