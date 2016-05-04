@@ -101,7 +101,7 @@ class Validation implements ValidationInterface
 				if ( $fp !== false )
 				{
 					// Timeout setzen in Sekunden
-					stream_set_timeout($fp, 5);
+					//stream_set_timeout($fp, 5);
 					$meta = stream_get_meta_data($fp);
 				}
 
@@ -111,11 +111,11 @@ class Validation implements ValidationInterface
 
 					fclose($fp);
 
-					if ( is_array($wrapper_data) )
+					if ( is_array($wrapper_data) or $wrapper_data instanceof \ArrayAccess )
 					{
-						foreach ( array_keys($wrapper_data) as $hh )
+						foreach ( $wrapper_data as $hh )
 						{
-							if ( substr($wrapper_data[$hh], 0, 19) == "Content-Type: image" ) // strlen("Content-Type: image") == 19
+							if ( substr($hh, 0, 19) == "Content-Type: image" ) // strlen("Content-Type: image") == 19
 							{
 								$is_valid = true;
 								break;
@@ -127,7 +127,7 @@ class Validation implements ValidationInterface
 				static::$_valid_img_url_counter++;
 			}
 
-			//Ergebnis für eine Woche cachen
+			// Ergebnis für eine Woche cachen
 			$cache_item->set($is_valid);
 			$cache_item->expiresAfter(604800);
 
