@@ -23,8 +23,14 @@ class EmailOptionTest extends \PHPUnit_Framework_TestCase
 			->getMock();
 
 		$config->method('get')
-			->with('callbacks.email_content.protect_email')
-			->willReturn(false);
+			->will(
+				$this->returnValueMap(
+					array(
+						array('cacheitempool', null, null),
+						array('callbacks.email_content.protect_email', null, false),
+					)
+				)
+			);
 
 		$definition = new EmailOption($config);
 
@@ -43,8 +49,14 @@ class EmailOptionTest extends \PHPUnit_Framework_TestCase
 			->getMock();
 
 		$config->method('get')
-			->with('callbacks.email_content.protect_email')
-			->willReturn(true);
+			->will(
+				$this->returnValueMap(
+					array(
+						array('cacheitempool', null, null),
+						array('callbacks.email_content.protect_email', null, true),
+					)
+				)
+			);
 
 		$definition = new EmailOption($config);
 

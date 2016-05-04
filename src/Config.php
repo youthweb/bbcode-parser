@@ -33,6 +33,10 @@ class Config
 	 */
 	protected $default_config = array(
 		/**
+		 * Psr\Cache\CacheItemPoolInterface
+		 */
+		'cacheitempool' => null,
+		/**
 		 * Sollen die Standard BBCodes ersetzt werden?
 		 */
 		'parse_default' => true,
@@ -104,11 +108,9 @@ class Config
 	/**
 	 * Constructor
 	 */
-	public function __construct(ValidationInterface $validation = null)
+	public function __construct()
 	{
 		$this->data = $this->default_config;
-
-		$this->validation = ($validation === null) ? new Validation : $validation;
 	}
 
 	/**
@@ -206,6 +208,11 @@ class Config
 	 */
 	public function getValidation()
 	{
+		if ( is_null($this->validation) )
+		{
+			$this->validation = new Validation($this);
+		}
+
 		return $this->validation;
 	}
 

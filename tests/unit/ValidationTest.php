@@ -24,6 +24,25 @@ class ValidationTest extends \PHPUnit_Framework_TestCase
 		ValidationMock::resetImageCounter();
 	}
 
+	public function getConfigMock()
+	{
+		$config = $this->getMockBuilder('Youthweb\BBCodeParser\Config')
+			->setMethods(['get'])
+			->getMock();
+
+		$config->expects($this->any())
+			->method('get')
+			->will(
+				$this->returnValueMap(
+					array(
+						array('cacheitempool', null, null),
+					)
+				)
+			);
+
+		return $config;
+	}
+
 	/**
 	 * @test
 	 */
@@ -36,7 +55,7 @@ class ValidationTest extends \PHPUnit_Framework_TestCase
 
 		ValidationMock::resetImageCounter();
 
-		$validation = new Validation();
+		$validation = new Validation($this->getConfigMock());
 
 		$this->assertTrue($validation->isValidImageUrl('http://example.org/image.jpg', true));
 	}
@@ -53,7 +72,7 @@ class ValidationTest extends \PHPUnit_Framework_TestCase
 
 		ValidationMock::resetImageCounter();
 
-		$validation = new Validation();
+		$validation = new Validation($this->getConfigMock());
 
 		$this->assertTrue($validation->isValidImageUrl('http://example.org/image.jpg', true));
 		$this->assertFalse($validation->isValidImageUrl('http://example.org/image2.jpg', true));
@@ -71,7 +90,7 @@ class ValidationTest extends \PHPUnit_Framework_TestCase
 
 		ValidationMock::resetImageCounter();
 
-		$validation = new Validation();
+		$validation = new Validation($this->getConfigMock());
 
 		$this->assertTrue($validation->isValidImageUrl('http://example.org/image.jpg', true));
 		$this->assertTrue($validation->isValidImageUrl('http://example.org/image.jpg', true));
@@ -82,7 +101,7 @@ class ValidationTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testValidImageUrlForceless()
 	{
-		$validation = new Validation();
+		$validation = new Validation($this->getConfigMock());
 
 		$this->assertTrue($validation->isValidImageUrl('http://example.org/image.jpg', false));
 	}
@@ -92,7 +111,7 @@ class ValidationTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testValidImageUrlForcelessWithInvalidUrl()
 	{
-		$validation = new Validation();
+		$validation = new Validation($this->getConfigMock());
 
 		$this->assertFalse($validation->isValidImageUrl('foobar', false));
 	}

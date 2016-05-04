@@ -34,8 +34,10 @@ class Validation implements ValidationInterface
 	 * @param Cache
 	 * @return {11:return type}
 	 */
-	public function __construct(CacheItemPoolInterface $cache = null)
+	public function __construct(Config $config)
 	{
+		$cache = $config->get('cacheitempool');
+
 		$this->cache = ($cache === null) ? new VoidCachePool() : $cache;
 	}
 
