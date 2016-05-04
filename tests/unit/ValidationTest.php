@@ -3,6 +3,7 @@
 namespace Youthweb\BBCodeParser\Tests\Unit;
 
 use Youthweb\BBCodeParser\Tests\Fixtures\MockHttpStreamWrapper;
+use Youthweb\BBCodeParser\Tests\Fixtures\ValidationMock;
 use Youthweb\BBCodeParser\Validation;
 
 class ValidationTest extends \PHPUnit_Framework_TestCase
@@ -16,29 +17,11 @@ class ValidationTest extends \PHPUnit_Framework_TestCase
 		) or die('Failed to register protocol');
 	}
 
-	/**
-	* Makes a mock stream that returns expected values.
-	* @param string $data response body
-	* @param string $code HTTP response code
-	*/
-	public function getMockStream($data, $code='HTTP/1.1 200 OK')
-	{
-		MockHttpStreamWrapper::$mockBodyData = $data;
-		MockHttpStreamWrapper::$mockResponseCode = $code;
-		$context = stream_context_create(
-			array(
-				'http' => array(
-					'method' => 'GET'
-				)
-			)
-		);
-		$stream = fopen('http://example.com', 'r', false, $context);
-		return $stream;
-	}
-
 	public function tearDown()
 	{
 		stream_wrapper_restore('http');
+
+		ValidationMock::resetImageCounter();
 	}
 
 	/**
@@ -51,9 +34,47 @@ class ValidationTest extends \PHPUnit_Framework_TestCase
 		];
 		MockHttpStreamWrapper::$mockResponseCode = 'HTTP/1.1 200 OK';
 
+		ValidationMock::resetImageCounter();
+
 		$validation = new Validation();
 
-		$this->assertSame(true, $validation->isValidImageUrl('http://example.org/image.jpg', true));
+		$this->assertTrue($validation->isValidImageUrl('http://example.org/image.jpg', true));
+	}
+
+	/**
+	 * @test
+	 */
+	public function testMultipleValidImageUrl()
+	{
+		MockHttpStreamWrapper::$mockMetaData = [
+			'Content-Type: image/jpeg',
+		];
+		MockHttpStreamWrapper::$mockResponseCode = 'HTTP/1.1 200 OK';
+
+		ValidationMock::resetImageCounter();
+
+		$validation = new Validation();
+
+		$this->assertTrue($validation->isValidImageUrl('http://example.org/image.jpg', true));
+		$this->assertFalse($validation->isValidImageUrl('http://example.org/image2.jpg', true));
+	}
+
+	/**
+	 * @test
+	 */
+	public function testCachedMultipleValidImageUrl()
+	{
+		MockHttpStreamWrapper::$mockMetaData = [
+			'Content-Type: image/jpeg',
+		];
+		MockHttpStreamWrapper::$mockResponseCode = 'HTTP/1.1 200 OK';
+
+		ValidationMock::resetImageCounter();
+
+		$validation = new Validation();
+
+		$this->assertTrue($validation->isValidImageUrl('http://example.org/image.jpg', true));
+		$this->assertTrue($validation->isValidImageUrl('http://example.org/image.jpg', true));
 	}
 
 	/**
@@ -63,7 +84,7 @@ class ValidationTest extends \PHPUnit_Framework_TestCase
 	{
 		$validation = new Validation();
 
-		$this->assertSame(true, $validation->isValidImageUrl('http://example.org/image.jpg', false));
+		$this->assertTrue($validation->isValidImageUrl('http://example.org/image.jpg', false));
 	}
 
 	/**
@@ -73,6 +94,6 @@ class ValidationTest extends \PHPUnit_Framework_TestCase
 	{
 		$validation = new Validation();
 
-		$this->assertSame(false, $validation->isValidImageUrl('foobar', false));
+		$this->assertFalse($validation->isValidImageUrl('foobar', false));
 	}
 }
