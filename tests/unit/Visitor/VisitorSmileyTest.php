@@ -27,7 +27,7 @@ class VisitorSmileyTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @test visitDocumentElement
 	 */
-	public function visitDocumentElement()
+	public function testVisitDocumentElement()
 	{
 		$visitor = new VisitorSmiley();
 
@@ -52,6 +52,48 @@ class VisitorSmileyTest extends \PHPUnit_Framework_TestCase
 			->willReturn([$child]);
 
 		$visitor->visitDocumentElement($element);
+	}
+
+	/**
+	 * @test visitElementNode
+	 */
+	public function testVisitElementNode()
+	{
+		$visitor = new VisitorSmiley();
+
+		$code_definition = $this->getMockBuilder('JBBCode\CodeDefinition')
+			->disableOriginalConstructor()
+			->disableOriginalClone()
+			->disableArgumentCloning()
+			->getMock();
+
+		$code_definition->method('parseContent')
+			->willReturn(true);
+
+		$child = $this->getMockBuilder('JBBCode\Node')
+			->disableOriginalConstructor()
+			->disableOriginalClone()
+			->disableArgumentCloning()
+			->getMock();
+
+		$child->expects($this->once())
+			->method('accept')
+			->with($visitor)
+			->willReturn(null);
+
+		$element = $this->getMockBuilder('JBBCode\ElementNode')
+			->disableOriginalConstructor()
+			->disableOriginalClone()
+			->disableArgumentCloning()
+			->getMock();
+
+		$element->method('getCodeDefinition')
+			->willReturn($code_definition);
+
+		$element->method('getChildren')
+			->willReturn([$child]);
+
+		$visitor->visitElementNode($element);
 	}
 
 	/**
