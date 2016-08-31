@@ -1,11 +1,59 @@
 <?php
 
-namespace Youthweb\BBCodeParser\Tests\Unit;
+namespace Youthweb\BBCodeParser\Tests\Unit\Visitor;
 
 use Youthweb\BBCodeParser\Visitor\VisitorSmiley;
 
 class VisitorSmileyTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * @test create
+	 */
+	public function testCreate()
+	{
+		$config = $this->getMockBuilder('Youthweb\BBCodeParser\Config')
+			->disableOriginalConstructor()
+			->disableOriginalClone()
+			->disableArgumentCloning()
+			->getMock();
+
+		$visitor = new VisitorSmiley();
+
+		$visitor->setConfig($config);
+
+		$this->assertInstanceOf('Youthweb\BBCodeParser\Visitor\VisitorInterface', $visitor);
+	}
+
+	/**
+	 * @test visitDocumentElement
+	 */
+	public function visitDocumentElement()
+	{
+		$visitor = new VisitorSmiley();
+
+		$child = $this->getMockBuilder('JBBCode\Node')
+			->disableOriginalConstructor()
+			->disableOriginalClone()
+			->disableArgumentCloning()
+			->getMock();
+
+		$child->expects($this->once())
+			->method('accept')
+			->with($visitor)
+			->willReturn(null);
+
+		$element = $this->getMockBuilder('JBBCode\DocumentElement')
+			->disableOriginalConstructor()
+			->disableOriginalClone()
+			->disableArgumentCloning()
+			->getMock();
+
+		$element->method('getChildren')
+			->willReturn([$child]);
+
+		$visitor->visitDocumentElement($element);
+	}
+
 	/**
 	 * @dataProvider SmileyDataProvider
 	 */
