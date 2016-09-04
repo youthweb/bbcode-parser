@@ -94,17 +94,15 @@ class ParsingTest extends \PHPUnit_Framework_TestCase
 				'<p>[h7]Header 7[/h7]</p>',
 			],
 			// Code
-			// FIXME: htmlspecialchars() anwenden
 			[
 				'[code]<h7>Header 7</h7>[/code]',
 				[],
-				'<p><code><h7>Header 7</h7></code></p>',
+				'<p><code>&lt;h7&gt;Header 7&lt;/h7&gt;</code></p>',
 			],
-			// FIXME: htmlspecialchars() anwenden
 			[
 				'[noparse]<h7>Header 7</h7>[/noparse]',
 				[],
-				'<p><h7>Header 7</h7></p>',
+				'<p>&lt;h7&gt;Header 7&lt;/h7&gt;</p>',
 			],
 			// Urls
 			[
