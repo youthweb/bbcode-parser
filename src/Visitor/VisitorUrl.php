@@ -13,7 +13,7 @@ namespace Youthweb\BBCodeParser\Visitor;
 use JBBCode\DocumentElement;
 use JBBCode\TextNode;
 use JBBCode\ElementNode;
-use Kwi\UrlLinker;
+use Youthweb\UrlLinker\UrlLinker;
 use Youthweb\BBCodeParser\Config;
 
 /**
@@ -51,7 +51,7 @@ class VisitorUrl implements VisitorInterface
 
 	public function visitTextNode(TextNode $text_node)
 	{
-		$urllinker = UrlLinker::getInstance();
+		$urllinker = new UrlLinker;
 
 		$text_node->setValue($urllinker->linkUrlsAndEscapeHtml($text_node->getValue()));
 	}
