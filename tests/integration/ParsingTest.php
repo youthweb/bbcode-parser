@@ -111,6 +111,11 @@ class ParsingTest extends \PHPUnit_Framework_TestCase
 				'<p><a href="http://example.org">example.org</a></p>',
 			],
 			[
+				'[url]http://www.example.com/irgend/eine/lange/url/die/gek%C3%BCrzt/werden/soll.html[/url]',
+				[],
+				'<p><a href="http://www.example.com/irgend/eine/lange/url/die/gek%C3%BCrzt/werden/soll.html">www.example.com/irgend/eine/lange/url/die/gek%C3%BCrzt/werden/soll.html</a></p>',
+			],
+			[
 				'Mehr Infos gibt es auf http://example.org/pfad?query=string',
 				[],
 				'<p>Mehr Infos gibt es auf <a href="http://example.org/pfad?query=string">example.org/pfad</a></p>',

@@ -115,4 +115,38 @@ class ValidationTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertFalse($validation->isValidImageUrl('foobar', false));
 	}
+
+	/**
+	 * test valid url
+	 *
+	 * @dataProvider providerValidUrl
+	 */
+	public function testValidUrl($url, $expected)
+	{
+		$validation = new Validation($this->getConfigMock());
+
+		$this->assertSame($expected, $validation->isValidUrl($url));
+	}
+
+	public function providerValidUrl()
+	{
+		return [
+			[
+				'http://example.com',
+				true,
+			],
+			[
+				'http://www.example.com/irgend/eine/lange/url/die/gek&uuml;rzt/werden/soll.html',
+				true,
+			],
+			[
+				'http://www.example.com/irgend/eine/lange/url/die/gek%C3%BCrzt/werden/soll.html',
+				true,
+			],
+			[
+				'http://www.example.com/irgend/eine/lange/url/die/gekürzt/werden/soll.html',
+				false,
+			],
+		];
+	}
 }
