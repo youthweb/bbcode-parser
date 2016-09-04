@@ -116,7 +116,7 @@ class Html
 		// Create and display a URL hyperlink
 		is_null($text) and $text = $href;
 
-		$attr['href'] = $href;
+		$attr['href'] = htmlspecialchars($href);
 
 		return static::html_tag('a', $attr, $text);
 	}

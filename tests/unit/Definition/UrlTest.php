@@ -201,6 +201,11 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 	{
 		return [
 			[
+				'http://example.org/foo?query=string&foo=bar',
+				null,
+				'<a target="_blank" href="http://example.org/foo?query=string&amp;foo=bar">http://example.org/foo?query=string&foo=bar</a>',
+			],
+			[
 				'http://example.org',
 				null,
 				'<a target="_blank" href="http://example.org">http://example.org</a>',
