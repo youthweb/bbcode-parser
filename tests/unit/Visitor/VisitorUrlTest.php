@@ -19,6 +19,7 @@ class VisitorUrlTest extends \PHPUnit_Framework_TestCase
 
 		$visitor = new VisitorUrl();
 
+		$config = new \Youthweb\BBCodeParser\Config;
 		$visitor->setConfig($config);
 
 		$this->assertInstanceOf('Youthweb\BBCodeParser\Visitor\VisitorInterface', $visitor);
@@ -30,6 +31,9 @@ class VisitorUrlTest extends \PHPUnit_Framework_TestCase
 	public function testVisitDocumentElement()
 	{
 		$visitor = new VisitorUrl();
+
+		$config = new \Youthweb\BBCodeParser\Config;
+		$visitor->setConfig($config);
 
 		$child = $this->getMockBuilder('JBBCode\Node')
 			->disableOriginalConstructor()
@@ -60,6 +64,9 @@ class VisitorUrlTest extends \PHPUnit_Framework_TestCase
 	public function testVisitElementNode()
 	{
 		$visitor = new VisitorUrl();
+
+		$config = new \Youthweb\BBCodeParser\Config;
+		$visitor->setConfig($config);
 
 		$code_definition = $this->getMockBuilder('JBBCode\CodeDefinition')
 			->disableOriginalConstructor()
@@ -99,7 +106,7 @@ class VisitorUrlTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @dataProvider SmileyDataProvider
 	 */
-	public function testvisitTextNode($src, $expected)
+	public function testVisitTextNode($src, $expected)
 	{
 		$textnode = $this->getMockBuilder('JBBCode\TextNode')
 			->disableOriginalConstructor()
@@ -117,6 +124,9 @@ class VisitorUrlTest extends \PHPUnit_Framework_TestCase
 
 		$visitor = new VisitorUrl();
 
+		$config = new \Youthweb\BBCodeParser\Config;
+		$visitor->setConfig($config);
+
 		$visitor->visitTextNode($textnode);
 	}
 
@@ -128,11 +138,11 @@ class VisitorUrlTest extends \PHPUnit_Framework_TestCase
 		return [
 			[
 				'example.org',
-				'<a href="http://example.org">example.org</a>',
+				'<a target="_blank" href="http://example.org">http://example.org</a>',
 			],
 			[
 				'Hier ist meine Webseite: example.org',
-				'Hier ist meine Webseite: <a href="http://example.org">example.org</a>',
+				'Hier ist meine Webseite: <a target="_blank" href="http://example.org">http://example.org</a>',
 			],
 		];
 	}

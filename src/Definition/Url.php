@@ -95,60 +95,7 @@ class Url extends CodeDefinition
 			return $content;
 		}
 
-		// Lange URLs ggf. kürzen
-		if ( $short_url === true )
-		{
-			// Mindestlänge: 20
-			$max_length = max(20, $this->config->get('callbacks.url_content.short_url_length'));
-
-			// http:// oder anderes am Anfang wegkürzen
-			$content = preg_replace('~^[a-z]+://~i', '', $content);
-
-			// Muss die URL gekürzt werden?
-			if ( strlen($content) > $max_length )
-			{
-				// Bsp.: Aus http://www.example.com/irgend/eine/lange/url.html wird
-				if ( $max_length < 30 )
-				{
-					// www.example.com/ir…
-					$content = substr($content, 0, $max_length-2) . "…";
-				}
-				else
-				{
-					// www.example.com/ir…e/url.html
-					$content = substr($content, 0, $max_length-12) . "…" . substr($content, -10);
-				}
-			}
-		}
-
-		// Attribute für den Link
-		$attr = array();
-
-		// Soll ein Target-Attribut gesetzt werden?
-		$target = $this->config->get('callbacks.url_content.target');
-
-		if ( ! is_null($target) )
-		{
-			// target Attribut nicht ändern, wenn wir nach youthweb.net verlinken
-			// TODO: In Config verschieben
-			$delimiter = '://youthweb.net';
-
-			if ( stripos($url, $delimiter) !== false )
-			{
-				$protocol = strtolower(strstr($url, $delimiter, true));
-
-				if ( $protocol !== 'https' and $protocol !== 'http' )
-				{
-					$attr['target'] = $target;
-				}
-			}
-			else
-			{
-				$attr['target'] = $target;
-			}
-		}
-
-		return Html::anchor($url, $content, $attr);
+		return Html::anchorFromConfig($url, $content, $this->config);
 	}
 
 }

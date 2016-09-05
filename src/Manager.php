@@ -59,6 +59,19 @@ class Manager
 
 		$parser->parse($text);
 
+		// Sollen Urls erkannt werden?
+		if ( $this->config->get('parse_urls')  )
+		{
+			$visitor = $this->config->get('visitor.url');
+
+			if ( is_object($visitor) and $visitor instanceof VisitorInterface )
+			{
+				$visitor->setConfig($this->config);
+
+				$parser->accept($visitor);
+			}
+		}
+
 		// Sollen Smilies geparset werden?
 		if ( $this->config->get('parse_smilies')  )
 		{
@@ -71,19 +84,6 @@ class Manager
 				{
 					$visitor->setConfig($this->config);
 				}
-
-				$parser->accept($visitor);
-			}
-		}
-
-		// Sollen Urls erkannt werden?
-		if ( $this->config->get('parse_urls')  )
-		{
-			$visitor = $this->config->get('visitor.url');
-
-			if ( is_object($visitor) and $visitor instanceof VisitorInterface )
-			{
-				$visitor->setConfig($this->config);
 
 				$parser->accept($visitor);
 			}

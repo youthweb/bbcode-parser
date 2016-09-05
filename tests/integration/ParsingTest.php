@@ -108,17 +108,17 @@ class ParsingTest extends \PHPUnit_Framework_TestCase
 			[
 				'example.org',
 				[],
-				'<p><a href="http://example.org">example.org</a></p>',
+				'<p><a target="_blank" href="http://example.org">http://example.org</a></p>',
 			],
 			[
 				'[url]http://www.example.com/irgend/eine/lange/url/die/gek%C3%BCrzt/werden/soll.html[/url]',
 				[],
-				'<p><a href="http://www.example.com/irgend/eine/lange/url/die/gek%C3%BCrzt/werden/soll.html">www.example.com/irgend/eine/lange/url/die/gek%C3%BCrzt/werden/soll.html</a></p>',
+				'<p><a target="_blank" href="http://www.example.com/irgend/eine/lange/url/die/gek%C3%BCrzt/werden/soll.html">http://www.example.com/irgend/eine/lange/url/die/gek%C3%BCrzt/werden/soll.html</a></p>',
 			],
 			[
 				'Mehr Infos gibt es auf http://example.org/pfad?query=string',
 				[],
-				'<p>Mehr Infos gibt es auf <a href="http://example.org/pfad?query=string">example.org/pfad</a></p>',
+				'<p>Mehr Infos gibt es auf <a target="_blank" href="http://example.org/pfad?query=string">http://example.org/pfad?query=string</a></p>',
 			],
 			[
 				'Quellen:
@@ -131,16 +131,16 @@ class ParsingTest extends \PHPUnit_Framework_TestCase
 				[],
 				'<p>Quellen:</p>
 <ul type="disc">
-'."\t".'<li><a href="http://example.org">example.org</a></li>
-'."\t".'<li><a href="https://example.org/test">example.org/test</a></li>
-'."\t".'<li><a href="https://example.org/ohne_leerzeichen_am_Anfang">example.org/ohne_leerzeichen_am_Anfang</a></li>
-'."\t".'<li>Siehe 3. Absatz auf <a href="https://example.org/pfad?query=string">example.org/pfad</a></li>
+'."\t".'<li><a target="_blank" href="http://example.org">http://example.org</a></li>
+'."\t".'<li><a target="_blank" href="https://example.org/test">https://example.org/test</a></li>
+'."\t".'<li><a target="_blank" href="https://example.org/ohne_leerzeichen_am_Anfang">https://example.org/ohne_leerzeichen_am_Anfang</a></li>
+'."\t".'<li>Siehe 3. Absatz auf <a target="_blank" href="https://example.org/pfad?query=string">https://example.org/pfad?query=string</a></li>
 </ul>',
 			],
 			[
 				'Here\'s an e-mail-address:bob+test@example.org. Here\'s an authenticated URL: http://skroob:12345@example.com.',
 				[],
-				'<p>Here\'s an e-mail-address:<a href="mailto:bob+test&#64;example.org">bob+test&#64;example.org</a>. Here\'s an authenticated URL: <a href="http://skroob:12345&#64;example.com">example.com</a>.</p>',
+				'<p>Here\'s an e-mail-address:<a href="mailto:bob+test&#64;example.org">bob+test&#64;example.org</a>. Here\'s an authenticated URL: <a target="_blank" href="http://skroob:12345@example.com">http://skroob:12345@example.com</a>.</p>',
 			],
 			[
 				'Here are some URLs:
@@ -149,9 +149,9 @@ Here\'s the answer: http://www.google.com/search?rls=en&q=42&ie=utf-8&oe=utf-8&h
 A quick look at \'http://en.wikipedia.org/wiki/URI_scheme#Generic_syntax\' is helpful.',
 				[],
 				'<p>Here are some URLs:<br />
-<a href="http://stackoverflow.com/questions/1188129/pregreplace-to-detect-html-php">stackoverflow.com/questions/1188129/pregreplace-to-detect-html-php</a><br />
-Here\'s the answer: <a href="http://www.google.com/search?rls=en&amp;q=42&amp;ie=utf-8&amp;oe=utf-8&amp;hl=en">www.google.com/search</a>. What was the question?<br />
-A quick look at \'<a href="http://en.wikipedia.org/wiki/URI_scheme#Generic_syntax">en.wikipedia.org/wiki/URI_scheme</a>\' is helpful.</p>',
+<a target="_blank" href="http://stackoverflow.com/questions/1188129/pregreplace-to-detect-html-php">http://stackoverflow.com/questions/1188129/pregreplace-to-detect-html-php</a><br />
+Here\'s the answer: <a target="_blank" href="http://www.google.com/search?rls=en&amp;q=42&amp;ie=utf-8&amp;oe=utf-8&amp;hl=en">http://www.google.com/search?rls=en&q=42&ie=utf-8&oe=utf-8&hl=en</a>. What was the question?<br />
+A quick look at \'<a target="_blank" href="http://en.wikipedia.org/wiki/URI_scheme#Generic_syntax">http://en.wikipedia.org/wiki/URI_scheme#Generic_syntax</a>\' is helpful.</p>',
 			],
 			[
 				'There is no place like 127.0.0.1! Except maybe http://news.bbc.co.uk/1/hi/england/surrey/8168892.stm?
@@ -159,8 +159,8 @@ Ports: 192.168.0.1:8080, https://example.net:1234/.
 Beware of Greeks bringing internationalized top-level domains (xn--hxajbheg2az3al.xn--jxalpdlp).
 10.000.000.000 is not an IP-address. Nor is this.a.domain.',
 				[],
-				'<p>There is no place like <a href="http://127.0.0.1">127.0.0.1</a>! Except maybe <a href="http://news.bbc.co.uk/1/hi/england/surrey/8168892.stm">news.bbc.co.uk/1/hi/england/surrey/8168892.stm</a>?<br />
-Ports: <a href="http://192.168.0.1:8080">192.168.0.1:8080</a>, <a href="https://example.net:1234/">example.net:1234/</a>.<br />
+				'<p>There is no place like <a target="_blank" href="http://127.0.0.1">http://127.0.0.1</a>! Except maybe <a target="_blank" href="http://news.bbc.co.uk/1/hi/england/surrey/8168892.stm">http://news.bbc.co.uk/1/hi/england/surrey/8168892.stm</a>?<br />
+Ports: <a target="_blank" href="http://192.168.0.1:8080">http://192.168.0.1:8080</a>, <a target="_blank" href="https://example.net:1234">https://example.net:1234/</a>.<br />
 Beware of Greeks bringing internationalized top-level domains (xn--hxajbheg2az3al.xn--jxalpdlp).<br />
 10.000.000.000 is not an IP-address. Nor is this.a.domain.</p>',
 			],
@@ -178,23 +178,23 @@ Beware of Greeks bringing internationalized top-level domains (xn--hxajbheg2az3a
 			[
 				'<a href="https://example.com">Der a-Tag muss escaped werden.</a>',
 				[],
-				'<p>&lt;a href=&quot;<a href="https://example.com">example.com</a>&quot;&gt;Der a-Tag muss escaped werden.&lt;/a&gt;</p>',
+				'<p>&lt;a href=&quot;<a target="_blank" href="https://example.com">https://example.com</a>&quot;&gt;Der a-Tag muss escaped werden.&lt;/a&gt;</p>',
 			],
 			[
 				'https://mail.google.com/mail/u/0/#starred?compose=141d598cd6e13025
 https://www.google.com/search?q=bla%20bla%20bla
 https://www.google.com/search?q=bla+bla+bla',
 				[],
-				'<p><a href="https://mail.google.com/mail/u/0/#starred?compose=141d598cd6e13025">mail.google.com/mail/u/0/</a><br />
-<a href="https://www.google.com/search?q=bla%20bla%20bla">www.google.com/search</a><br />
-<a href="https://www.google.com/search?q=bla+bla+bla">www.google.com/search</a></p>',
+				'<p><a target="_blank" href="https://mail.google.com/mail/u/0/#starred?compose=141d598cd6e13025">https://mail.google.com/mail/u/0/#starred?compose=141d598cd6e13025</a><br />
+<a target="_blank" href="https://www.google.com/search?q=bla%20bla%20bla">https://www.google.com/search?q=bla%20bla%20bla</a><br />
+<a target="_blank" href="https://www.google.com/search?q=bla+bla+bla">https://www.google.com/search?q=bla+bla+bla</a></p>',
 			],
 			[
 				'We need to support IDNs and IRIs and röck döts:
 møøse.kwi.dk/阿驼鹿一旦咬了我的妹妹/من-اليمين-إلى-اليسار-لغات-تخلط-لي.',
 				[],
 				'<p>We need to support IDNs and IRIs and röck döts:<br />
-<a href="http://møøse.kwi.dk/阿驼鹿一旦咬了我的妹妹/من-اليمين-إلى-اليسار-لغات-تخلط-لي">møøse.kwi.dk/阿驼鹿一旦咬了我的妹妹/من-اليمين-إلى-اليسار-لغات-تخلط-لي</a>.</p>',
+<a target="_blank" href="http://møøse.kwi.dk/阿驼鹿一旦咬了我的妹妹/من-اليمين-إلى-اليسار-لغات-تخلط-لي">http://møøse.kwi.dk/阿驼鹿一旦咬了我的妹妹/من-اليمين-إلى-اليسار-لغات-تخلط-لي</a>.</p>',
 			],
 		];
 	}

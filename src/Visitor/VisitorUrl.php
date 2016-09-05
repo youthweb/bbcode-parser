@@ -15,6 +15,7 @@ use JBBCode\TextNode;
 use JBBCode\ElementNode;
 use Youthweb\UrlLinker\UrlLinker;
 use Youthweb\BBCodeParser\Config;
+use Youthweb\BBCodeParser\Html;
 
 /**
  * Url Visitor
@@ -53,12 +54,19 @@ class VisitorUrl implements VisitorInterface
 	{
 		$urllinker = new UrlLinker;
 
+		$urllinker->setHtmlLinkCreator(function($url, $content)
+		{
+			// Wir vergeben extra zweimal $url, weil $content durch UrlLinker gekürzt wird
+			return Html::anchorFromConfig($url, $url, $this->config);
+		});
+
 		$text_node->setValue($urllinker->linkUrlsAndEscapeHtml($text_node->getValue()));
 	}
 
 	public function visitElementNode(ElementNode $element_node)
 	{
-		if ( $element_node->getCodeDefinition()->parseContent() )
+		// Nur nach Urls suchen, wenn nicht in URL-Tag und der Content geparst werden soll
+		if ( $element_node->getCodeDefinition()->getTagName() !== 'url' and $element_node->getCodeDefinition()->parseContent() )
 		{
 			foreach ( $element_node->getChildren() as $child )
 			{
