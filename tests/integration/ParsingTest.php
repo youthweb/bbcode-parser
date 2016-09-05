@@ -138,6 +138,16 @@ class ParsingTest extends \PHPUnit_Framework_TestCase
 </ul>',
 			],
 			[
+				'mail@example.com',
+				[],
+				'<p>mail@example.com</p>',
+			],
+			[
+				'[email]mail@example.com[/email]',
+				[],
+				'<p><a href="mailto:mail@example.com">mail@example.com</a></p>',
+			],
+			[
 				'Here\'s an e-mail-address:bob+test@example.org. Here\'s an authenticated URL: http://skroob:12345@example.com.',
 				[],
 				'<p>Here\'s an e-mail-address:bob+test@example.org. Here\'s an authenticated URL: <a target="_blank" href="http://skroob:12345@example.com">http://skroob:12345@example.com</a>.</p>',
