@@ -140,7 +140,7 @@ class ParsingTest extends \PHPUnit_Framework_TestCase
 			[
 				'Here\'s an e-mail-address:bob+test@example.org. Here\'s an authenticated URL: http://skroob:12345@example.com.',
 				[],
-				'<p>Here\'s an e-mail-address:<a href="mailto:bob+test&#64;example.org">bob+test&#64;example.org</a>. Here\'s an authenticated URL: <a target="_blank" href="http://skroob:12345@example.com">http://skroob:12345@example.com</a>.</p>',
+				'<p>Here\'s an e-mail-address:bob+test@example.org. Here\'s an authenticated URL: <a target="_blank" href="http://skroob:12345@example.com">http://skroob:12345@example.com</a>.</p>',
 			],
 			[
 				'Here are some URLs:

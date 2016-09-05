@@ -54,6 +54,9 @@ class VisitorUrl implements VisitorInterface
 	{
 		$urllinker = new UrlLinker;
 
+		// Email-Adressen sollen nicht verlinkt werden
+		$urllinker->setEmailLinkCreator(function($email, $content) { return $email; });
+
 		$urllinker->setHtmlLinkCreator(function($url, $content)
 		{
 			// Wir vergeben extra zweimal $url, weil $content durch UrlLinker gekürzt wird
