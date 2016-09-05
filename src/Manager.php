@@ -10,6 +10,7 @@
 
 namespace Youthweb\BBCodeParser;
 
+use Youthweb\BBCodeParser\Visitor\VisitorInterface;
 use JBBCode\Parser;
 use Youthweb\BBCodeParser\DefinitionSet\DefaultSet;
 use Youthweb\BBCodeParser\DefinitionSet\HeadlineSet;
@@ -58,6 +59,19 @@ class Manager
 
 		$parser->parse($text);
 
+		// Sollen Urls erkannt werden?
+		if ( $this->config->get('parse_urls')  )
+		{
+			$visitor = $this->config->get('visitor.url');
+
+			if ( is_object($visitor) and $visitor instanceof VisitorInterface )
+			{
+				$visitor->setConfig($this->config);
+
+				$parser->accept($visitor);
+			}
+		}
+
 		// Sollen Smilies geparset werden?
 		if ( $this->config->get('parse_smilies')  )
 		{
@@ -65,6 +79,12 @@ class Manager
 
 			if ( is_object($visitor) and $visitor instanceof \JBBCode\NodeVisitor )
 			{
+				// BC: VisitorInterface wurde erst mit v1.1 eingeführt
+				if ( $visitor instanceof VisitorInterface )
+				{
+					$visitor->setConfig($this->config);
+				}
+
 				$parser->accept($visitor);
 			}
 		}

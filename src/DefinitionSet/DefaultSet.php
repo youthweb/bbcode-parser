@@ -51,14 +51,10 @@ class DefaultSet implements CodeDefinitionSet
 		array_push($this->definitions, $builder->build());
 
 		/* [code] code tag */
-		$builder = new CodeDefinitionBuilder('code', '<code>{param}</code>');
-		$builder->setParseContent(false);
-		array_push($this->definitions, $builder->build());
+		array_push($this->definitions, new Definition\Code());
 
 		/* [noparse] noparse tag */
-		$builder = new CodeDefinitionBuilder('noparse', '{param}');
-		$builder->setParseContent(false);
-		array_push($this->definitions, $builder->build());
+		array_push($this->definitions, new Definition\Noparse());
 
 		/* [list] list tag */
 		array_push($this->definitions, new Definition\ListDefinition());

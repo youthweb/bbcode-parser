@@ -10,6 +10,8 @@
 
 namespace Youthweb\BBCodeParser;
 
+use Youthweb\BBCodeParser\Visitor\VisitorUrl;
+
 /**
  * Diese Klasse verwaltet die Config
  */
@@ -45,6 +47,10 @@ class Config
 		 */
 		'parse_smilies' => true,
 		/**
+		 * Sollen Urls ersetzt werden?
+		 */
+		'parse_urls' => true,
+		/**
 		 * Sollen BBCodes für h1 bis h6 unterstützt werden?
 		 */
 		'parse_headlines' => false,
@@ -72,10 +78,11 @@ class Config
 			'video' => null,
 		),
 		/**
-		 * Visitor für Smilies (JBBCode\NodeVisitor oder null)
+		 * Visitors als VisitorInterface, JBBCode\NodeVisitor oder null
 		 */
 		'visitor' => array(
 			'smiley' => null,
+			'url' => null,
 		),
 		/**
 		 * Callback Config
@@ -111,6 +118,8 @@ class Config
 	public function __construct()
 	{
 		$this->data = $this->default_config;
+
+		$this->set('visitor.url', new VisitorUrl());
 	}
 
 	/**
