@@ -97,7 +97,47 @@ class ParsingTest extends \PHPUnit_Framework_TestCase
 			[
 				'[code]<h7>Header 7</h7>[/code]',
 				[],
-				'<p><code>&lt;h7&gt;Header 7&lt;/h7&gt;</code></p>',
+				'<pre><code>&lt;h7&gt;Header 7&lt;/h7&gt;</code></pre>',
+			],
+			[
+				'[code]
+Durchmesser der Erde:    D  = 12742 km = 12742000 m
+Umfang der Erde:         U  = Pi*D     = 40030173,592 m
+Seillängenge:            S  = U+1      = 40030174,592 m
+Seil-Durchmesser:        SD = S/Pi     = 12742000,318 m
+Abstand Seil zu Boden:   l  = (SD-D)/2 = 0,159m
+[/code]',
+				[],
+				'<pre><code>
+Durchmesser der Erde:    D  = 12742 km = 12742000 m
+Umfang der Erde:         U  = Pi*D     = 40030173,592 m
+Seillängenge:            S  = U+1      = 40030174,592 m
+Seil-Durchmesser:        SD = S/Pi     = 12742000,318 m
+Abstand Seil zu Boden:   l  = (SD-D)/2 = 0,159m
+</code></pre>'
+			],
+			[
+				'Hier ein Beispiel:
+
+[code]
+<?php
+    $message = \'Hello World!\';
+    echo $message;
+[/code]',
+				[],
+				'<p>Hier ein Beispiel:</p>
+<pre><code>
+&lt;?php
+    $message = \'Hello World!\';
+    echo $message;
+</code></pre>'
+			],
+			[
+				'Hier ein Beispiel mit [code]Code-Beispiel[/code] in einer Zeile.',
+				[],
+				'<p>Hier ein Beispiel mit</p>
+<pre><code>Code-Beispiel</code></pre>
+<p>in einer Zeile.</p>'
 			],
 			[
 				'[noparse]<h7>Header 7</h7>[/noparse]',

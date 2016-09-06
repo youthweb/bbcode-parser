@@ -41,7 +41,7 @@ class Code extends CodeDefinition
 			$content .= $child->getAsHTML();
 		}
 
-		return '<code>' . htmlspecialchars($content) . '</code>';
+		return '<!-- no_p --><pre><code>' . htmlspecialchars($content) . '</code></pre><!-- no_p -->';
 	}
 
 }

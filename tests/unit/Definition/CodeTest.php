@@ -30,14 +30,14 @@ class CodeTest extends \PHPUnit_Framework_TestCase
 	{
 		return [
 			[
-				'<span style="color:Red;">some text</span>',
+				'<span style="color:Red;">some text mit Umlauten äöü</span>',
 				null,
-				'<code>&lt;span style=&quot;color:Red;&quot;&gt;some text&lt;/span&gt;</code>',
+				'<!-- no_p --><pre><code>&lt;span style=&quot;color:Red;&quot;&gt;some text mit Umlauten äöü&lt;/span&gt;</code></pre><!-- no_p -->',
 			],
 			[
 				'',
 				null,
-				'<code></code>',
+				'<!-- no_p --><pre><code></code></pre><!-- no_p -->',
 			],
 		];
 	}
