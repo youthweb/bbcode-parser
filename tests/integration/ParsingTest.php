@@ -99,6 +99,12 @@ class ParsingTest extends \PHPUnit_Framework_TestCase
 				[],
 				'<pre><code>&lt;h7&gt;Header 7&lt;/h7&gt;</code></pre>',
 			],
+			// Do not double encode
+			[
+				'[code]&lt;h7&gt;Header 7&lt;/h7&gt;[/code]',
+				[],
+				'<pre><code>&lt;h7&gt;Header 7&lt;/h7&gt;</code></pre>',
+			],
 			[
 				'[code]
 Durchmesser der Erde:    D  = 12742 km = 12742000 m
@@ -141,6 +147,12 @@ Abstand Seil zu Boden:   l  = (SD-D)/2 = 0,159m
 			],
 			[
 				'[noparse]<h7>Header 7</h7>[/noparse]',
+				[],
+				'<p>&lt;h7&gt;Header 7&lt;/h7&gt;</p>',
+			],
+			// Do not double encode
+			[
+				'[noparse]&lt;h7&gt;Header 7&lt;/h7&gt;[/noparse]',
 				[],
 				'<p>&lt;h7&gt;Header 7&lt;/h7&gt;</p>',
 			],

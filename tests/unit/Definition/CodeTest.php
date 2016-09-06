@@ -34,6 +34,12 @@ class CodeTest extends \PHPUnit_Framework_TestCase
 				null,
 				'<!-- no_p --><pre><code>&lt;span style=&quot;color:Red;&quot;&gt;some text mit Umlauten äöü&lt;/span&gt;</code></pre><!-- no_p -->',
 			],
+			// Do not double encode
+			[
+				'&lt;span style=&quot;color:Red;&quot;&gt;some text mit Umlauten äöü&lt;/span&gt;',
+				null,
+				'<!-- no_p --><pre><code>&lt;span style=&quot;color:Red;&quot;&gt;some text mit Umlauten äöü&lt;/span&gt;</code></pre><!-- no_p -->',
+			],
 			[
 				'',
 				null,

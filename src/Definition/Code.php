@@ -41,7 +41,11 @@ class Code extends CodeDefinition
 			$content .= $child->getAsHTML();
 		}
 
-		return '<!-- no_p --><pre><code>' . htmlspecialchars($content) . '</code></pre><!-- no_p -->';
+		$flags = ENT_COMPAT | ENT_HTML401;
+		$encoding = ini_get("default_charset");
+		$double_encode = false; // Do not double encode
+
+		return '<!-- no_p --><pre><code>' . htmlspecialchars($content, $flags, $encoding, $double_encode) . '</code></pre><!-- no_p -->';
 	}
 
 }

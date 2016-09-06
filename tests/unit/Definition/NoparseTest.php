@@ -39,6 +39,12 @@ class NoparseTest extends \PHPUnit_Framework_TestCase
 				null,
 				'',
 			],
+			// Do not double encode
+			[
+				'&lt;h7&gt;Header 7&lt;/h7&gt;',
+				[],
+				'&lt;h7&gt;Header 7&lt;/h7&gt;',
+			],
 		];
 	}
 }

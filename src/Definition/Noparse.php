@@ -41,7 +41,11 @@ class Noparse extends CodeDefinition
 			$content .= $child->getAsHTML();
 		}
 
-		return htmlspecialchars($content);
+		$flags = ENT_COMPAT | ENT_HTML401;
+		$encoding = ini_get("default_charset");
+		$double_encode = false; // Do not double encode
+
+		return htmlspecialchars($content, $flags, $encoding, $double_encode);
 	}
 
 }
