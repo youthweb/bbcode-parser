@@ -56,6 +56,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 			->getMock();
 
 		$config = new Config($validation);
+		$config->set('foo', 'bar');
 
 		$this->assertSame('default', $config->get('foo.bar', 'default'));
 	}
