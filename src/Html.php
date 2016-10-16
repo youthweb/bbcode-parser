@@ -233,11 +233,6 @@ class Html
 	 */
 	protected static function build_list($type = 'ul', array $list = array(), $attr = false, $indent = '')
 	{
-		if ( ! is_array($list))
-		{
-			$result = false;
-		}
-
 		$out = '';
 		foreach ( $list as $key => $val )
 		{

@@ -22,13 +22,13 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
 		return [
 			[
 				'http://example.org/image.jpg',
-				[],
+				['hidden' => false],
 				'<img src="http://example.org/image.jpg" alt="image" />',
 			],
 			[
 				'example.org/image.jpg',
-				[],
-				'<img src="/example.org/image.jpg" alt="image" />',
+				['hidden'],
+				'<img hidden="hidden" src="/example.org/image.jpg" alt="image" />',
 			],
 		];
 	}
