@@ -156,6 +156,18 @@ Abstand Seil zu Boden:   l  = (SD-D)/2 = 0,159m
 				[],
 				'<p>&lt;h7&gt;Header 7&lt;/h7&gt;</p>',
 			],
+			// Images callbacks.image.force_check
+			[
+				'[img]http://example.org/image.jpg[/img]',
+				[
+					'callbacks' => [
+						'image' => [
+							'force_check' => false,
+						],
+					],
+				],
+				'<p><a target="_blank" href="http://example.org/image.jpg"><img class="img-responsive" border="0" src="http://example.org/image.jpg" alt="image" /></a></p>',
+			],
 			// Urls
 			[
 				'example.org',
