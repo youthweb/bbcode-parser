@@ -27,6 +27,11 @@
             "Youthweb\\BBCodeParser\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Youthweb\\BBCodeParser\\Tests\\": "tests"
+        }
+    },
     "config": {
 		"sort-packages": true
 	}
