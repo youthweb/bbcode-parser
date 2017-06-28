@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Changed
+- Update dependencies to cache/void-adapter 0.3 => 0.4
+
 ## [1.1] - 2016-09-06
 ### Added
 - Autolink Urls without the need of [url]
