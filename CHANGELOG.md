@@ -34,7 +34,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - Initial version, separated from youthweb.net
 
 [Unreleased]: https://github.com/youthweb/bbcode-parser/compare/1.2.0...HEAD
-[1.2]: https://github.com/youthweb/bbcode-parser/compare/1.0.1...1.2.0
+[1.2]: https://github.com/youthweb/bbcode-parser/compare/1.1.0...1.2.0
 [1.1]: https://github.com/youthweb/bbcode-parser/compare/1.0.1...1.1.0
 [1.0.1]: https://github.com/youthweb/bbcode-parser/compare/1.0.0...1.0.1
 [1.0]: https://github.com/youthweb/bbcode-parser/compare/c4163941a543d79e2179fa54559ba06bc9e1f4a4...1.0.0
