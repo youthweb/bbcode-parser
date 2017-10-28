@@ -7,7 +7,7 @@ use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\SizeOption;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
 
-class SizeOptionTest extends \PHPUnit_Framework_TestCase
+class SizeOptionTest extends \PHPUnit\Framework\TestCase
 {
 	use MockerTrait;
 

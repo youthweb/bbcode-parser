@@ -5,7 +5,7 @@ namespace Youthweb\BBCodeParser\Tests\Integration;
 use Youthweb\BBCodeParser\Manager;
 use Youthweb\BBCodeParser\Visitor\VisitorSmiley;
 
-class SmileyTest extends \PHPUnit_Framework_TestCase
+class SmileyTest extends \PHPUnit\Framework\TestCase
 {
 
 	/**

@@ -6,7 +6,7 @@ use Youthweb\BBCodeParser\Tests\Fixtures\MockHttpStreamWrapper;
 use Youthweb\BBCodeParser\Tests\Fixtures\ValidationMock;
 use Youthweb\BBCodeParser\Validation;
 
-class ValidationTest extends \PHPUnit_Framework_TestCase
+class ValidationTest extends \PHPUnit\Framework\TestCase
 {
 	public function setUp()
 	{

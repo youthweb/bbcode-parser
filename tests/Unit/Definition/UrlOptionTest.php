@@ -7,7 +7,7 @@ use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\UrlOption;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
 
-class UrlOptionTest extends \PHPUnit_Framework_TestCase
+class UrlOptionTest extends \PHPUnit\Framework\TestCase
 {
 	use MockerTrait;
 

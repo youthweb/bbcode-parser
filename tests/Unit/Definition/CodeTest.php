@@ -7,7 +7,7 @@ use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\Code;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
 
-class CodeTest extends \PHPUnit_Framework_TestCase
+class CodeTest extends \PHPUnit\Framework\TestCase
 {
 	use MockerTrait;
 

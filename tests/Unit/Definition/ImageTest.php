@@ -8,7 +8,7 @@ use Youthweb\BBCodeParser\Definition\Image;
 use Youthweb\BBCodeParser\Filter\FilterException;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
 
-class ImageTest extends \PHPUnit_Framework_TestCase
+class ImageTest extends \PHPUnit\Framework\TestCase
 {
 	use MockerTrait;
 

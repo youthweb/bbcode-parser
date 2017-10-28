@@ -4,7 +4,7 @@ namespace Youthweb\BBCodeParser\Tests\Unit\Visitor;
 
 use Youthweb\BBCodeParser\Visitor\VisitorUrl;
 
-class VisitorUrlTest extends \PHPUnit_Framework_TestCase
+class VisitorUrlTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * @test create

@@ -4,7 +4,7 @@ namespace Youthweb\BBCodeParser\Tests\Unit;
 
 use Youthweb\BBCodeParser\Html;
 
-class HtmlTest extends \PHPUnit_Framework_TestCase
+class HtmlTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * @dataProvider ImageDataProvider

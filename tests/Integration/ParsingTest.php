@@ -4,7 +4,7 @@ namespace Youthweb\BBCodeParser\Tests\Integration;
 
 use Youthweb\BBCodeParser\Manager;
 
-class ParsingTest extends \PHPUnit_Framework_TestCase
+class ParsingTest extends \PHPUnit\Framework\TestCase
 {
 
 	private $parser;

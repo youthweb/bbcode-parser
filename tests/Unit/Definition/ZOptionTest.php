@@ -7,7 +7,7 @@ use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\ZOption;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
 
-class ZOptionTest extends \PHPUnit_Framework_TestCase
+class ZOptionTest extends \PHPUnit\Framework\TestCase
 {
 	use MockerTrait;
 

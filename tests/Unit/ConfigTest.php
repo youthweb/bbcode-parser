@@ -4,7 +4,7 @@ namespace Youthweb\BBCodeParser\Tests\Unit;
 
 use Youthweb\BBCodeParser\Config;
 
-class ConfigTest extends \PHPUnit_Framework_TestCase
+class ConfigTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * @dataProvider SetterDataProvider

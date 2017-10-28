@@ -7,7 +7,7 @@ use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\EmailOption;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
 
-class EmailOptionTest extends \PHPUnit_Framework_TestCase
+class EmailOptionTest extends \PHPUnit\Framework\TestCase
 {
 	use MockerTrait;
 

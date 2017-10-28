@@ -7,7 +7,7 @@ use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\ListOption;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
 
-class ListOptionTest extends \PHPUnit_Framework_TestCase
+class ListOptionTest extends \PHPUnit\Framework\TestCase
 {
 	use MockerTrait;
 

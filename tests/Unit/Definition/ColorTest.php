@@ -7,7 +7,7 @@ use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\Color;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
 
-class ColorTest extends \PHPUnit_Framework_TestCase
+class ColorTest extends \PHPUnit\Framework\TestCase
 {
 	use MockerTrait;
 

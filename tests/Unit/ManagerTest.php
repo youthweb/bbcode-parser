@@ -4,7 +4,7 @@ namespace Youthweb\BBCodeParser\Tests\Unit;
 
 use Youthweb\BBCodeParser\Manager;
 
-class ManagerTest extends \PHPUnit_Framework_TestCase
+class ManagerTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * @test
