@@ -18,7 +18,7 @@ use Youthweb\BBCodeParser\Config;
  * [YWLINK=example.com]Click me[/YWLINK]
  */
 
-class Ywlinkoption extends UrlOption
+class YwlinkOption extends UrlOption
 {
 
 	public function __construct(Config $config)

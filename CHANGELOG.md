@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Fixed
+- Fixed case missmatches in `QuoteOption` and `YwlinkOption`
+
 ## [1.2] - 2017-06-28
 
 ### Changed

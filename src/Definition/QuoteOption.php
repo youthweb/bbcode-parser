@@ -18,7 +18,7 @@ namespace Youthweb\BBCodeParser\Definition;
  * [/qoute]
  */
 
-class Quoteoption extends Quote
+class QuoteOption extends Quote
 {
 
 	public function __construct()
