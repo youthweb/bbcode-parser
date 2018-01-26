@@ -2,7 +2,7 @@
 /*
  * This file is part of the Youthweb\BBCodeParser package.
  *
- * (c) Youthweb e.V. <info@youthweb.net>
+ * Copyright (C) 2016-2018  Youthweb e.V. <info@youthweb.net>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -24,78 +24,67 @@ use Youthweb\BBCodeParser\Validation;
 
 class Url extends CodeDefinition
 {
+    public function __construct(Config $config)
+    {
+        $this->parseContent = true;
+        $this->useOption = false;
+        $this->setTagName('url');
+        $this->nestLimit = -1;
 
-	public function __construct(Config $config)
-	{
-		$this->parseContent = true;
-		$this->useOption = false;
-		$this->setTagName('url');
-		$this->nestLimit = -1;
+        $this->config = $config;
+    }
 
-		$this->config = $config;
-	}
+    public function asHtml(ElementNode $el)
+    {
+        $content = '';
 
-	public function asHtml(ElementNode $el)
-	{
-		$content = '';
+        foreach ($el->getChildren() as $child) {
+            $content .= $child->getAsText();
+        }
 
-		foreach ( $el->getChildren() as $child )
-		{
-			$content .= $child->getAsText();
-		}
+        $param = $el->getAttribute();
 
-		$param = $el->getAttribute();
+        if (is_array($param)) {
+            $param = array_shift($param);
+        }
 
-		if ( is_array($param) )
-		{
-			$param = array_shift($param);
-		}
+        $param = trim($param);
 
-		$param = trim($param);
+        if ($content == '' and $param == '') {
+            return '';
+        }
 
-		if ( $content == '' and $param == '' )
-		{
-			return '';
-		}
+        $short_url = $this->config->get('callbacks.url_content.short_url');
 
-		$short_url = $this->config->get('callbacks.url_content.short_url');
+        // Url finden
+        if ($param == '') {
+            // Die Url steht im Content
+            $url = $content;
 
-		// Url finden
-		if ( $param == '' )
-		{
-			// Die Url steht im Content
-			$url = $content;
+            // In der anzuzeigenden URL kein &amp; anzeigen
+            $content = str_replace('&amp;', '&', $content);
+        } else {
+            // Die Url steht im Parameter
+            $url = $param;
+            $short_url = false;
 
-			// In der anzuzeigenden URL kein &amp; anzeigen
-			$content = str_replace('&amp;', '&', $content);
-		}
-		else
-		{
-			// Die Url steht im Parameter
-			$url = $param;
-			$short_url = false;
+            $content = '';
 
-			$content = '';
+            foreach ($el->getChildren() as $child) {
+                $content .= $child->getAsHTML();
+            }
+        }
 
-			foreach ( $el->getChildren() as $child )
-			{
-				$content .= $child->getAsHTML();
-			}
-		}
+        // http:// voranstellen, wenn nichts angegeben
+        if (! preg_match('~^[a-z]+://~i', $url)) {
+            $url = 'http://' . $url;
+        }
 
-		// http:// voranstellen, wenn nichts angegeben
-		if ( ! preg_match('~^[a-z]+://~i', $url) )
-		{
-			$url = "http://" . $url;
-		}
+        // Wenn die URL nicht gültig ist, zeigen wir nur den Text
+        if (! $this->config->getValidation()->isValidUrl($url)) {
+            return $content;
+        }
 
-		// Wenn die URL nicht gültig ist, zeigen wir nur den Text
-		if ( ! $this->config->getValidation()->isValidUrl($url) )
-		{
-			return $content;
-		}
-
-		return Html::anchorFromConfig($url, $content, $this->config);
-	}
-
+        return Html::anchorFromConfig($url, $content, $this->config);
+    }
 }

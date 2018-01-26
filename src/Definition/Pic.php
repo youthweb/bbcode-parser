@@ -2,7 +2,7 @@
 /*
  * This file is part of the Youthweb\BBCodeParser package.
  *
- * (c) Youthweb e.V. <info@youthweb.net>
+ * Copyright (C) 2016-2018  Youthweb e.V. <info@youthweb.net>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -21,12 +21,10 @@ use Youthweb\BBCodeParser\Config;
 
 class Pic extends Image
 {
+    public function __construct(Config $config)
+    {
+        parent::__construct($config);
 
-	public function __construct(Config $config)
-	{
-		parent::__construct($config);
-
-		$this->setTagName('PIC');
-	}
-
+        $this->setTagName('PIC');
+    }
 }

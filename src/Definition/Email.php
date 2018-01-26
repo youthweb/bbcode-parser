@@ -2,7 +2,7 @@
 /*
  * This file is part of the Youthweb\BBCodeParser package.
  *
- * (c) Youthweb e.V. <info@youthweb.net>
+ * Copyright (C) 2016-2018  Youthweb e.V. <info@youthweb.net>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -24,76 +24,64 @@ use Youthweb\BBCodeParser\Validation;
 
 class Email extends CodeDefinition
 {
+    public function __construct(Config $config)
+    {
+        $this->parseContent = true;
+        $this->useOption = false;
+        $this->setTagName('email');
+        $this->nestLimit = -1;
 
-	public function __construct(Config $config)
-	{
-		$this->parseContent = true;
-		$this->useOption = false;
-		$this->setTagName('email');
-		$this->nestLimit = -1;
+        $this->config = $config;
+    }
 
-		$this->config = $config;
-	}
+    public function asHtml(ElementNode $el)
+    {
+        $content = '';
 
-	public function asHtml(ElementNode $el)
-	{
-		$content = '';
+        foreach ($el->getChildren() as $child) {
+            $content .= $child->getAsText();
+        }
 
-		foreach ( $el->getChildren() as $child )
-		{
-			$content .= $child->getAsText();
-		}
+        $param = $el->getAttribute();
 
-		$param = $el->getAttribute();
+        if (is_array($param)) {
+            $param = array_shift($param);
+        }
 
-		if ( is_array($param) )
-		{
-			$param = array_shift($param);
-		}
+        $param = trim($param);
 
-		$param = trim($param);
+        if ($content == '' and $param == '') {
+            return '';
+        }
 
-		if ( $content == '' and $param == '' )
-		{
-			return '';
-		}
+        if ($param == '') {
+            // Die Email steht im Content
+            $email = '';
 
-		if ( $param == '' )
-		{
-			// Die Email steht im Content
-			$email = '';
+            foreach ($el->getChildren() as $child) {
+                $email .= $child->getAsText();
+            }
+        } else {
+            // Die Email steht im Parameter
+            $email = $param;
 
-			foreach ( $el->getChildren() as $child )
-			{
-				$email .= $child->getAsText();
-			}
-		}
-		else
-		{
-			// Die Email steht im Parameter
-			$email = $param;
+            $content = '';
 
-			$content = '';
+            foreach ($el->getChildren() as $child) {
+                $content .= $child->getAsHTML();
+            }
+        }
 
-			foreach ( $el->getChildren() as $child )
-			{
-				$content .= $child->getAsHTML();
-			}
-		}
+        // Nur Content anzeigen, wenn keine gültige Email angegeben wurde
+        if (! $this->config->getValidation()->isValidEmail($email)) {
+            return $content;
+        }
 
-		// Nur Content anzeigen, wenn keine gültige Email angegeben wurde
-		if ( ! $this->config->getValidation()->isValidEmail($email) )
-		{
-			return $content;
-		}
+        // Mail vor Bots schützen?
+        if ($this->config->get('callbacks.email_content.protect_email')) {
+            return Html::mail_to_safe($email, $content);
+        }
 
-		// Mail vor Bots schützen?
-		if ( $this->config->get('callbacks.email_content.protect_email') )
-		{
-			return Html::mail_to_safe($email, $content);
-		}
-
-		return Html::mail_to($email, $content);
-	}
-
+        return Html::mail_to($email, $content);
+    }
 }

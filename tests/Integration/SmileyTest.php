@@ -1,4 +1,12 @@
 <?php
+/*
+ * This file is part of the Youthweb\BBCodeParser package.
+ *
+ * Copyright (C) 2016-2018  Youthweb e.V. <info@youthweb.net>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Youthweb\BBCodeParser\Tests\Integration;
 
@@ -7,24 +15,22 @@ use Youthweb\BBCodeParser\Visitor\VisitorSmiley;
 
 class SmileyTest extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * @test
+     */
+    public function testParseSmileyCode()
+    {
+        $text     = 'My mistake :-[';
+        $expected = '<p>My mistake <img src="https://youthweb.net/vendor/smilies/49_2.gif" alt=":-[" title=":-[" /></p>';
 
-	/**
-	 * @test
-	 */
-	public function testParseSmileyCode()
-	{
-		$text     = 'My mistake :-[';
-		$expected = '<p>My mistake <img src="https://youthweb.net/vendor/smilies/49_2.gif" alt=":-[" title=":-[" /></p>';
+        $parser = new Manager();
 
-		$parser = new Manager();
+        $config = [
+            'visitor' => [
+                'smiley' => new VisitorSmiley()
+            ]
+        ];
 
-		$config = [
-			'visitor' => [
-				'smiley' => new VisitorSmiley()
-			]
-		];
-
-		$this->assertSame($expected, $parser->parse($text, $config));
-	}
-
+        $this->assertSame($expected, $parser->parse($text, $config));
+    }
 }

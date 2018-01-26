@@ -2,7 +2,7 @@
 /*
  * This file is part of the Youthweb\BBCodeParser package.
  *
- * (c) Youthweb e.V. <info@youthweb.net>
+ * Copyright (C) 2016-2018  Youthweb e.V. <info@youthweb.net>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -25,57 +25,54 @@ use Youthweb\BBCodeParser\Html;
 
 class VisitorUrl implements VisitorInterface
 {
+    /**
+     * @var Youthweb\BBCodeParser\Config
+     */
+    private $config;
 
-	/**
-	 * @var Youthweb\BBCodeParser\Config
-	 */
-	private $config;
+    /**
+     * Set the config
+     *
+     * @param Config $config The config object
+     *
+     * @return self
+     */
+    public function setConfig(Config $config)
+    {
+        $this->config = $config;
+    }
 
-	/**
-	 * Set the config
-	 *
-	 * @param  Config $config The config object
-	 * @return self
-	 */
-	public function setConfig(Config $config)
-	{
-		$this->config = $config;
-	}
+    public function visitDocumentElement(DocumentElement $document_element)
+    {
+        foreach ($document_element->getChildren() as $child) {
+            $child->accept($this);
+        }
+    }
 
-	public function visitDocumentElement(DocumentElement $document_element)
-	{
-		foreach ( $document_element->getChildren() as $child )
-		{
-			$child->accept($this);
-		}
-	}
+    public function visitTextNode(TextNode $text_node)
+    {
+        $urllinker = new UrlLinker;
 
-	public function visitTextNode(TextNode $text_node)
-	{
-		$urllinker = new UrlLinker;
+        // Email-Adressen sollen nicht verlinkt werden
+        $urllinker->setEmailLinkCreator(function ($email, $content) {
+            return $email;
+        });
 
-		// Email-Adressen sollen nicht verlinkt werden
-		$urllinker->setEmailLinkCreator(function($email, $content) { return $email; });
+        $urllinker->setHtmlLinkCreator(function ($url, $content) {
+            // Wir vergeben extra zweimal $url, weil $content durch UrlLinker gekürzt wird
+            return Html::anchorFromConfig($url, $url, $this->config);
+        });
 
-		$urllinker->setHtmlLinkCreator(function($url, $content)
-		{
-			// Wir vergeben extra zweimal $url, weil $content durch UrlLinker gekürzt wird
-			return Html::anchorFromConfig($url, $url, $this->config);
-		});
+        $text_node->setValue($urllinker->linkUrlsAndEscapeHtml($text_node->getValue()));
+    }
 
-		$text_node->setValue($urllinker->linkUrlsAndEscapeHtml($text_node->getValue()));
-	}
-
-	public function visitElementNode(ElementNode $element_node)
-	{
-		// Nur nach Urls suchen, wenn nicht in URL-Tag und der Content geparst werden soll
-		if ( $element_node->getCodeDefinition()->getTagName() !== 'url' and $element_node->getCodeDefinition()->parseContent() )
-		{
-			foreach ( $element_node->getChildren() as $child )
-			{
-				$child->accept($this);
-			}
-		}
-	}
-
+    public function visitElementNode(ElementNode $element_node)
+    {
+        // Nur nach Urls suchen, wenn nicht in URL-Tag und der Content geparst werden soll
+        if ($element_node->getCodeDefinition()->getTagName() !== 'url' and $element_node->getCodeDefinition()->parseContent()) {
+            foreach ($element_node->getChildren() as $child) {
+                $child->accept($this);
+            }
+        }
+    }
 }
