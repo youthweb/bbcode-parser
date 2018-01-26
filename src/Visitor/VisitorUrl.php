@@ -51,17 +51,16 @@ class VisitorUrl implements VisitorInterface
 
     public function visitTextNode(TextNode $text_node)
     {
-        $urllinker = new UrlLinker;
-
-        // Email-Adressen sollen nicht verlinkt werden
-        $urllinker->setEmailLinkCreator(function ($email, $content) {
-            return $email;
-        });
-
-        $urllinker->setHtmlLinkCreator(function ($url, $content) {
-            // Wir vergeben extra zweimal $url, weil $content durch UrlLinker gekürzt wird
-            return Html::anchorFromConfig($url, $url, $this->config);
-        });
+        $urllinker = new UrlLinker([
+            'emailLinkCreator' => function ($email, $content) {
+                // Email-Adressen sollen nicht verlinkt werden
+                return $email;
+            },
+            'htmlLinkCreator' => function ($url, $content) {
+                // Wir vergeben extra zweimal $url, weil $content durch UrlLinker gekürzt wird
+                return Html::anchorFromConfig($url, $url, $this->config);
+            },
+        ]);
 
         $text_node->setValue($urllinker->linkUrlsAndEscapeHtml($text_node->getValue()));
     }
