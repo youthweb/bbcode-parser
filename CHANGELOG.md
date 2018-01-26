@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [1.3] - 2018-01-26
+
 ### Changed
 
 - Update cache/void-adapter to 1.0
@@ -44,7 +46,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 - Initial version, separated from youthweb.net
 
-[Unreleased]: https://github.com/youthweb/bbcode-parser/compare/1.2.1...HEAD
+[Unreleased]: https://github.com/youthweb/bbcode-parser/compare/1.3.0...HEAD
+[1.3]: https://github.com/youthweb/bbcode-parser/compare/1.2.1...1.3.0
 [1.2.1]: https://github.com/youthweb/bbcode-parser/compare/1.2.0...1.2.1
 [1.2]: https://github.com/youthweb/bbcode-parser/compare/1.1.0...1.2.0
 [1.1]: https://github.com/youthweb/bbcode-parser/compare/1.0.1...1.1.0
