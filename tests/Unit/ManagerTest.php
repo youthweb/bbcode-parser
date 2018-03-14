@@ -10,9 +10,11 @@
 
 namespace Youthweb\BBCodeParser\Tests\Unit;
 
+use PHPUnit\Framework\TestCase;
 use Youthweb\BBCodeParser\Manager;
+use Youthweb\BBCodeParser\Visitor\VisitorCollectionInterface;
 
-class ManagerTest extends \PHPUnit\Framework\TestCase
+class ManagerTest extends TestCase
 {
     /**
      * @test
@@ -20,6 +22,26 @@ class ManagerTest extends \PHPUnit\Framework\TestCase
     public function testParseWithoutDefinitions()
     {
         $manager = new Manager();
+
+        $config = [
+            'parse_headlines' => false,
+            'parse_default' => false,
+        ];
+
+        $text = '[b]test[/b]';
+
+        $this->assertSame($text, $manager->parse($text, $config));
+    }
+
+    /**
+     * @test
+     */
+    public function parseWillUseTheVisitorCollection()
+    {
+        $visitorCollection = $this->createMock(VisitorCollectionInterface::class);
+        $visitorCollection->expects($this->once())->method('getVisitors')->willReturn([]);
+
+        $manager = new Manager($visitorCollection);
 
         $config = [
             'parse_headlines' => false,
