@@ -13,6 +13,7 @@ namespace Youthweb\BBCodeParser\Tests\Unit;
 use PHPUnit\Framework\TestCase;
 use Youthweb\BBCodeParser\Manager;
 use Youthweb\BBCodeParser\Visitor\VisitorCollectionInterface;
+use Youthweb\BBCodeParser\Visitor\VisitorInterface;
 
 class ManagerTest extends TestCase
 {
@@ -38,8 +39,10 @@ class ManagerTest extends TestCase
      */
     public function parseWillUseTheVisitorCollection()
     {
+        $visitor = $this->createMock(VisitorInterface::class);
+
         $visitorCollection = $this->createMock(VisitorCollectionInterface::class);
-        $visitorCollection->expects($this->once())->method('getVisitors')->willReturn([]);
+        $visitorCollection->expects($this->once())->method('getVisitors')->willReturn([$visitor]);
 
         $manager = new Manager($visitorCollection);
 
