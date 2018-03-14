@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [1.4] - 2018-03-14
+
+### Added
+
+- The `Youthweb\BBCodeParser\Manager` constructor expects an optional `Youthweb\BBCodeParser\Visitor\VisitorCollectionInterface` object to add custom Vistors
+
 ## [1.3] - 2018-01-26
 
 ### Changed
@@ -46,7 +52,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 - Initial version, separated from youthweb.net
 
-[Unreleased]: https://github.com/youthweb/bbcode-parser/compare/1.3.0...HEAD
+[Unreleased]: https://github.com/youthweb/bbcode-parser/compare/1.4.0...HEAD
+[1.4]: https://github.com/youthweb/bbcode-parser/compare/1.3.0...1.4.0
 [1.3]: https://github.com/youthweb/bbcode-parser/compare/1.2.1...1.3.0
 [1.2.1]: https://github.com/youthweb/bbcode-parser/compare/1.2.0...1.2.1
 [1.2]: https://github.com/youthweb/bbcode-parser/compare/1.1.0...1.2.0
