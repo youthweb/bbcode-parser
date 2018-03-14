@@ -10,8 +10,10 @@
 
 namespace Youthweb\BBCodeParser;
 
-use Youthweb\BBCodeParser\Visitor\VisitorInterface;
 use JBBCode\Parser;
+use Youthweb\BBCodeParser\Visitor\VisitorCollection;
+use Youthweb\BBCodeParser\Visitor\VisitorCollectionInterface;
+use Youthweb\BBCodeParser\Visitor\VisitorInterface;
 use Youthweb\BBCodeParser\DefinitionSet\DefaultSet;
 use Youthweb\BBCodeParser\DefinitionSet\HeadlineSet;
 
@@ -27,9 +29,26 @@ class Manager
     protected $config = null;
 
     /**
-     * parst einen Text mit BBCode-Regeln
+     * @var Youthweb\BBCodeParser\Visitor\VisitorCollection
+     */
+    private $visitorCollection;
+
+    /**
+     * Create the Manager
      *
-     * Zur Anwendung kann HtmlParser::parse() verwendet werden
+     * @param Youthweb\BBCodeParser\Visitor\VisitorCollectionInterface|null $visitorCollection
+     */
+    public function __construct(VisitorCollectionInterface $visitorCollection = null)
+    {
+        if ($visitorCollection === null) {
+            $visitorCollection = new VisitorCollection();
+        }
+
+        $this->visitorCollection = $visitorCollection;
+    }
+
+    /**
+     * parst einen Text mit BBCode-Regeln
      *
      * @param string $text   Der Text, der geparst werden soll
      * @param array  $config config array
@@ -41,6 +60,11 @@ class Manager
         $this->config->mergeRecursive($config);
 
         $parser = new Parser();
+
+        // Gibt es Visitors?
+        foreach ($this->visitorCollection->getVisitors() as $visitor) {
+            $parser->accept($visitor);
+        }
 
         $definition_sets = $this->getDefinitionSets();
 
