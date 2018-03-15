@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [1.4.1] - 2018-03-15
+
+### Fixed
+
+- Call visitors in Manager after parsing the text
+
 ## [1.4] - 2018-03-14
 
 ### Added
@@ -52,7 +58,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 - Initial version, separated from youthweb.net
 
-[Unreleased]: https://github.com/youthweb/bbcode-parser/compare/1.4.0...HEAD
+[Unreleased]: https://github.com/youthweb/bbcode-parser/compare/1.4.1...HEAD
+[1.4.1]: https://github.com/youthweb/bbcode-parser/compare/1.4.0...1.4.1
 [1.4]: https://github.com/youthweb/bbcode-parser/compare/1.3.0...1.4.0
 [1.3]: https://github.com/youthweb/bbcode-parser/compare/1.2.1...1.3.0
 [1.2.1]: https://github.com/youthweb/bbcode-parser/compare/1.2.0...1.2.1
