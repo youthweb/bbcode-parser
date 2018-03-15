@@ -11,6 +11,7 @@
 namespace Youthweb\BBCodeParser\Tests\Integration;
 
 use Youthweb\BBCodeParser\Manager;
+use Youthweb\BBCodeParser\Visitor\VisitorCollection;
 use Youthweb\BBCodeParser\Visitor\VisitorSmiley;
 
 class SmileyTest extends \PHPUnit\Framework\TestCase
@@ -29,6 +30,29 @@ class SmileyTest extends \PHPUnit\Framework\TestCase
             'visitor' => [
                 'smiley' => new VisitorSmiley()
             ]
+        ];
+
+        $this->assertSame($expected, $parser->parse($text, $config));
+    }
+
+    /**
+     * @test
+     */
+    public function parseSmileyWithCustomVisitor()
+    {
+        $text     = 'My mistake :-[';
+        $expected = '<p>My mistake <img src="https://youthweb.net/vendor/smilies/49_2.gif" alt=":-[" title=":-[" /></p>';
+
+        $visitor = new VisitorSmiley();
+
+        $collection = new VisitorCollection();
+        $collection->addVisitor($visitor);
+
+        $parser = new Manager($collection);
+
+        $config = [
+            'parse_smilies' => false,
+            'parse_urls' => false,
         ];
 
         $this->assertSame($expected, $parser->parse($text, $config));

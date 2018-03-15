@@ -61,15 +61,11 @@ class Manager
 
         $parser = new Parser();
 
-        // Gibt es Visitors?
-        foreach ($this->visitorCollection->getVisitors() as $visitor) {
-            $parser->accept($visitor);
-        }
-
         $definition_sets = $this->getDefinitionSets();
+        $visitors = $this->visitorCollection->getVisitors();
 
-        // Wenn keine Definitions definiert wurde, brechen wir ab
-        if (count($definition_sets) === 0) {
+        // Wenn keine Definitions oder Visitors definiert wurden, brechen wir ab
+        if (count($definition_sets) === 0 and count($visitors) === 0) {
             return $text;
         }
 
@@ -91,6 +87,11 @@ class Manager
             }
         }
 
+        // Gibt es Visitors?
+        foreach ($visitors as $visitor) {
+            $parser->accept($visitor);
+        }
+
         // Sollen Smilies geparset werden?
         if ($this->config->get('parse_smilies')) {
             $visitor = $this->config->get('visitor.smiley');
@@ -107,7 +108,9 @@ class Manager
 
         $text = $parser->getAsHtml();
 
-        $text = $this->addParagraphs($text);
+        if (count($definition_sets) !== 0) {
+            $text = $this->addParagraphs($text);
+        }
 
         //Erklärungen hinzufügen
         $text = $this->addExplanations($text);

@@ -10,9 +10,10 @@
 
 namespace Youthweb\BBCodeParser\Tests\Integration;
 
+use PHPUnit\Framework\TestCase;
 use Youthweb\BBCodeParser\Manager;
 
-class ParsingTest extends \PHPUnit\Framework\TestCase
+class ParsingTest extends TestCase
 {
     private $parser;
 
@@ -311,7 +312,6 @@ møøse.kwi.dk/阿驼鹿一旦咬了我的妹妹/من-اليمين-إلى-الي
             }
         }
 
-        //return $curEol;
         return $key;
     }
 }
