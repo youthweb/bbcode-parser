@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [1.5.0] - 2019-10-01
+
 ### Added
 
 - Add support for PHP 7.3
@@ -76,7 +78,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 - Initial version, separated from youthweb.net
 
-[Unreleased]: https://github.com/youthweb/bbcode-parser/compare/1.4.1...HEAD
+[Unreleased]: https://github.com/youthweb/bbcode-parser/compare/1.5.0...HEAD
+[1.5.0]: https://github.com/youthweb/bbcode-parser/compare/1.4.1...1.5.0
 [1.4.1]: https://github.com/youthweb/bbcode-parser/compare/1.4.0...1.4.1
 [1.4.0]: https://github.com/youthweb/bbcode-parser/compare/1.3.0...1.4.0
 [1.3.0]: https://github.com/youthweb/bbcode-parser/compare/1.2.1...1.3.0
