@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Changed
+
+- Set minimum requirement tp PHP 7.2
+
 ## [1.4.1] - 2018-03-15
 
 ### Fixed
