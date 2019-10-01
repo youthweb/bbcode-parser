@@ -257,7 +257,7 @@ class Html
             if (! is_array($val)) {
                 $out .= $indent . "\t" . static::html_tag('li', false, $val) . PHP_EOL;
             } else {
-                $out .= $indent . "\t" . static::html_tag('li', false, $key . PHP_EOL . static::build_list($type, $val, '', $indent . "\t\t") . $indent . "\t") . PHP_EOL;
+                $out .= $indent . "\t" . static::html_tag('li', false, PHP_EOL . static::build_list($type, $val, '', $indent . "\t\t") . $indent . "\t") . PHP_EOL;
             }
         }
         $result = $indent . static::html_tag($type, $attr, PHP_EOL . $out . $indent) . PHP_EOL;

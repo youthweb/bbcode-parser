@@ -44,4 +44,46 @@ class HtmlTest extends \PHPUnit\Framework\TestCase
             ],
         ];
     }
+
+    /**
+     * @dataProvider ListDataProvider
+     *
+     * @param mixed $src
+     * @param mixed $attr
+     * @param mixed $expected
+     */
+    public function testList($src, $attr, $expected)
+    {
+        $this->assertSame($expected, Html::ul($src, $attr));
+    }
+
+    /**
+     * @ImageDataProvider
+     */
+    public function ListDataProvider()
+    {
+        return [
+            [
+                [
+                    'item one',
+                    [
+                        'item 1.1',
+                        'item 1.2',
+                    ],
+                    'item 2',
+                ],
+                [],
+                '<ul>' . PHP_EOL .
+                "\t".'<li>item one</li>' . PHP_EOL .
+                "\t".'<li>' . PHP_EOL .
+                "\t\t".'<ul>' . PHP_EOL .
+                "\t\t\t".'<li>item 1.1</li>' . PHP_EOL .
+                "\t\t\t".'<li>item 1.2</li>' . PHP_EOL .
+                "\t\t".'</ul>' . PHP_EOL .
+                "\t".'</li>' . PHP_EOL .
+                "\t".'<li>item 2</li>' . PHP_EOL .
+                '</ul>' . PHP_EOL,
+            ],
+        ];
+    }
 }

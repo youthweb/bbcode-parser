@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 - Set minimum requirement tp PHP 7.2
 
+### Fixed
+
+- Fixed bug in multidimensional lists
+
 ## [1.4.1] - 2018-03-15
 
 ### Fixed
