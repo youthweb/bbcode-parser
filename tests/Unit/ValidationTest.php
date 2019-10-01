@@ -16,7 +16,7 @@ use Youthweb\BBCodeParser\Validation;
 
 class ValidationTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         stream_wrapper_unregister('http');
         stream_wrapper_register(
@@ -25,7 +25,7 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
         ) or die('Failed to register protocol');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         stream_wrapper_restore('http');
 

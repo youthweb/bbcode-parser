@@ -20,7 +20,7 @@ class ParsingTest extends TestCase
     /**
      * @dataProvider providerParseBBCode
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->parser = new Manager();
     }
