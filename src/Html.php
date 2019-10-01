@@ -355,6 +355,7 @@ class Html
      * @param mixed      $url
      * @param mixed      $parts
      * @param null|mixed $flags
+     * @param mixed      $new_url
      *
      * @return string constructed URL
      */
