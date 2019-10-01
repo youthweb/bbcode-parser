@@ -6,9 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+
+- Added support for PHP 7.3
+
 ### Changed
 
-- Set minimum requirement tp PHP 7.2
+- Drop support for PHP 5.6, 7.0 and 7.1
 
 ### Fixed
 
@@ -37,16 +41,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ## [1.2.1] - 2017-10-28
 
 ### Fixed
+
 - Fixed case missmatches in `QuoteOption` and `YwlinkOption`
 
 ## [1.2] - 2017-06-28
 
 ### Changed
+
 - Allow dependencies to cache/void-adapter 0.3 and 0.4
 
 ## [1.1] - 2016-09-06
 
 ### Added
+
 - Autolink Urls without the need of [url]
 - Escape all html characters
 - VisitorInterface for injecting your custom Visitor
@@ -54,14 +61,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - PHP 7.1 support
 
 ### Changed
-- **BREAKING**: Drop PHP 5.5 support
+
+- Drop PHP 5.5 support
 
 ## [1.0.1] - 2016-05-05
 
 ### Added
+
 - A PSR6 CacheItemPool can be injected via config
 
 ## [1.0] - 2016-05-04
+
 ### Added
 
 - Initial version, separated from youthweb.net
