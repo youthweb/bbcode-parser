@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [Unreleased](https://github.com/youthweb/bbcode-parser/compare/1.5.0...HEAD)
+## [Unreleased](https://github.com/youthweb/bbcode-parser/compare/1.6.0...master)
+
+## [1.6.0](https://github.com/youthweb/bbcode-parser/compare/1.5.0...1.6.0) - 2021-03-05
 
 ### Added
 
