@@ -56,6 +56,7 @@ class UnderlineTest extends \PHPUnit\Framework\TestCase
         $elementNode = $this->buildElementNodeMock($text, null);
 
         $definition = new Underline();
+        $definition->setParseContent(false);
 
         $this->assertSame($text, $definition->asText($elementNode));
     }

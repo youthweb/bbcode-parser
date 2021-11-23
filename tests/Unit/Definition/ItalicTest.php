@@ -56,6 +56,7 @@ class ItalicTest extends \PHPUnit\Framework\TestCase
         $elementNode = $this->buildElementNodeMock($text, null);
 
         $definition = new Italic();
+        $definition->setParseContent(false);
 
         $this->assertSame($text, $definition->asText($elementNode));
     }
