@@ -19,7 +19,7 @@
 
 namespace Youthweb\BBCodeParser\Filter;
 
-use \RuntimeException;
+use RuntimeException;
 
 /**
  * Filter exception

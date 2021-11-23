@@ -143,7 +143,7 @@ class VTest extends \PHPUnit\Framework\TestCase
 
         $filter->expects($this->any())
             ->method('execute')
-            ->willThrowException(new FilterException);
+            ->willThrowException(new FilterException());
 
         $config = $this->getMockBuilder('Youthweb\BBCodeParser\Config')
             ->setMethods(['get'])

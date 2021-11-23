@@ -36,7 +36,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
 
         $visitor = new VisitorUrl();
 
-        $config = new \Youthweb\BBCodeParser\Config;
+        $config = new \Youthweb\BBCodeParser\Config();
         $visitor->setConfig($config);
 
         $this->assertInstanceOf('Youthweb\BBCodeParser\Visitor\VisitorInterface', $visitor);
@@ -49,7 +49,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
     {
         $visitor = new VisitorUrl();
 
-        $config = new \Youthweb\BBCodeParser\Config;
+        $config = new \Youthweb\BBCodeParser\Config();
         $visitor->setConfig($config);
 
         $child = $this->getMockBuilder('JBBCode\Node')
@@ -82,7 +82,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
     {
         $visitor = new VisitorUrl();
 
-        $config = new \Youthweb\BBCodeParser\Config;
+        $config = new \Youthweb\BBCodeParser\Config();
         $visitor->setConfig($config);
 
         $code_definition = $this->getMockBuilder('JBBCode\CodeDefinition')
@@ -144,7 +144,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
 
         $visitor = new VisitorUrl();
 
-        $config = new \Youthweb\BBCodeParser\Config;
+        $config = new \Youthweb\BBCodeParser\Config();
         $visitor->setConfig($config);
 
         $visitor->visitTextNode($textnode);
