@@ -45,6 +45,22 @@ class BoldTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @dataProvider dataProvider
+     *
+     * @param mixed $text
+     * @param mixed $attribute
+     * @param mixed $expected
+     */
+    public function testAsText($text, $attribute, $expected)
+    {
+        $elementNode = $this->buildElementNodeMock($text, null);
+
+        $definition = new Bold();
+
+        $this->assertSame($text, $definition->asText($elementNode));
+    }
+
+    /**
      * data provider
      */
     public function dataProvider()
