@@ -47,4 +47,9 @@ jobs:
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
     - name: Run test suite
-      run: vendor/bin/phpunit --coverage-text
+      run: vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml
+
+    - name: Coveralls GitHub Action
+      uses: coverallsapp/github-action@1.1.3
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
