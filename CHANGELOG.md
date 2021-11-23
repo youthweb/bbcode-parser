@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased](https://github.com/youthweb/bbcode-parser/compare/1.6.0...master)
 
+### Added
+
+- New code definitions for bold, italic and underline
+
 ### Changed
 
 - Replace Travic-CI with Github Actions
