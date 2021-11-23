@@ -32,6 +32,8 @@ use Youthweb\BBCodeParser\Html;
 
 class Size extends CodeDefinition
 {
+    public $config;
+
     public function __construct(Config $config)
     {
         $this->parseContent = true;

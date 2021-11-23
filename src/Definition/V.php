@@ -36,6 +36,8 @@ use Youthweb\BBCodeParser\Filter\FilterException;
 
 class V extends CodeDefinition
 {
+    public $config;
+
     public function __construct(Config $config)
     {
         $this->parseContent = false;

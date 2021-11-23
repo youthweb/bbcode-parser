@@ -32,11 +32,15 @@ class HeadlineSet implements CodeDefinitionSet
     /** @var array Die Definitionen */
     protected $definitions = [];
 
+    private $config;
+
     /**
      * Definiert die Definitionen
      */
     public function __construct(Config $config)
     {
+        $this->config = $config;
+
         /* [h1] headline 1 tag */
         $builder = new CodeDefinitionBuilder('h1', '<!-- no_p --><h1>{param}</h1><!-- no_p -->');
         array_push($this->definitions, $builder->build());

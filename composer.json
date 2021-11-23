@@ -21,6 +21,7 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.3",
+        "phpstan/phpstan": "^1.2",
         "phpunit/phpunit": "^9"
     },
     "autoload": {
@@ -34,7 +35,8 @@
         }
     },
     "scripts": {
-        "php-cs-fixer": "vendor/bin/php-cs-fixer fix "
+        "php-cs-fixer": "vendor/bin/php-cs-fixer fix",
+        "phpstan": "vendor/bin/phpstan --level=1 analyze src"
     },
     "config": {
         "sort-packages": true

@@ -47,6 +47,8 @@ class VisitorSmiley implements VisitorInterface
     public function setConfig(Config $config)
     {
         $this->config = $config;
+
+        return $this;
     }
 
     public function visitDocumentElement(DocumentElement $document_element)

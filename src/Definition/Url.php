@@ -33,6 +33,8 @@ use Youthweb\BBCodeParser\Validation;
 
 class Url extends CodeDefinition
 {
+    public $config;
+
     public function __construct(Config $config)
     {
         $this->parseContent = true;
