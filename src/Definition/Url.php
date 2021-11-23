@@ -48,7 +48,7 @@ class Url extends CodeDefinition
         $content = '';
 
         foreach ($el->getChildren() as $child) {
-            $content .= $child->getAsText();
+            $content .= $child->getAsHTML();
         }
 
         $param = $el->getAttribute();
@@ -80,7 +80,11 @@ class Url extends CodeDefinition
             $content = '';
 
             foreach ($el->getChildren() as $child) {
-                $content .= $child->getAsHTML();
+                if ($child->isTextNode()) {
+                    $content .= Html::escapeSpecialChars($child->getAsHTML());
+                } else {
+                    $content .= $child->getAsHTML();
+                }
             }
         }
 

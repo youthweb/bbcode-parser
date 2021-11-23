@@ -49,69 +49,69 @@ class ParsingTest extends TestCase
     {
         return [
             [
-                '[b]Hello World![/b]',
+                '[b]Hello World! <img src="javascript:alert(\'XSS\')">[/b]',
                 [],
-                '<p><b>Hello World!</b></p>',
+                '<p><b>Hello World! &lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;</b></p>',
             ],
             [
-                '[i]Hello World![/i]',
+                '[i]Hello World! <img src="javascript:alert(\'XSS\')">[/i]',
                 [],
-                '<p><i>Hello World!</i></p>',
+                '<p><i>Hello World! &lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;</i></p>',
             ],
             [
-                '[u]Hello World![/u]',
+                '[u]Hello World! <img src="javascript:alert(\'XSS\')">[/u]',
                 [],
-                '<p><u>Hello World!</u></p>',
+                '<p><u>Hello World! &lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;</u></p>',
             ],
             // Headlines
             [
-                '[h1]Header 1[/h1]',
+                '[h1]Header 1 <img src="javascript:alert(\'XSS\')">[/h1]',
                 [
                     'parse_headlines' => true,
                 ],
-                '<h1>Header 1</h1>',
+                '<h1>Header 1 &lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;</h1>',
             ],
             [
-                '[h2]Header 2[/h2]',
+                '[h2]Header 2 <img src="javascript:alert(\'XSS\')">[/h2]',
                 [
                     'parse_headlines' => true,
                 ],
-                '<h2>Header 2</h2>',
+                '<h2>Header 2 &lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;</h2>',
             ],
             [
-                '[h3]Header 3[/h3]',
+                '[h3]Header 3 <img src="javascript:alert(\'XSS\')">[/h3]',
                 [
                     'parse_headlines' => true,
                 ],
-                '<h3>Header 3</h3>',
+                '<h3>Header 3 &lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;</h3>',
             ],
             [
-                '[h4]Header 4[/h4]',
+                '[h4]Header 4 <img src="javascript:alert(\'XSS\')">[/h4]',
                 [
                     'parse_headlines' => true,
                 ],
-                '<h4>Header 4</h4>',
+                '<h4>Header 4 &lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;</h4>',
             ],
             [
-                '[h5]Header 5[/h5]',
+                '[h5]Header 5 <img src="javascript:alert(\'XSS\')">[/h5]',
                 [
                     'parse_headlines' => true,
                 ],
-                '<h5>Header 5</h5>',
+                '<h5>Header 5 &lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;</h5>',
             ],
             [
-                '[h6]Header 6[/h6]',
+                '[h6]Header 6 <img src="javascript:alert(\'XSS\')">[/h6]',
                 [
                     'parse_headlines' => true,
                 ],
-                '<h6>Header 6</h6>',
+                '<h6>Header 6 &lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;</h6>',
             ],
             [
-                '[h7]Header 7[/h7]',
+                '[h7]Header 7 <img src="javascript:alert(\'XSS\')">[/h7]',
                 [
                     'parse_headlines' => true,
                 ],
-                '<p>[h7]Header 7[/h7]</p>',
+                '<p>[h7]Header 7 &lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;[/h7]</p>',
             ],
             // Code
             [
@@ -132,6 +132,7 @@ Umfang der Erde:         U  = Pi*D     = 40030173,592 m
 Seillängenge:            S  = U+1      = 40030174,592 m
 Seil-Durchmesser:        SD = S/Pi     = 12742000,318 m
 Abstand Seil zu Boden:   l  = (SD-D)/2 = 0,159m
+<img src="javascript:alert(\'XSS\')">
 [/code]',
                 [],
                 '<pre><code>
@@ -140,6 +141,7 @@ Umfang der Erde:         U  = Pi*D     = 40030173,592 m
 Seillängenge:            S  = U+1      = 40030174,592 m
 Seil-Durchmesser:        SD = S/Pi     = 12742000,318 m
 Abstand Seil zu Boden:   l  = (SD-D)/2 = 0,159m
+&lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;
 </code></pre>'
             ],
             [
@@ -205,6 +207,36 @@ Abstand Seil zu Boden:   l  = (SD-D)/2 = 0,159m
                 '<p>Mehr Infos gibt es auf <a target="_blank" href="http://example.org/pfad?query=string">http://example.org/pfad?query=string</a></p>',
             ],
             [
+                'Jemand hat dich eingeladen, am Event [url=http://example.org/events/6]"E. "><img src=javascript:alert(\'XSS\')>"[/url] teilzunehmen.',
+                [],
+                '<p>Jemand hat dich eingeladen, am Event <a target="_blank" href="http://example.org/events/6">&quot;E. &quot;&gt;&lt;img src=javascript:alert(\'XSS\')&gt;&quot;</a> teilzunehmen.</p>',
+            ],
+            [
+                'B1: Jemand hat dich eingeladen, am Event [url=http://example.org/events/6][b]"E. "><img src=javascript:alert(\'XSS\')>"[/b][/url] teilzunehmen.',
+                [],
+                '<p>B1: Jemand hat dich eingeladen, am Event <a target="_blank" href="http://example.org/events/6"><b>&quot;E. &quot;&gt;&lt;img src=javascript:alert(\'XSS\')&gt;&quot;</b></a> teilzunehmen.</p>',
+            ],
+            [
+                'B2: Jemand hat dich eingeladen, am Event [url=http://example.org/events/6][F]"E. "><img src=javascript:alert(\'XSS\')>"[/F][/url] teilzunehmen.',
+                [],
+                '<p>B2: Jemand hat dich eingeladen, am Event <a target="_blank" href="http://example.org/events/6"><b>&quot;E. &quot;&gt;&lt;img src=javascript:alert(\'XSS\')&gt;&quot;</b></a> teilzunehmen.</p>',
+            ],
+            [
+                'I1: Jemand hat dich eingeladen, am Event [url=http://example.org/events/6][i]"E. "><img src="javascript:alert(\'XSS\')">"[/i][/url] teilzunehmen.',
+                [],
+                '<p>I1: Jemand hat dich eingeladen, am Event <a target="_blank" href="http://example.org/events/6"><i>&quot;E. &quot;&gt;&lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;&quot;</i></a> teilzunehmen.</p>',
+            ],
+            [
+                'I2: Jemand hat dich eingeladen, am Event [url=http://example.org/events/6][K]"E. "><img src="javascript:alert(\'XSS\')">"[/K][/url] teilzunehmen.',
+                [],
+                '<p>I2: Jemand hat dich eingeladen, am Event <a target="_blank" href="http://example.org/events/6"><i>&quot;E. &quot;&gt;&lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;&quot;</i></a> teilzunehmen.</p>',
+            ],
+            [
+                'U1: Jemand hat dich eingeladen, am Event [url=http://example.org/events/6][u]"E. "><img src="javascript:alert(\'XSS\')">"[/u][/url] teilzunehmen.',
+                [],
+                '<p>U1: Jemand hat dich eingeladen, am Event <a target="_blank" href="http://example.org/events/6"><u>&quot;E. &quot;&gt;&lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;&quot;</u></a> teilzunehmen.</p>',
+            ],
+            [
                 'Quellen:
 [list]
 [*] http://example.org
@@ -219,6 +251,40 @@ Abstand Seil zu Boden:   l  = (SD-D)/2 = 0,159m
 ' . "\t" . '<li><a target="_blank" href="https://example.org/test">https://example.org/test</a></li>
 ' . "\t" . '<li><a target="_blank" href="https://example.org/ohne_leerzeichen_am_Anfang">https://example.org/ohne_leerzeichen_am_Anfang</a></li>
 ' . "\t" . '<li>Siehe 3. Absatz auf <a target="_blank" href="https://example.org/pfad?query=string">https://example.org/pfad?query=string</a></li>
+</ul>',
+            ],
+            [
+                'Mögliche Angriffe:
+[list]
+[*] <img src="javascript:alert(\'XSS\')">
+[*] [b]<img src="javascript:alert(\'XSS\')">[/b]
+[*] [b][i]<img src="javascript:alert(\'XSS\')">[/i][/b]
+[*] [b][i][u]<img src="javascript:alert(\'XSS\')">[/u][/i][/b]
+[/list]',
+                [],
+                '<p>Mögliche Angriffe:</p>
+<ul type="disc">
+' . "\t" . '<li>&lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;</li>
+' . "\t" . '<li><b>&lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;</b></li>
+' . "\t" . '<li><b><i>&lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;</i></b></li>
+' . "\t" . '<li><b><i><u>&lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;</u></i></b></li>
+</ul>',
+            ],
+            [
+                'Mögliche Angriffe:
+[list]
+[*] <img src="javascript:alert(\'XSS\')">
+[*] [F]<img src="javascript:alert(\'XSS\')">[/F]
+[*] [F][K]<img src="javascript:alert(\'XSS\')">[/K][/F]
+[*] [F][K][u]<img src="javascript:alert(\'XSS\')">[/u][/K][/F]
+[/list]',
+                [],
+                '<p>Mögliche Angriffe:</p>
+<ul type="disc">
+' . "\t" . '<li>&lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;</li>
+' . "\t" . '<li><b>&lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;</b></li>
+' . "\t" . '<li><b><i>&lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;</i></b></li>
+' . "\t" . '<li><b><i><u>&lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;</u></i></b></li>
 </ul>',
             ],
             [
