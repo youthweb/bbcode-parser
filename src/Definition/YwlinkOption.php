@@ -1,7 +1,7 @@
 <?php
 /*
  * A BBCode-to-HTML parser for youthweb.net
- * Copyright (C) 2016-2019  Youthweb e.V. <info@youthweb.net>
+ * Copyright (C) 2016-2021  Youthweb e.V. <info@youthweb.net>
 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
