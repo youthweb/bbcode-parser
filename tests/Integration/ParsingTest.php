@@ -205,6 +205,16 @@ Abstand Seil zu Boden:   l  = (SD-D)/2 = 0,159m
                 '<p>Mehr Infos gibt es auf <a target="_blank" href="http://example.org/pfad?query=string">http://example.org/pfad?query=string</a></p>',
             ],
             [
+                'Jemand hat dich eingeladen, am Event [url=http://example.org/events/6]"E. "><img src=javascript:alert(\'XSS\')>"[/url] teilzunehmen.',
+                [],
+                '<p>Jemand hat dich eingeladen, am Event <a target="_blank" href="http://example.org/events/6">&quot;E. &quot;&gt;&lt;img src=javascript:alert(\'XSS\')&gt;&quot;</a> teilzunehmen.</p>',
+            ],
+            [
+                'Jemand hat dich eingeladen, am Event [url=http://example.org/events/6][b]"E. "><img src=javascript:alert(\'XSS\')>"[/b][/url] teilzunehmen.',
+                [],
+                '<p>Jemand hat dich eingeladen, am Event <a target="_blank" href="http://example.org/events/6"><b>&quot;E. &quot;&gt;&lt;img src=javascript:alert(\'XSS\')&gt;&quot;</b></a> teilzunehmen.</p>',
+            ],
+            [
                 'Quellen:
 [list]
 [*] http://example.org

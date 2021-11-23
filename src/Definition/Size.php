@@ -47,7 +47,11 @@ class Size extends CodeDefinition
         $content = '';
 
         foreach ($el->getChildren() as $child) {
-            $content .= $child->getAsHTML();
+            if ($child->isTextNode()) {
+                $content .= Html::escapeSpecialChars($child->getAsHTML());
+            } else {
+                $content .= $child->getAsHTML();
+            }
         }
 
         $param = $el->getAttribute();

@@ -25,29 +25,40 @@ use Youthweb\BBCodeParser\Config;
 use Youthweb\BBCodeParser\Html;
 
 /**
- * Implements a [noparse] definition that provides the following syntax:
+ * Implements a [b] code definition that provides the following syntax:
  *
- * [noparse][b]some bbcode[/b][/noparse]
+ * [b]this text will be bold[/b]
  */
 
-class Noparse extends CodeDefinition
+class Bold extends CodeDefinition
 {
     public function __construct()
     {
-        $this->parseContent = false;
+        parent::__construct();
+        $this->parseContent = true;
         $this->useOption = false;
-        $this->setTagName('noparse');
-        $this->nestLimit = -1;
+        $this->setTagName('b');
+        $this->setReplacementText('<b>{param}</b>');
     }
 
-    public function asHtml(ElementNode $el)
+    protected function getContent(ElementNode $el)
     {
-        $content = '';
-
-        foreach ($el->getChildren() as $child) {
-            $content .= $child->getAsHTML();
+        if ($this->parseContent()) {
+            $content = "";
+            foreach ($el->getChildren() as $child) {
+                if ($child->isTextNode()) {
+                    $content .= Html::escapeSpecialChars($child->getAsHTML());
+                } else {
+                    $content .= $child->getAsHTML();
+                }
+            }
+        } else {
+            $content = "";
+            foreach ($el->getChildren() as $child) {
+                $content .= $child->getAsBBCode();
+            }
         }
 
-        return Html::escapeSpecialChars($content);
+        return $content;
     }
 }

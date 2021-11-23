@@ -39,9 +39,9 @@ class DefaultSet implements CodeDefinitionSet
     public function __construct(Config $config)
     {
         /* [b] bold tag */
-        $builder = new CodeDefinitionBuilder('b', '<b>{param}</b>');
-        array_push($this->definitions, $builder->build());
+        array_push($this->definitions, new Definition\Bold());
         // Depreacated [F] tag
+        $builder = new CodeDefinitionBuilder('b', '<b>{param}</b>');
         $builder->setTagName('F');
         array_push($this->definitions, $builder->build());
 

@@ -202,7 +202,7 @@ class Html
         // Create and display a URL hyperlink
         is_null($text) and $text = $href;
 
-        $attr['href'] = htmlspecialchars($href);
+        $attr['href'] = static::escapeSpecialChars($href);
 
         return static::html_tag('a', $attr, $text);
     }
@@ -244,6 +244,17 @@ class Html
     public static function span($content, $attr = [])
     {
         return static::html_tag('span', $attr, $content);
+    }
+
+    /**
+     * Use htmlspecialchars() on a text
+     */
+    public static function escapeSpecialChars(string $text, bool $double_encode = false): string
+    {
+        $flags = ENT_COMPAT | ENT_HTML401;
+        $encoding = ini_get('default_charset');
+
+        return htmlspecialchars($text, $flags, $encoding, $double_encode);
     }
 
     /**

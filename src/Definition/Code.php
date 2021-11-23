@@ -48,10 +48,6 @@ class Code extends CodeDefinition
             $content .= $child->getAsHTML();
         }
 
-        $flags = ENT_COMPAT | ENT_HTML401;
-        $encoding = ini_get('default_charset');
-        $double_encode = false; // Do not double encode
-
-        return '<!-- no_p --><pre><code>' . htmlspecialchars($content, $flags, $encoding, $double_encode) . '</code></pre><!-- no_p -->';
+        return '<!-- no_p --><pre><code>' . Html::escapeSpecialChars($content) . '</code></pre><!-- no_p -->';
     }
 }
