@@ -45,11 +45,7 @@ class Q extends CodeDefinition
         $content = '';
 
         foreach ($el->getChildren() as $child) {
-            if ($child->isTextNode()) {
-                $content .= Html::escapeSpecialChars($child->getAsHTML());
-            } else {
-                $content .= $child->getAsHTML();
-            }
+            $content .= $child->getAsHTML();
         }
 
         $param = $el->getAttribute();
