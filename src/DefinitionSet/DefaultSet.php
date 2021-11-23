@@ -41,20 +41,19 @@ class DefaultSet implements CodeDefinitionSet
         /* [b] bold tag */
         array_push($this->definitions, new Definition\Bold());
         // Depreacated [F] tag
-        $builder = new CodeDefinitionBuilder('b', '<b>{param}</b>');
-        $builder->setTagName('F');
-        array_push($this->definitions, $builder->build());
+        $definition = new Definition\Bold();
+        $definition->setTagName('F');
+        array_push($this->definitions, $definition);
 
         /* [i] italics tag */
-        $builder = new CodeDefinitionBuilder('i', '<i>{param}</i>');
-        array_push($this->definitions, $builder->build());
+        array_push($this->definitions, new Definition\Italic());
         // Depreacated [K] tag
-        $builder->setTagName('K');
-        array_push($this->definitions, $builder->build());
+        $definition = new Definition\Italic();
+        $definition->setTagName('K');
+        array_push($this->definitions, $definition);
 
         /* [u] underline tag */
-        $builder = new CodeDefinitionBuilder('u', '<u>{param}</u>');
-        array_push($this->definitions, $builder->build());
+        array_push($this->definitions, new Definition\Underline());
 
         /* [code] code tag */
         array_push($this->definitions, new Definition\Code());
