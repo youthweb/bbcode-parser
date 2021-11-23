@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased](https://github.com/youthweb/bbcode-parser/compare/1.6.0...master)
 
+### Changed
+
+- Replace Travic-CI with Github Actions
+
 ## [1.6.0](https://github.com/youthweb/bbcode-parser/compare/1.5.0...1.6.0) - 2021-03-05
 
 ### Added
