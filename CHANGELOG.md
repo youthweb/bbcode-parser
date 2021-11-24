@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased](https://github.com/youthweb/bbcode-parser/compare/1.7.0...master)
 
+### Fixed
+
+- Don't escape HTML that is setted through a Visitor
+
 ## [1.7.0](https://github.com/youthweb/bbcode-parser/compare/1.6.0...1.7.0) - 2021-11-23
 
 ### Added

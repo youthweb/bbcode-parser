@@ -204,6 +204,9 @@ class Manager
     protected function addExplanations($text)
     {
         $text = str_ireplace(' yw ', ' <acronym title="Youthweb">YW</acronym> ', $text);
+        $text = str_ireplace('{{{lt}}}', '<', $text);
+        $text = str_ireplace('{{{gt}}}', '>', $text);
+        $text = str_ireplace('{{{quot}}}', '"', $text);
 
         return $text;
     }

@@ -148,11 +148,11 @@ class VisitorSmileyTest extends \PHPUnit\Framework\TestCase
         return [
             [
                 'Hi :-)',
-                'Hi <img src="https://youthweb.net/vendor/smilies/smile0001.gif" alt=":-)" title=":-)" />',
+                'Hi {{{lt}}}img src={{{quot}}}https://youthweb.net/vendor/smilies/smile0001.gif{{{quot}}} alt={{{quot}}}:-){{{quot}}} title={{{quot}}}:-){{{quot}}} /{{{gt}}}',
             ],
             [
                 'Hey :super: Das war sehr gut.',
-                'Hey <img src="https://youthweb.net/vendor/smilies/489.gif" alt=":super:" title=":super:" /> Das war sehr gut.',
+                'Hey {{{lt}}}img src={{{quot}}}https://youthweb.net/vendor/smilies/489.gif{{{quot}}} alt={{{quot}}}:super:{{{quot}}} title={{{quot}}}:super:{{{quot}}} /{{{gt}}} Das war sehr gut.',
             ],
         ];
     }

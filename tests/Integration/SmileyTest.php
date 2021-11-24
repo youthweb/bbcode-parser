@@ -46,12 +46,10 @@ class SmileyTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @test
+     * @dataProvider provideSmileyExamples
      */
-    public function parseSmileyWithCustomVisitor()
+    public function parseSmileyWithCustomVisitor(string $text, string $expected)
     {
-        $text     = 'My mistake :-[';
-        $expected = '<p>My mistake <img src="https://youthweb.net/vendor/smilies/49_2.gif" alt=":-[" title=":-[" /></p>';
-
         $visitor = new VisitorSmiley();
 
         $collection = new VisitorCollection();
@@ -65,5 +63,23 @@ class SmileyTest extends \PHPUnit\Framework\TestCase
         ];
 
         $this->assertSame($expected, $parser->parse($text, $config));
+    }
+
+    public function provideSmileyExamples()
+    {
+        return [
+            [
+                'My mistake :-[',
+                '<p>My mistake <img src="https://youthweb.net/vendor/smilies/49_2.gif" alt=":-[" title=":-[" /></p>',
+            ],
+            [
+                'My mistake <span> :-[',
+                '<p>My mistake <span> <img src="https://youthweb.net/vendor/smilies/49_2.gif" alt=":-[" title=":-[" /></p>',
+            ],
+            [
+                '[b]My mistake :-[[/b]',
+                '<p><b>My mistake <img src="https://youthweb.net/vendor/smilies/49_2.gif" alt=":-[" title=":-[" /></b></p>',
+            ],
+        ];
     }
 }
