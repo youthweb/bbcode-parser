@@ -26,11 +26,8 @@ class CommonMarkParserTest extends TestCase
 {
     /**
      * @dataProvider provideBbcodeAndHtml
-     *
-     * @param mixed $text
-     * @param mixed $expected
      */
-    public function testParseBbcodeToHtml($text, $expected)
+    public function testParseBbcodeToHtml(string $text, string $expected)
     {
         $parser = CommonMarkParser::create();
 
@@ -42,7 +39,7 @@ class CommonMarkParserTest extends TestCase
         return [
             [
                 'Hello World!',
-                'Hello World!',
+                '<p>Hello World!</p>'.\PHP_EOL,
             ],
         ];
     }

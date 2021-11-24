@@ -19,6 +19,8 @@
 
 namespace Youthweb\BBCodeParser\Parser;
 
+use League\CommonMark\CommonMarkConverter;
+
 /**
  * CommonMarkParser
  */
@@ -32,12 +34,14 @@ final class CommonMarkParser
         return new self();
     }
 
+    private CommonMarkConverter $converter;
+
     /**
      * Create the Parser
      */
     private function __construct()
     {
-
+        $this->converter = new CommonMarkConverter();
     }
 
     /**
@@ -45,6 +49,6 @@ final class CommonMarkParser
      */
     public function parseBbcodeToHtml(string $text): string
     {
-        return $text;
+        return $this->converter->convertToHtml($text);
     }
 }
