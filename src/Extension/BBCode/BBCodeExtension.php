@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /*
  * A BBCode-to-HTML parser for youthweb.net
  * Copyright (C) 2016-2021  Youthweb e.V. <info@youthweb.net>
@@ -24,6 +27,7 @@ use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Node as CoreNode;
 use League\CommonMark\Parser as CoreParser;
 use League\CommonMark\Renderer as CoreRenderer;
+use Youthweb\BBCodeParser\Extension\BBCode\Delimiter\Processor\EmphasisDelimiterProcessor;
 
 /**
  * BBCodeExtension
@@ -38,7 +42,10 @@ final class BBCodeExtension implements ExtensionInterface
             ->addRenderer(CoreNode\Block\Document::class,  new CoreRenderer\Block\DocumentRenderer(),  0)
             ->addRenderer(CoreNode\Block\Paragraph::class, new CoreRenderer\Block\ParagraphRenderer(), 0)
 
+            ->addRenderer(Node\Inline\Strong::class,      new Renderer\Inline\StrongRenderer(),      0)
             ->addRenderer(CoreNode\Inline\Text::class,    new CoreRenderer\Inline\TextRenderer(),    0)
         ;
+
+        $environment->addDelimiterProcessor(new EmphasisDelimiterProcessor('*'));
     }
 }

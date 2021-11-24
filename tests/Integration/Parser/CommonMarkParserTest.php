@@ -49,6 +49,10 @@ class CommonMarkParserTest extends TestCase
                 'Hello World! <img src="javascript:alert(\'XSS\')">',
                 '<p>Hello World! &lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;</p>'.\PHP_EOL,
             ],
+            [
+                '**Hello World!**',
+                '<p><b>Hello World!</b></p>'.\PHP_EOL,
+            ],
         ];
     }
 }
