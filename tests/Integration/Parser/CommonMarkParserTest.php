@@ -41,6 +41,10 @@ class CommonMarkParserTest extends TestCase
                 'Hello World!',
                 '<p>Hello World!</p>'.\PHP_EOL,
             ],
+            [
+                'Hello World! </div>',
+                '<p>Hello World! &lt;/div&gt;</p>'.\PHP_EOL,
+            ],
         ];
     }
 }

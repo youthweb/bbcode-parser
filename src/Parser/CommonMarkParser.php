@@ -41,7 +41,11 @@ final class CommonMarkParser
      */
     private function __construct()
     {
-        $this->converter = new CommonMarkConverter();
+        $config = [
+            'html_input' => 'escape',
+        ];
+
+        $this->converter = new CommonMarkConverter($config);
     }
 
     /**
