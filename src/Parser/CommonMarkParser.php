@@ -19,8 +19,8 @@
 
 namespace Youthweb\BBCodeParser\Parser;
 
+use Youthweb\BBCodeParser\Extension\BBCode\BBCodeExtension;
 use League\CommonMark\Environment\Environment;
-use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Renderer\HtmlRenderer;
 
@@ -53,7 +53,7 @@ final class CommonMarkParser
         ];
 
         $environment = new Environment($config);
-        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new BBCodeExtension());
 
         $this->markdownParser = new MarkdownParser($environment);
         $this->htmlRenderer   = new HtmlRenderer($environment);
