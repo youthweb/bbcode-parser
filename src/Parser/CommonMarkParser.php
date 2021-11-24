@@ -19,7 +19,10 @@
 
 namespace Youthweb\BBCodeParser\Parser;
 
-use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Parser\MarkdownParser;
+use League\CommonMark\Renderer\HtmlRenderer;
 
 /**
  * CommonMarkParser
@@ -34,7 +37,9 @@ final class CommonMarkParser
         return new self();
     }
 
-    private CommonMarkConverter $converter;
+    private MarkdownParser $markdownParser;
+
+    private HtmlRenderer $htmlRenderer;
 
     /**
      * Create the Parser
@@ -43,9 +48,15 @@ final class CommonMarkParser
     {
         $config = [
             'html_input' => 'escape',
+            'allow_unsafe_links' => false,
+            'max_nesting_level' => 5,
         ];
 
-        $this->converter = new CommonMarkConverter($config);
+        $environment = new Environment($config);
+        $environment->addExtension(new CommonMarkCoreExtension());
+
+        $this->markdownParser = new MarkdownParser($environment);
+        $this->htmlRenderer   = new HtmlRenderer($environment);
     }
 
     /**
@@ -53,6 +64,8 @@ final class CommonMarkParser
      */
     public function parseBbcodeToHtml(string $text): string
     {
-        return $this->converter->convertToHtml($text);
+        $documentAST = $this->markdownParser->parse($text);
+
+        return $this->htmlRenderer->renderDocument($documentAST)->getContent();
     }
 }
