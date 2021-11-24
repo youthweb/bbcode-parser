@@ -97,7 +97,7 @@ class VisitorSmiley implements VisitorInterface
             $url = 'https://youthweb.net/vendor/smilies/' . $filename;
 
             $codes[] = $code;
-            $html[] = '<img src="' . $url . '" alt="' . $code . '" title="' . $code . '" />';
+            $html[] = '{{{lt}}}img src={{{quot}}}' . $url . '{{{quot}}} alt={{{quot}}}' . $code . '{{{quot}}} title={{{quot}}}' . $code . '{{{quot}}} /{{{gt}}}';
         }
 
         $rules = [$codes, $html];

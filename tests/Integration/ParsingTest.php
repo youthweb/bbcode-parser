@@ -26,9 +26,6 @@ class ParsingTest extends TestCase
 {
     private $parser;
 
-    /**
-     * @dataProvider providerParseBBCode
-     */
     public function setUp(): void
     {
         $this->parser = new Manager();
@@ -48,6 +45,16 @@ class ParsingTest extends TestCase
     public function providerParseBBCode()
     {
         return [
+            [
+                'Hello World!',
+                [],
+                '<p>Hello World!</p>',
+            ],
+            [
+                'Hello World! </div>',
+                [],
+                '<p>Hello World! &lt;/div&gt;</p>',
+            ],
             [
                 '[b]Hello World! <img src="javascript:alert(\'XSS\')">[/b]',
                 [],
@@ -207,19 +214,19 @@ Abstand Seil zu Boden:   l  = (SD-D)/2 = 0,159m
                 '<p>Mehr Infos gibt es auf <a target="_blank" href="http://example.org/pfad?query=string">http://example.org/pfad?query=string</a></p>',
             ],
             [
-                'Jemand hat dich eingeladen, am Event [url=http://example.org/events/6]"E. "><img src=javascript:alert(\'XSS\')>"[/url] teilzunehmen.',
+                'Jemand hat dich eingeladen, am Event [url=http://example.org/events/6]"E. "><img src="javascript:alert(\'XSS\')">"[/url] teilzunehmen.',
                 [],
-                '<p>Jemand hat dich eingeladen, am Event <a target="_blank" href="http://example.org/events/6">&quot;E. &quot;&gt;&lt;img src=javascript:alert(\'XSS\')&gt;&quot;</a> teilzunehmen.</p>',
+                '<p>Jemand hat dich eingeladen, am Event <a target="_blank" href="http://example.org/events/6">&quot;E. &quot;&gt;&lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;&quot;</a> teilzunehmen.</p>',
             ],
             [
-                'B1: Jemand hat dich eingeladen, am Event [url=http://example.org/events/6][b]"E. "><img src=javascript:alert(\'XSS\')>"[/b][/url] teilzunehmen.',
+                'B1: Jemand hat dich eingeladen, am Event [url=http://example.org/events/6][b]"E. "><img src="javascript:alert(\'XSS\')">"[/b][/url] teilzunehmen.',
                 [],
-                '<p>B1: Jemand hat dich eingeladen, am Event <a target="_blank" href="http://example.org/events/6"><b>&quot;E. &quot;&gt;&lt;img src=javascript:alert(\'XSS\')&gt;&quot;</b></a> teilzunehmen.</p>',
+                '<p>B1: Jemand hat dich eingeladen, am Event <a target="_blank" href="http://example.org/events/6"><b>&quot;E. &quot;&gt;&lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;&quot;</b></a> teilzunehmen.</p>',
             ],
             [
-                'B2: Jemand hat dich eingeladen, am Event [url=http://example.org/events/6][F]"E. "><img src=javascript:alert(\'XSS\')>"[/F][/url] teilzunehmen.',
+                'B2: Jemand hat dich eingeladen, am Event [url=http://example.org/events/6][F]"E. "><img src="javascript:alert(\'XSS\')">"[/F][/url] teilzunehmen.',
                 [],
-                '<p>B2: Jemand hat dich eingeladen, am Event <a target="_blank" href="http://example.org/events/6"><b>&quot;E. &quot;&gt;&lt;img src=javascript:alert(\'XSS\')&gt;&quot;</b></a> teilzunehmen.</p>',
+                '<p>B2: Jemand hat dich eingeladen, am Event <a target="_blank" href="http://example.org/events/6"><b>&quot;E. &quot;&gt;&lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;&quot;</b></a> teilzunehmen.</p>',
             ],
             [
                 'I1: Jemand hat dich eingeladen, am Event [url=http://example.org/events/6][i]"E. "><img src="javascript:alert(\'XSS\')">"[/i][/url] teilzunehmen.',
