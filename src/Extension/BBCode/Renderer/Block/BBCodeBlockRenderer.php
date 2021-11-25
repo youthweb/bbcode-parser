@@ -20,36 +20,41 @@ declare(strict_types=1);
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Youthweb\BBCodeParser\Extension\BBCode\Renderer\Inline;
+namespace Youthweb\BBCodeParser\Extension\BBCode\Renderer\Block;
 
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
-use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Util\HtmlFilter;
 use League\CommonMark\Xml\XmlNodeRendererInterface;
-use Youthweb\BBCodeParser\Extension\BBCode\Node\Inline\Strong;
+use League\Config\ConfigurationAwareInterface;
+use League\Config\ConfigurationInterface;
+use Youthweb\BBCodeParser\Extension\BBCode\Node\Block\BBCodeBlock;
 
-final class StrongRenderer implements NodeRendererInterface, XmlNodeRendererInterface
+final class BBCodeBlockRenderer implements NodeRendererInterface, XmlNodeRendererInterface, ConfigurationAwareInterface
 {
+    private ConfigurationInterface $config;
+
     /**
-     * @param Strong $node
+     * @param BBCodeBlock $node
      *
      * {@inheritDoc}
-     *
-     * @psalm-suppress MoreSpecificImplementedParamType
      */
-    public function render(Node $node, ChildNodeRendererInterface $childRenderer): \Stringable
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): string
     {
-        Strong::assertInstanceOf($node);
+        BBCodeBlock::assertInstanceOf($node);
 
-        $attrs = $node->data->get('attributes');
+        return $node->getLiteral();
+    }
 
-        return new HtmlElement('b', $attrs, $childRenderer->renderNodes($node->children()));
+    public function setConfiguration(ConfigurationInterface $configuration): void
+    {
+        $this->config = $configuration;
     }
 
     public function getXmlTagName(Node $node): string
     {
-        return 'b';
+        return 'html_block';
     }
 
     /**

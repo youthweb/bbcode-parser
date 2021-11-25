@@ -39,19 +39,19 @@ class CommonMarkParserTest extends TestCase
         return [
             [
                 'Hello World!',
-                '<p>Hello World!</p>'.\PHP_EOL,
+                '<p>Hello World!</p>',
             ],
             [
                 'Hello World! </div>',
-                '<p>Hello World! &lt;/div&gt;</p>'.\PHP_EOL,
+                '<p>Hello World! &lt;/div&gt;</p>',
             ],
             [
                 'Hello World! <img src="javascript:alert(\'XSS\')">',
-                '<p>Hello World! &lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;</p>'.\PHP_EOL,
+                '<p>Hello World! &lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;</p>',
             ],
             [
-                '**Hello World!**',
-                '<p><b>Hello World!</b></p>'.\PHP_EOL,
+                '[b]Hello World![/b]',
+                '<p><b>Hello World!</b></p>',
             ],
         ];
     }

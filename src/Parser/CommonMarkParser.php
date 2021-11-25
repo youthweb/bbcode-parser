@@ -53,6 +53,11 @@ final class CommonMarkParser
             'html_input' => 'escape',
             'allow_unsafe_links' => false,
             'max_nesting_level' => 5,
+            'renderer' => [
+                'block_separator' => \PHP_EOL,
+                'inner_separator' => \PHP_EOL,
+                'soft_break'      => \PHP_EOL,
+            ],
         ];
 
         $environment = new Environment($config);
@@ -69,6 +74,8 @@ final class CommonMarkParser
     {
         $documentAST = $this->markdownParser->parse($text);
 
-        return $this->htmlRenderer->renderDocument($documentAST)->getContent();
+        $content = $this->htmlRenderer->renderDocument($documentAST);
+
+        return trim($content->getContent());
     }
 }

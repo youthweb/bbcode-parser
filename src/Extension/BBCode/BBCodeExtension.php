@@ -37,15 +37,15 @@ final class BBCodeExtension implements ExtensionInterface
     public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment
+            ->addBlockStartParser(new Parser\Block\BoldBlockStartParser(),      40)
+
             ->addInlineParser(new CoreParser\Inline\NewlineParser(), 200)
 
             ->addRenderer(CoreNode\Block\Document::class,  new CoreRenderer\Block\DocumentRenderer(),  0)
+            ->addRenderer(Node\Block\BBCodeBlock::class,   new Renderer\Block\BBCodeBlockRenderer(),   0)
             ->addRenderer(CoreNode\Block\Paragraph::class, new CoreRenderer\Block\ParagraphRenderer(), 0)
 
-            ->addRenderer(Node\Inline\Strong::class,      new Renderer\Inline\StrongRenderer(),      0)
             ->addRenderer(CoreNode\Inline\Text::class,    new CoreRenderer\Inline\TextRenderer(),    0)
         ;
-
-        $environment->addDelimiterProcessor(new EmphasisDelimiterProcessor('*'));
     }
 }
