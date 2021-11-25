@@ -24,43 +24,11 @@ namespace Youthweb\BBCodeParser\Extension\BBCode\Node\Block;
 
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\RawMarkupContainerInterface;
+use League\CommonMark\Node\StringContainerInterface;
 
-final class BBCodeBlock extends AbstractBlock implements RawMarkupContainerInterface
+final class BoldBlock extends AbstractBlock implements RawMarkupContainerInterface, StringContainerInterface
 {
-    public const TYPE_BOLD = 1;
-
-    /**
-     * @phpstan-var self::TYPE_* $type
-     */
-    private int $type;
-
     private string $literal = '';
-
-    /**
-     * @phpstan-param self::TYPE_* $type
-     */
-    public function __construct(int $type)
-    {
-        parent::__construct();
-
-        $this->type = $type;
-    }
-
-    /**
-     * @phpstan-return self::TYPE_*
-     */
-    public function getType(): int
-    {
-        return $this->type;
-    }
-
-    /**
-     * @phpstan-param self::TYPE_* $type
-     */
-    public function setType(int $type): void
-    {
-        $this->type = $type;
-    }
 
     public function getLiteral(): string
     {

@@ -25,35 +25,42 @@ namespace Youthweb\BBCodeParser\Extension\BBCode\Parser\Block;
 use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
 use League\CommonMark\Parser\Block\BlockContinue;
 use League\CommonMark\Parser\Block\BlockContinueParserInterface;
+use League\CommonMark\Parser\Block\BlockContinueParserWithInlinesInterface;
 use League\CommonMark\Parser\Cursor;
+use League\CommonMark\Parser\InlineParserEngineInterface;
 use League\CommonMark\Util\RegexHelper;
-use Youthweb\BBCodeParser\Extension\BBCode\Node\Block\BBCodeBlock;
+use Youthweb\BBCodeParser\Extension\BBCode\Node\Block\BoldBlock;
 
-final class BoldBlockParser extends AbstractBlockContinueParser
+final class BoldBlockParser extends AbstractBlockContinueParser implements BlockContinueParserWithInlinesInterface
 {
-    private BBCodeBlock $block;
+    private BoldBlock $block;
 
     private string $content = '';
 
     private bool $finished = false;
 
-    /**
-     * @phpstan-param HtmlBlock::TYPE_* $blockType
-     */
-    public function __construct(int $blockType)
+    public function __construct()
     {
-        $this->block = new BBCodeBlock($blockType);
+        $this->block = new BoldBlock();
     }
 
-    public function getBlock(): BBCodeBlock
+    public function getBlock(): BoldBlock
     {
         return $this->block;
     }
 
     public function tryContinue(Cursor $cursor, BlockContinueParserInterface $activeBlockParser): ?BlockContinue
     {
-        if ($this->finished) {
-            return BlockContinue::none();
+        if ($cursor->getNextNonSpaceCharacter() !== '[') {
+            return BlockContinue::at($cursor);
+        }
+
+        $tmpCursor = clone $cursor;
+        $tmpCursor->advanceToNextNonSpaceOrTab();
+        $line = $tmpCursor->getSubstring(0, 4);
+
+        if ($line === '[/b]') {
+            return BlockStart::none();
         }
 
         return BlockContinue::at($cursor);
@@ -65,15 +72,22 @@ final class BoldBlockParser extends AbstractBlockContinueParser
             $this->content .= "\n";
         }
 
-        $line = substr($line, 3);
         $line = substr($line, 0, -4);
 
-        $this->content .= '<p><b>' . $line . '</b></p>';
+        $this->content .= $line;
     }
 
     public function closeBlock(): void
     {
         $this->block->setLiteral($this->content);
         $this->content = '';
+    }
+
+    /**
+     * Parse any inlines inside of the current block
+     */
+    public function parseInlines(InlineParserEngineInterface $inlineParser): void
+    {
+        // #TODO
     }
 }

@@ -27,7 +27,6 @@ use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Parser\MarkdownParserStateInterface;
 use League\CommonMark\Util\RegexHelper;
-use Youthweb\BBCodeParser\Extension\BBCode\Node\Block\BBCodeBlock;
 
 final class BoldBlockStartParser implements BlockStartParserInterface
 {
@@ -41,10 +40,12 @@ final class BoldBlockStartParser implements BlockStartParserInterface
         $tmpCursor->advanceToNextNonSpaceOrTab();
         $line = $tmpCursor->getSubstring(0, 3);
 
-        if ($line === '[b]') {
-            return BlockStart::of(new BoldBlockParser(BBCodeBlock::TYPE_BOLD))->at($cursor);
+        if ($line !== '[b]') {
+            return BlockStart::none();
         }
 
-        return BlockStart::none();
+        $cursor->advanceBy(3);
+
+        return BlockStart::of(new BoldBlockParser())->at($cursor);
     }
 }

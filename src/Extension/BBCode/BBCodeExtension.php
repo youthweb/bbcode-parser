@@ -42,7 +42,7 @@ final class BBCodeExtension implements ExtensionInterface
             ->addInlineParser(new CoreParser\Inline\NewlineParser(), 200)
 
             ->addRenderer(CoreNode\Block\Document::class,  new CoreRenderer\Block\DocumentRenderer(),  0)
-            ->addRenderer(Node\Block\BBCodeBlock::class,   new Renderer\Block\BBCodeBlockRenderer(),   0)
+            ->addRenderer(Node\Block\BoldBlock::class,     new Renderer\Block\BoldBlockRenderer(),     0)
             ->addRenderer(CoreNode\Block\Paragraph::class, new CoreRenderer\Block\ParagraphRenderer(), 0)
 
             ->addRenderer(CoreNode\Inline\Text::class,    new CoreRenderer\Inline\TextRenderer(),    0)

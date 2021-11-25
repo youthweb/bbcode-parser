@@ -25,26 +25,32 @@ namespace Youthweb\BBCodeParser\Extension\BBCode\Renderer\Block;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
-use League\CommonMark\Util\HtmlFilter;
+use League\CommonMark\Util\HtmlElement;
 use League\CommonMark\Xml\XmlNodeRendererInterface;
 use League\Config\ConfigurationAwareInterface;
 use League\Config\ConfigurationInterface;
-use Youthweb\BBCodeParser\Extension\BBCode\Node\Block\BBCodeBlock;
+use Youthweb\BBCodeParser\Extension\BBCode\Node\Block\BoldBlock;
 
-final class BBCodeBlockRenderer implements NodeRendererInterface, XmlNodeRendererInterface, ConfigurationAwareInterface
+final class BoldBlockRenderer implements NodeRendererInterface, XmlNodeRendererInterface, ConfigurationAwareInterface
 {
     private ConfigurationInterface $config;
 
     /**
-     * @param BBCodeBlock $node
+     * @param BoldBlock $node
      *
      * {@inheritDoc}
      */
-    public function render(Node $node, ChildNodeRendererInterface $childRenderer): string
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): HtmlElement
     {
-        BBCodeBlock::assertInstanceOf($node);
+        BoldBlock::assertInstanceOf($node);
 
-        return $node->getLiteral();
+        $innerHtml = $childRenderer->renderNodes($node->children());
+
+        if ($innerHtml === '') {
+            $innerHtml = $node->getLiteral();
+        }
+
+        return new HtmlElement('b', [], $innerHtml);
     }
 
     public function setConfiguration(ConfigurationInterface $configuration): void
@@ -54,7 +60,7 @@ final class BBCodeBlockRenderer implements NodeRendererInterface, XmlNodeRendere
 
     public function getXmlTagName(Node $node): string
     {
-        return 'html_block';
+        return 'strong';
     }
 
     /**
