@@ -57,3 +57,4 @@ Used by `/continuous-refactoring-run`.
 - **Rejected**: an issue closed as not planned, the reason in its closing comment: `gh issue close <n> --reason "not planned" --comment "<reason>"`. Found again with **Search**, its query extended by `reason:"not planned"`.
 - **Blocked by**: a line `Blocked by: #<n>, #<n>` in the issue's description. The issue is unblocked when every issue on that line is done.
 - **BC promise**: the project's promise to code outside it is `docs/bc-promise.md`; read it before changing what it covers.
+- **Candidate**: the label `refactoring`. List the open ones with `gh issue list --state open --label refactoring --json number,title,state,labels,updatedAt`.
