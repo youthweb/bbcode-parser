@@ -25,4 +25,4 @@ jobs:
     - name: Roave Backward Compatibility Check
       uses: docker://nyholm/roave-bc-check-ga
       with:
-        args: --format=github-actions
+        args: --format=github-actions --baseline=.roave-backward-compatibility-check.xml
