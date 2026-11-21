@@ -1,0 +1,8 @@
+parameters:
+    level: 0
+    paths:
+        - src
+    excludePaths:
+        - vendor
+includes:
+    - phpstan-baseline.neon
