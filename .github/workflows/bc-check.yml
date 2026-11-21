@@ -20,7 +20,7 @@ jobs:
     # The action's container runs as another user than the checkout's owner, so git
     # refuses the workspace. The container's HOME is mounted from the runner's _github_home.
     - name: Trust the workspace inside the action container
-      run: HOME="$RUNNER_TEMP/_github_home" git config --global --add safe.directory /github/workspace
+      run: mkdir -p "$RUNNER_TEMP/_github_home" && HOME="$RUNNER_TEMP/_github_home" git config --global --add safe.directory /github/workspace
 
     - name: Roave Backward Compatibility Check
       uses: docker://nyholm/roave-bc-check-ga
