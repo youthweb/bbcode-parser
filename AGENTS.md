@@ -49,3 +49,7 @@ Default vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-
 ### Domain docs
 
 Single-context: one `GLOSSARY.md` and `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+
+### Releasing
+
+Releases are developer-initiated, never agent-launched. Prepare up to the release pull request and stop there; tagging and the GitHub release are the developer's. See `docs/agents/releasing.md`.
