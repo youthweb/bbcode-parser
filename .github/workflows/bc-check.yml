@@ -25,4 +25,4 @@ jobs:
           --volume "$PWD:/app" \
           --workdir /app \
           nyholm/roave-bc-check \
-          --format=github-actions
+          --help
