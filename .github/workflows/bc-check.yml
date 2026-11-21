@@ -1,0 +1,23 @@
+name: Backward compatibility
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  roave-bc-check:
+    name: Roave Backward Compatibility Check
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        # The tool compares against the newest tag, so the tags must be fetched.
+        fetch-depth: 0
+
+    - name: Roave Backward Compatibility Check
+      uses: docker://nyholm/roave-bc-check-ga
+      with:
+        args: --format=github-actions
