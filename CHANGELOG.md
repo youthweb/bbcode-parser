@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased](https://github.com/youthweb/bbcode-parser/compare/1.7.1...master)
 
+### Added
+
+- Support for PHP 8.1, 8.2, 8.3, 8.4 and 8.5, the test suite runs on all of them
+- A [backward compatibility promise](docs/bc-promise.md) that states which parts of the library are covered
+
+### Changed
+
+- Mark `Definition`, `DefinitionSet`, `Html`, `Validation` and `ValidationInterface` as `@internal`, they are not covered by the backward compatibility promise
+
+### Fixed
+
+- Declare the parameter of `Manager::__construct()` explicitly nullable, the implicit nullable type is deprecated in PHP 8.4
+
 ## [1.7.1](https://github.com/youthweb/bbcode-parser/compare/1.7.0...1.7.1) - 2021-11-24
 
 ### Fixed
