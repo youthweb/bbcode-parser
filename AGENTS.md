@@ -17,7 +17,7 @@ PHP, Composer and every PHP tool (`vendor/bin/*`, PHPUnit, PHPStan, PHP CS Fixer
 ## Development
 
 - The default branch is `master` (not `main`). Other remote branches: `v2.x`, `init-commonmark-parser`, `custom_visitors`. A v2 based on CommonMark was started; its state is unclear.
-- The dev container runs PHP 7.4, the lowest supported version. Use the Makefile: `make install`, `make test` (PHPUnit, 182 tests), `make phpstan`, `make codestyle` (this **rewrites files**), `make shell`, `make composer ARGS="..."`. Other PHP versions: `make test PHP_VERSION=8.5` (after `make clean install`). See `docs/dev-environment.md`.
+- The dev container runs PHP 7.4, the lowest supported version. Use the Makefile: `make build`, `make install`, `make test` (default; PHPUnit), `make phpunit`, `make phpstan`, `make codestyle` (this **rewrites files**), `make coverage`, `make shell`, `make composer ARGS="..."`, `make clean`. Other PHP versions: `make test PHP_VERSION=8.5` (after `make clean install`). See `docs/dev-environment.md`.
 - Under the hood: `vendor/bin/phpunit` (suites `all`, `unit`, `integration`), `composer php-cs-fixer` (PSR-12), `composer phpstan` (level 1). `composer.lock` is gitignored.
 - Test status: all 182 tests pass on PHP 7.4 and 8.5 (8.5 with `trim(): Passing null` deprecations in `Definition/Color.php` and `Definition/Email.php`). The code does not match the current PHP CS Fixer ruleset (77 files would change), so never run `make codestyle` on the whole tree without intending that diff.
 
