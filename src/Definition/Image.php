@@ -32,6 +32,8 @@ use Youthweb\BBCodeParser\Filter\FilterException;
  *
  * [img]example.com/image.jpg[/img]
  * [img]321654[/img]
+ *
+ * @internal
  */
 
 class Image extends CodeDefinition

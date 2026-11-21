@@ -28,6 +28,8 @@ use Youthweb\BBCodeParser\Html;
  * Implements a [noparse] definition that provides the following syntax:
  *
  * [noparse][b]some bbcode[/b][/noparse]
+ *
+ * @internal
  */
 
 class Noparse extends CodeDefinition

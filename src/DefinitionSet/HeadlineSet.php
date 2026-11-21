@@ -25,6 +25,8 @@ use Youthweb\BBCodeParser\Config;
 
 /**
  * Headlinesatz an BBCode Definitionen
+ *
+ * @internal
  */
 
 class HeadlineSet implements CodeDefinitionSet

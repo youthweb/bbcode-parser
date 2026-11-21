@@ -23,6 +23,8 @@ namespace Youthweb\BBCodeParser;
  * HTML Generation class
  *
  * Inspiried by Fuel\Core\Html
+ *
+ * @internal
  */
 
 class Html

@@ -26,6 +26,8 @@ use Youthweb\BBCodeParser\Config;
  *
  * [PIC]example.com/image.jpg[/PIC]
  * [PIC]321654[/PIC]
+ *
+ * @internal
  */
 
 class Pic extends Image

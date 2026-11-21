@@ -28,6 +28,8 @@ use Youthweb\BBCodeParser\Html;
  * Implements a [code] definition that provides the following syntax:
  *
  * [code]<span>some html</span>[/code]
+ *
+ * @internal
  */
 
 class Code extends CodeDefinition

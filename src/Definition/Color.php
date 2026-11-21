@@ -28,6 +28,8 @@ use Youthweb\BBCodeParser\Html;
  * Implements a [color] code definition that provides the following syntax:
  *
  * [color=green]green text comes here[/color]
+ *
+ * @internal
  */
 
 class Color extends CodeDefinition

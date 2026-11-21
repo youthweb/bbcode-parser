@@ -25,6 +25,8 @@ use Youthweb\BBCodeParser\Config;
  * Implements a [email] code definition that provides the following syntax:
  *
  * [email=mail@example.com]Mail me[/email]
+ *
+ * @internal
  */
 
 class EmailOption extends Email
