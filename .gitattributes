@@ -4,3 +4,6 @@
 /.gitignore         export-ignore
 /.travis.yml        export-ignore
 /phpunit.xml        export-ignore
+/.dockerignore      export-ignore
+/Makefile           export-ignore
+/scripts            export-ignore
