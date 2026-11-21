@@ -40,7 +40,7 @@ Commits, PRs, issues and docs are written in English.
 
 ### Issue tracker
 
-Issues and specs live in the GitHub Issues of `youthweb/bbcode-parser`, operated via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+Issues and specs live in the GitHub Issues of `youthweb/bbcode-parser`, operated via the `gh` CLI. Refactoring tickets carry the label `refactoring`. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 
