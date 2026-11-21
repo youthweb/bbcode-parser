@@ -10,12 +10,16 @@ PHP library `youthweb/bbcode-parser`: converts BBCode to HTML. Built on `jbbcode
 - `src/Config.php` (nested config), `src/Validation.php` and `src/Filter/` (input validation). A PSR-6 cache can be injected via config; the default is `cache/void-adapter`.
 - Tests: `tests/Unit/` (per definition/visitor), `tests/Integration/` (`ParsingTest`, `SmileyTest`, `QuoteTest`), mocks in `tests/Fixtures/`.
 
+## PHP only in Docker
+
+PHP, Composer and every PHP tool (`vendor/bin/*`, PHPUnit, PHPStan, PHP CS Fixer, Rector) run **only inside the Docker dev container, never on the host system**. Do not invoke `php`, `composer` or `vendor/bin/*` on the host, not even for a quick check. Use the `make` targets listed below. If a command needs PHP, run it through `make shell` or `make composer ARGS="..."`.
+
 ## Development
 
 - The default branch is `master` (not `main`). Other remote branches: `v2.x`, `init-commonmark-parser`, `custom_visitors`. A v2 based on CommonMark was started; its state is unclear.
-- Tests: `vendor/bin/phpunit` (suites `all`, `unit`, `integration`). Code style: `composer php-cs-fixer` (PSR-12). Static analysis: `composer phpstan` (level 1).
-- `vendor/` and `composer.lock` are absent from the checkout (`composer.lock` is gitignored). Run `composer install` first. There is no Makefile and no Docker setup; whether PHP should run on the host or in a container is undecided.
-- The test status is unverified; the analysis ran nothing.
+- The dev container runs PHP 7.4, the lowest supported version. Use the Makefile: `make install`, `make test` (PHPUnit, 182 tests), `make phpstan`, `make codestyle` (this **rewrites files**), `make shell`, `make composer ARGS="..."`. Other PHP versions: `make test PHP_VERSION=8.5` (after `make clean install`). See `docs/dev-environment.md`.
+- Under the hood: `vendor/bin/phpunit` (suites `all`, `unit`, `integration`), `composer php-cs-fixer` (PSR-12), `composer phpstan` (level 1). `composer.lock` is gitignored.
+- Test status: all 182 tests pass on PHP 7.4 and 8.5 (8.5 with `trim(): Passing null` deprecations in `Definition/Color.php` and `Definition/Email.php`). The code does not match the current PHP CS Fixer ruleset (77 files would change), so never run `make codestyle` on the whole tree without intending that diff.
 
 ## Known issues (as of 2026-11-21)
 
