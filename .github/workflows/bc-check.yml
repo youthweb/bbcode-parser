@@ -14,18 +14,20 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        # The tool compares against the newest tag, so the tags must be fetched.
+        # The tool needs the history and the tags to find the version it compares against.
         fetch-depth: 0
 
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
+    # The action's container runs as another user than the checkout's owner, so git
+    # refuses the workspace. The container's HOME is mounted from the runner's _github_home.
+    - name: Trust the workspace inside the action container
+      run: mkdir -p "$RUNNER_TEMP/_github_home" && HOME="$RUNNER_TEMP/_github_home" git config --global --add safe.directory /github/workspace
+
+    # --from: the classes outside the BC promise were marked @internal after the tag 1.7.1 (#32),
+    # which the tool reports as 32 breaks against that tag. Compare against the merge commit of
+    # that change until the next release, then remove --from so the newest tag is used again.
+    # Both formats are printed: the console list shows every break in the log, github-actions
+    # adds an annotation for each.
+    - name: Roave Backward Compatibility Check
+      uses: docker://nyholm/roave-bc-check-ga
       with:
-        php-version: '8.3'
-        tools: composer
-
-    # Installed in a directory of its own, so its dependencies cannot conflict with the project's.
-    - name: Install Roave Backward Compatibility Check
-      run: composer require --working-dir="$RUNNER_TEMP/roave" --no-progress roave/backward-compatibility-check
-
-    - name: Show help
-      run: "$RUNNER_TEMP/roave/vendor/bin/roave-backward-compatibility-check" --help
+        args: --from=d5057e5 --format=console --format=github-actions
