@@ -47,7 +47,7 @@ class Manager
      *
      * @param Youthweb\BBCodeParser\Visitor\VisitorCollectionInterface|null $visitorCollection
      */
-    public function __construct(VisitorCollectionInterface $visitorCollection = null)
+    public function __construct(?VisitorCollectionInterface $visitorCollection = null)
     {
         if ($visitorCollection === null) {
             $visitorCollection = new VisitorCollection();
