@@ -17,12 +17,15 @@ jobs:
         # The tool compares against the newest tag, so the tags must be fetched.
         fetch-depth: 0
 
-    - name: Roave Backward Compatibility Check
-      run: |
-        docker run --rm \
-          --user "$(id -u):$(id -g)" \
-          --env HOME=/tmp \
-          --volume "$PWD:/app" \
-          --workdir /app \
-          roave/backward-compatibility-check:latest \
-          --help
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        tools: composer
+
+    # Installed in a directory of its own, so its dependencies cannot conflict with the project's.
+    - name: Install Roave Backward Compatibility Check
+      run: composer require --working-dir="$RUNNER_TEMP/roave" --no-progress roave/backward-compatibility-check
+
+    - name: Show help
+      run: "$RUNNER_TEMP/roave/vendor/bin/roave-backward-compatibility-check" --help
