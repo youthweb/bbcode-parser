@@ -7,7 +7,6 @@
             1.7.1. The promise allows changing them in any release. Remove these entries after
             the release that contains the @internal marks (the next release after 1.7.1).
         -->
-        <ignored-regex>#\[BC\] CHANGED: (Class|Interface) Youthweb\\BBCodeParser\\(Definition|DefinitionSet)\\[A-Za-z]+ was marked "@internal"#</ignored-regex>
-        <ignored-regex>#\[BC\] CHANGED: (Class|Interface) Youthweb\\BBCodeParser\\(Html|Validation|ValidationInterface) was marked "@internal"#</ignored-regex>
+        <ignored-regex>#Youthweb\\BBCodeParser\\[A-Za-z\\]+ was marked "@internal"#</ignored-regex>
     </baseline>
 </roave-bc-check>
