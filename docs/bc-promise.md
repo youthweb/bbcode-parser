@@ -34,7 +34,7 @@ The tags `[F]`, `[K]` and `[Z]` are deprecated, with removal at the earliest in 
 
 ## Supported PHP versions
 
-The supported range is `require.php` in `composer.json`. A minor release may drop a PHP version that has reached its end of life; this is listed in the CHANGELOG and is not a breaking change. Dropping a PHP version that is still supported needs a major release.
+The supported range is `require.php` in `composer.json`. A minor release may raise the minimum PHP version, or drop a PHP version. This is listed in the CHANGELOG and is not a breaking change: Composer checks `require.php` on installation, so a project running an older PHP version keeps resolving to the earlier release.
 
 ## Supported releases
 
