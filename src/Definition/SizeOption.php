@@ -25,6 +25,8 @@ use Youthweb\BBCodeParser\Config;
  * Implements a [size] code definition that provides the following syntax:
  *
  * [size=75]small text[/size]
+ *
+ * @internal
  */
 
 class SizeOption extends Size

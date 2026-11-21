@@ -28,6 +28,8 @@ use JBBCode\ElementNode;
  * [q]
  * Quotetext
  * [/q]
+ *
+ * @internal
  */
 
 class Q extends CodeDefinition

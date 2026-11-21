@@ -24,6 +24,8 @@ use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * Einfache Validation-Klasse, angelehnt an Fuel\Core\Validation
+ *
+ * @internal
  */
 
 class Validation implements ValidationInterface

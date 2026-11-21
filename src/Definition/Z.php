@@ -25,6 +25,8 @@ namespace Youthweb\BBCodeParser\Definition;
  * [Z]
  * Quotetext
  * [/Z]
+ *
+ * @internal
  */
 
 class Z extends Q

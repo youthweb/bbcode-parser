@@ -28,6 +28,8 @@ use Youthweb\BBCodeParser\Html;
  * Implements a [b] code definition that provides the following syntax:
  *
  * [b]this text will be bold[/b]
+ *
+ * @internal
  */
 
 class Bold extends CodeDefinition

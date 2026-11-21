@@ -25,6 +25,8 @@ use Youthweb\BBCodeParser\Config;
  * Implements a [url] code definition that provides the following syntax:
  *
  * [url=example.com]Click me[/url]
+ *
+ * @internal
  */
 
 class UrlOption extends Url

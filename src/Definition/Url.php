@@ -29,6 +29,8 @@ use Youthweb\BBCodeParser\Validation;
  * Implements a [url] code definition that provides the following syntax:
  *
  * [url]example.com[/url]
+ *
+ * @internal
  */
 
 class Url extends CodeDefinition

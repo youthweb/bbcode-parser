@@ -21,6 +21,8 @@ namespace Youthweb\BBCodeParser;
 
 /**
  * Validation Interface
+ *
+ * @internal
  */
 
 interface ValidationInterface

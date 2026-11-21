@@ -28,6 +28,8 @@ use Youthweb\BBCodeParser\Html;
  * Implements a [i] code definition that provides the following syntax:
  *
  * [i]this text will be italic[/i]
+ *
+ * @internal
  */
 
 class Italic extends CodeDefinition
