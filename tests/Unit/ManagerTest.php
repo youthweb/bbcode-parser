@@ -24,9 +24,11 @@ use PHPUnit\Framework\TestCase;
 use Youthweb\BBCodeParser\Manager;
 use Youthweb\BBCodeParser\Visitor\VisitorCollectionInterface;
 use Youthweb\BBCodeParser\Visitor\VisitorInterface;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(Manager::class)]
 class ManagerTest extends TestCase
 {

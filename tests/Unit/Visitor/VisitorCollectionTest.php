@@ -23,9 +23,11 @@ namespace Youthweb\BBCodeParser\Tests\Unit\Visitor;
 use PHPUnit\Framework\TestCase;
 use Youthweb\BBCodeParser\Visitor\VisitorCollection;
 use Youthweb\BBCodeParser\Visitor\VisitorInterface;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(VisitorCollection::class)]
 class VisitorCollectionTest extends TestCase
 {

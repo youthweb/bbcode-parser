@@ -25,10 +25,12 @@ use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\Image;
 use Youthweb\BBCodeParser\Filter\FilterException;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(Image::class)]
 class ImageTest extends \PHPUnit\Framework\TestCase
 {

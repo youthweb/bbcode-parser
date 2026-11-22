@@ -24,9 +24,11 @@ use JBBCode\ElementNode;
 use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\Quote;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(Quote::class)]
 class QuoteTest extends \PHPUnit\Framework\TestCase
 {

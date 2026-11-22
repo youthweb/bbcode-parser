@@ -24,9 +24,11 @@ use JBBCode\ElementNode;
 use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\ListDefinition;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(ListDefinition::class)]
 class ListDefinitionTest extends \PHPUnit\Framework\TestCase
 {

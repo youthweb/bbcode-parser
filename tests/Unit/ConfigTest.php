@@ -21,10 +21,12 @@
 namespace Youthweb\BBCodeParser\Tests\Unit;
 
 use Youthweb\BBCodeParser\Config;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(Config::class)]
 class ConfigTest extends \PHPUnit\Framework\TestCase
 {

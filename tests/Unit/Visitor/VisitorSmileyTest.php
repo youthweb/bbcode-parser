@@ -21,10 +21,12 @@
 namespace Youthweb\BBCodeParser\Tests\Unit\Visitor;
 
 use Youthweb\BBCodeParser\Visitor\VisitorSmiley;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(VisitorSmiley::class)]
 class VisitorSmileyTest extends \PHPUnit\Framework\TestCase
 {

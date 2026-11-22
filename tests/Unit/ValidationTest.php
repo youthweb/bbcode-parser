@@ -23,10 +23,12 @@ namespace Youthweb\BBCodeParser\Tests\Unit;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockHttpStreamWrapper;
 use Youthweb\BBCodeParser\Tests\Fixtures\ValidationMock;
 use Youthweb\BBCodeParser\Validation;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(Validation::class)]
 class ValidationTest extends \PHPUnit\Framework\TestCase
 {
