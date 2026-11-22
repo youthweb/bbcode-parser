@@ -19,7 +19,6 @@ PHP, Composer and every PHP tool (`vendor/bin/*`, PHPUnit, PHPStan, PHP CS Fixer
 ## Known issues
 
 - Little typing. Docblocks partly wrong (namespaces without leading backslash), comments mix German and English, `DefaultSet` has an orphaned docblock.
-- `jakeasmith/http_build_url` is a polyfill for `pecl_http`. Whether and where it is needed is unchecked.
 - Security-sensitive (not reviewed in detail): HTML escaping and placeholders run as text replacement after rendering. `Image`, `Url` and `V` output external URLs.
 - README badges and CI point at `master`.
 
