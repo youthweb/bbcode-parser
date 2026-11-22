@@ -214,9 +214,7 @@ class Config
      */
     public function getValidation()
     {
-        if (is_null($this->validation)) {
-            $this->validation = new Validation($this);
-        }
+        $this->validation ??= new Validation($this);
 
         return $this->validation;
     }
