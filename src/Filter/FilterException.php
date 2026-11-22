@@ -25,6 +25,4 @@ use RuntimeException;
  * Filter exception
  */
 
-class FilterException extends RuntimeException
-{
-}
+class FilterException extends RuntimeException {}

@@ -54,11 +54,11 @@ class ListDefinitionTest extends \PHPUnit\Framework\TestCase
                 '[*]Hello World!
 [*]foobar',
                 null,
-                '<!-- no_p --><ul type="disc">' . PHP_EOL .
-                "\t" . '<li>Hello World!</li>' . PHP_EOL .
-                "\t" . '<li>foobar</li>' . PHP_EOL .
-                '</ul>' . PHP_EOL .
-                '<!-- no_p -->',
+                '<!-- no_p --><ul type="disc">' . PHP_EOL
+                . "\t" . '<li>Hello World!</li>' . PHP_EOL
+                . "\t" . '<li>foobar</li>' . PHP_EOL
+                . '</ul>' . PHP_EOL
+                . '<!-- no_p -->',
             ],
             [
                 '',
@@ -69,11 +69,11 @@ class ListDefinitionTest extends \PHPUnit\Framework\TestCase
                 'line1
 line2',
                 null,
-                '<!-- no_p --><ul type="disc">' . PHP_EOL .
-                "\t" . '<li>line1
-line2</li>' . PHP_EOL .
-                '</ul>' . PHP_EOL .
-                '<!-- no_p -->',
+                '<!-- no_p --><ul type="disc">' . PHP_EOL
+                . "\t" . '<li>line1
+line2</li>' . PHP_EOL
+                . '</ul>' . PHP_EOL
+                . '<!-- no_p -->',
             ],
         ];
     }
