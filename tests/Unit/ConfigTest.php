@@ -26,11 +26,9 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider SetterDataProvider
      *
-     * @param mixed $key
      * @param mixed $default
-     * @param mixed $value
      */
-    public function testSetter($key, $default, $value): void
+    public function testSetter(string $key, $default, string $value): void
     {
         $validation = $this->getMockBuilder(\Youthweb\BBCodeParser\ValidationInterface::class)
             ->getMock();

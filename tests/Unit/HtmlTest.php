@@ -25,12 +25,8 @@ class HtmlTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider ImageDataProvider
-     *
-     * @param mixed $src
-     * @param mixed $attr
-     * @param mixed $expected
      */
-    public function testImg($src, $attr, $expected): void
+    public function testImg(string $src, array $attr, string $expected): void
     {
         $this->assertSame($expected, Html::img($src, $attr));
     }
@@ -56,12 +52,8 @@ class HtmlTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider ListDataProvider
-     *
-     * @param mixed $src
-     * @param mixed $attr
-     * @param mixed $expected
      */
-    public function testList($src, $attr, $expected): void
+    public function testList(array $src, array $attr, string $expected): void
     {
         $this->assertSame($expected, Html::ul($src, $attr));
     }

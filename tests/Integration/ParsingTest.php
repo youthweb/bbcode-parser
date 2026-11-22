@@ -24,7 +24,7 @@ use Youthweb\BBCodeParser\Manager;
 
 class ParsingTest extends TestCase
 {
-    private $parser;
+    private \Youthweb\BBCodeParser\Manager $parser;
 
     public function setUp(): void
     {
@@ -33,11 +33,8 @@ class ParsingTest extends TestCase
 
     /**
      * @dataProvider providerParseBBCode
-     *
-     * @param mixed $text
-     * @param mixed $expected
      */
-    public function testParseBBCode($text, array $config, $expected): void
+    public function testParseBBCode(string $text, array $config, string $expected): void
     {
         $this->assertSame($expected, $this->parser->parse($text, $config));
     }
