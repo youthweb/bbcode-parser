@@ -11,8 +11,8 @@ return RectorConfig::configure()
         __DIR__ . '/src',
         __DIR__ . '/tests',
     ])
-    // Stops at PHP 7.4, the lowest version composer.json allows.
-    ->withSets([LevelSetList::UP_TO_PHP_74, SetList::DEAD_CODE, SetList::CODE_QUALITY])
+    // Stops at PHP 8.2, the lowest version composer.json allows.
+    ->withSets([LevelSetList::UP_TO_PHP_82, SetList::DEAD_CODE, SetList::CODE_QUALITY])
     // Strict types change how scalars are coerced, that is no refactoring.
     ->withSkip([SafeDeclareStrictTypesRector::class])
     // Declared types, added through the library's guarded rules: a type on a

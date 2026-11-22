@@ -62,7 +62,7 @@ class V extends CodeDefinition
 
                 return $filter->execute($el);
             }
-        } catch (FilterException $e) {
+        } catch (FilterException) {
         }
 
         // Video nur verlinken

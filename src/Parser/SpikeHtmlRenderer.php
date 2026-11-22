@@ -28,7 +28,7 @@ use League\CommonMark\Renderer\Inline\TextRenderer;
  *
  * @experimental
  */
-final class SpikeHtmlRenderer
+final readonly class SpikeHtmlRenderer
 {
     private HtmlRenderer $renderer;
 

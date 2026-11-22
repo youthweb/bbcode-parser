@@ -8,7 +8,7 @@ $finder = (new PhpCsFixer\Finder())
 return (new PhpCsFixer\Config())
     ->setRules([
         '@PER-CS3x0' => true,
-        'trailing_comma_in_multiline' => ['elements' => ['arguments', 'array_destructuring', 'arrays']],
+        'trailing_comma_in_multiline' => ['elements' => ['arguments', 'array_destructuring', 'arrays', 'parameters']],
     ])
     ->setCacheFile('.php-cs-fixer.cache')
     ->setFinder($finder)

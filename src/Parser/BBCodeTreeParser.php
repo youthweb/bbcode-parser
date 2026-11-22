@@ -154,14 +154,11 @@ final class BBCodeTreeParser
 
     private function createNode(string $name, ?string $arg): Node
     {
-        switch ($name) {
-            case 'b':
-                return new Strong();
-            case 'i':
-                return new Emphasis();
-            default:
-                return new Link($arg ?? '');
-        }
+        return match ($name) {
+            'b' => new Strong(),
+            'i' => new Emphasis(),
+            default => new Link($arg ?? ''),
+        };
     }
 
     private function appendText(Node $parent, string $text): void
