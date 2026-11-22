@@ -30,7 +30,7 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
         stream_wrapper_unregister('http');
         if (!stream_wrapper_register(
             'http',
-            \Youthweb\BBCodeParser\Tests\Fixtures\MockHttpStreamWrapper::class
+            \Youthweb\BBCodeParser\Tests\Fixtures\MockHttpStreamWrapper::class,
         )) {
             die('Failed to register protocol');
         }
@@ -55,8 +55,8 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
                 $this->returnValueMap(
                     [
                         ['cacheitempool', null, null],
-                    ]
-                )
+                    ],
+                ),
             );
 
         return $config;

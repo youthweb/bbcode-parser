@@ -146,7 +146,7 @@ Seillängenge:            S  = U+1      = 40030174,592 m
 Seil-Durchmesser:        SD = S/Pi     = 12742000,318 m
 Abstand Seil zu Boden:   l  = (SD-D)/2 = 0,159m
 &lt;img src=&quot;javascript:alert(\'XSS\')&quot;&gt;
-</code></pre>'
+</code></pre>',
             ],
             [
                 'Hier ein Beispiel:
@@ -162,14 +162,14 @@ Abstand Seil zu Boden:   l  = (SD-D)/2 = 0,159m
 &lt;?php
     $message = \'Hello World!\';
     echo $message;
-</code></pre>'
+</code></pre>',
             ],
             [
                 'Hier ein Beispiel mit [code]Code-Beispiel[/code] in einer Zeile.',
                 [],
                 '<p>Hier ein Beispiel mit</p>
 <pre><code>Code-Beispiel</code></pre>
-<p>in einer Zeile.</p>'
+<p>in einer Zeile.</p>',
             ],
             [
                 '[noparse]<h7>Header 7</h7>[/noparse]',

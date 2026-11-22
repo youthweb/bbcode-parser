@@ -48,8 +48,8 @@ class ColorTest extends \PHPUnit\Framework\TestCase
                     [
                         ['callbacks.color_param.allowed_colors', null, ['Red', 'Yellow']],
                         ['callbacks.color_param.default_color', null, 'Red'],
-                    ]
-                )
+                    ],
+                ),
             );
 
         $definition = new Color($config);

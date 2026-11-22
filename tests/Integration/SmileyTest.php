@@ -37,8 +37,8 @@ class SmileyTest extends \PHPUnit\Framework\TestCase
 
         $config = [
             'visitor' => [
-                'smiley' => new VisitorSmiley()
-            ]
+                'smiley' => new VisitorSmiley(),
+            ],
         ];
 
         $this->assertSame($expected, $parser->parse($text, $config));

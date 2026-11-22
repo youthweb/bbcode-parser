@@ -47,8 +47,8 @@ class EmailOptionTest extends \PHPUnit\Framework\TestCase
                     [
                         ['cacheitempool', null, null],
                         ['callbacks.email_content.protect_email', null, false],
-                    ]
-                )
+                    ],
+                ),
             );
 
         $definition = new EmailOption($config);
@@ -75,8 +75,8 @@ class EmailOptionTest extends \PHPUnit\Framework\TestCase
                     [
                         ['cacheitempool', null, null],
                         ['callbacks.email_content.protect_email', null, true],
-                    ]
-                )
+                    ],
+                ),
             );
 
         $definition = new EmailOption($config);
