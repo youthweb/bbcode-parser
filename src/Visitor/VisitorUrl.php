@@ -34,10 +34,7 @@ use Youthweb\BBCodeParser\Html;
 
 class VisitorUrl implements VisitorInterface
 {
-    /**
-     * @var Config
-     */
-    private $config;
+    private ?\Youthweb\BBCodeParser\Config $config = null;
 
     /**
      * Set the config
