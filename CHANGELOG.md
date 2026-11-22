@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased](https://github.com/youthweb/bbcode-parser/compare/1.8.0...master)
 
+### Added
+
+- Experimental parser engine based on `league/commonmark` that builds a node tree from BBCode (`[b]`, `[i]`, `[url]`, `[code]`), marked `@experimental`, see [#44](https://github.com/youthweb/bbcode-parser/issues/44)
+
+### Changed
+
+- Require `league/commonmark` ^2.0
+
 ## [1.8.0](https://github.com/youthweb/bbcode-parser/compare/1.7.1...1.8.0) - 2026-11-21
 
 ### Added
