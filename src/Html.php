@@ -182,7 +182,7 @@ class Html
     public static function anchor($href, $text = null, $attr = [], $secure = null)
     {
         if (! preg_match('#^(javascript:|\#)# i', $href)) {
-            $href = static::http_build_url($href);
+            $href = static::buildUrl($href);
 
             // Trim the trailing slash
             $href = rtrim($href, '/');
@@ -209,7 +209,7 @@ class Html
     public static function img($src, $attr = [])
     {
         if (! preg_match('#^(\w+://)# i', $src)) {
-            $src = static::http_build_url($src);
+            $src = static::buildUrl($src);
         }
 
         $attr['src'] = $src;
@@ -333,19 +333,65 @@ class Html
     }
 
     /**
-     * Takes an associative array in the layout of parse_url, and constructs a URL from it
+     * Completes a URL from its parse_url() parts
      *
-     * see http://www.php.net/manual/en/function.http-build-url.php#96335
+     * A path without a leading slash gets one, empty parts are left out and a
+     * URL that parse_url() cannot parse gives an empty string.
      *
-     * @param mixed $url (Part(s) of) an URL in form of a string or associative array like parse_url() returns
-     * @param mixed $parts Same as the first argument
-     * @param int|null $flags A bitmask of binary or'ed HTTP_URL constants (Optional)HTTP_URL_REPLACE is the default
-     * @param array|false $new_url If set, it will be filled with the parts of the composed url like parse_url() would return
+     * @param string $url the URL
      *
-     * @return string constructed URL
+     * @return string the rebuilt URL
      */
-    protected static function http_build_url($url, $parts = [], $flags = null, &$new_url = false)
+    protected static function buildUrl($url)
     {
-        return http_build_url($url, $parts, $flags, $new_url);
+        $parts = parse_url($url);
+
+        if ($parts === false) {
+            return '';
+        }
+
+        $result = '';
+
+        if (! empty($parts['scheme'])) {
+            $result .= $parts['scheme'] . '://';
+        }
+
+        if (! empty($parts['user'])) {
+            $result .= $parts['user'];
+
+            if (isset($parts['pass'])) {
+                $result .= ':' . $parts['pass'];
+            }
+
+            $result .= '@';
+        }
+
+        if (! empty($parts['host'])) {
+            $result .= $parts['host'];
+        }
+
+        if (! empty($parts['port'])) {
+            $result .= ':' . $parts['port'];
+        }
+
+        $path = $parts['path'] ?? '';
+
+        if ($path !== '' && ! str_starts_with($path, '/')) {
+            $path = '/' . $path;
+        }
+
+        if (! empty($path)) {
+            $result .= $path;
+        }
+
+        if (! empty($parts['query'])) {
+            $result .= '?' . $parts['query'];
+        }
+
+        if (! empty($parts['fragment'])) {
+            $result .= '#' . $parts['fragment'];
+        }
+
+        return $result;
     }
 }

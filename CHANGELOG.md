@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Removed
 
 - Support for PHP 7.4, 8.0 and 8.1; PHP 8.2 or newer is required
+- Dependency on the abandoned `jakeasmith/http_build_url`
 
 ## [1.8.0](https://github.com/youthweb/bbcode-parser/compare/1.7.1...1.8.0) - 2026-11-21
 
