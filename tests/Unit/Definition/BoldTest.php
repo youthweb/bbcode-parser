@@ -34,10 +34,8 @@ class BoldTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider dataProvider
-     *
-     * @param mixed $attribute
      */
-    public function testAsHtml(string $text, $attribute, string $expected): void
+    public function testAsHtml(string $text, null $attribute, string $expected): void
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
@@ -48,10 +46,8 @@ class BoldTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider dataProvider
-     *
-     * @param mixed $attribute
      */
-    public function testAsText(string $text, $attribute, string $expected): void
+    public function testAsText(string $text, null $attribute, string $expected): void
     {
         $elementNode = $this->buildElementNodeMock($text, null);
 

@@ -1,6 +1,6 @@
 DOCKER := docker
 
-PHP_VERSION ?= 7.4
+PHP_VERSION ?= 8.2
 
 IMAGE := bbcode-parser-php
 TAG := $(IMAGE):$(PHP_VERSION)
@@ -44,7 +44,7 @@ rector: build
 coverage: build
 	$(DOCKER_RUN) --env "XDEBUG_MODE=coverage" "$(TAG)" vendor/bin/phpunit --coverage-html="build/code-coverage"
 
-# Xdebug does not exist for PHP 7.4, run it with a newer version: make coverage-floor PHP_VERSION=8.3
+# Run it on PHP 8.3: make coverage-floor PHP_VERSION=8.3
 coverage-floor: build
 	$(DOCKER_RUN) --env "XDEBUG_MODE=coverage" "$(TAG)" sh -c 'vendor/bin/phpunit --coverage-text && scripts/check-coverage-floor.sh'
 

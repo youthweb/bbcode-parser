@@ -122,7 +122,7 @@ class Validation implements ValidationInterface
 
                     if (is_array($wrapper_data) || $wrapper_data instanceof \ArrayAccess) {
                         foreach ($wrapper_data as $hh) {
-                            if (substr($hh, 0, 19) == 'Content-Type: image') { // strlen("Content-Type: image") == 19
+                            if (substr($hh, 0, 19) === 'Content-Type: image') { // strlen("Content-Type: image") == 19
                                 $is_valid = true;
 
                                 break;
