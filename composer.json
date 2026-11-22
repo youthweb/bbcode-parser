@@ -18,7 +18,7 @@
         "jakeasmith/http_build_url": "^1",
         "jbbcode/jbbcode": "^1.4",
         "league/commonmark": "^2.0",
-        "youthweb/urllinker": "^1.4"
+        "youthweb/urllinker": "^2.3"
     },
     "require-dev": {
         "art4/rector-bc-library": "^1.4",

@@ -23,7 +23,7 @@ namespace Youthweb\BBCodeParser\Visitor;
 use JBBCode\DocumentElement;
 use JBBCode\TextNode;
 use JBBCode\ElementNode;
-use Youthweb\UrlLinker\UrlLinker;
+use Art4\UrlLinker\UrlLinker;
 use Youthweb\BBCodeParser\Config;
 use Youthweb\BBCodeParser\Html;
 
