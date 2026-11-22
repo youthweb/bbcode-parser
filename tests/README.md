@@ -12,4 +12,4 @@ Run them with `make test`; the coverage floor with `make coverage-floor PHP_VERS
 
 `phpunit.xml` sets `requireCoverageMetadata="true"` and `failOnRisky="true"`: a test without a `#[CoversClass]` attribute is risky and fails the run, and code counts as covered only where a test covers it.
 
-A unit test covers exactly one class, the one it tests; everything else it runs it uses. An integration test covers the class it enters through. Put the `#[CoversClass(...)]` attribute on the test class. Data providers are `static` methods named by `#[DataProvider(...)]`.
+A unit test covers exactly one class, the one it tests; everything else it runs it uses. An integration test covers the class it enters through. Put the `#[CoversClass(...)]` attribute on the test class. PHPUnit also counts the parent classes of that class as covered, so a test of `ColorOption` covers the code it inherits from `Color`. Data providers are `static` methods named by `#[DataProvider(...)]`.
