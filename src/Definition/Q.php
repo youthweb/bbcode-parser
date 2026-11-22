@@ -56,7 +56,7 @@ class Q extends CodeDefinition
             $param = array_shift($param);
         }
 
-        $param = (string) trim($param);
+        $param = trim($param);
 
         if (preg_match('/^\<blockquote/', trim($content)) == 0) {
             $content = '<cite>' . $param . '</cite>' . $content;

@@ -41,7 +41,6 @@ class Validation implements ValidationInterface
     /**
      * construct
      *
-     * @param Config $config
      *
      * @return void
      */

@@ -29,7 +29,7 @@ make test
 | `make phpunit` | Run PHPUnit |
 | `make phpstan` | Run PHPStan (`composer phpstan`) |
 | `make codestyle` | **Fix** the code style with PHP CS Fixer (`composer php-cs-fixer`); it rewrites files, check `git diff` afterwards |
-| `make rector` | Run Rector (`composer rector`) with the PHP 7.4 and code quality rule sets; it **rewrites files**, so check `git diff` afterwards. `make rector ARGS="--dry-run"` only shows the changes |
+| `make rector` | Run Rector (`composer rector`) with the PHP 7.4, dead code and code quality rule sets; it **rewrites files**, so check `git diff` afterwards. `make rector ARGS="--dry-run"` only shows the changes |
 | `make coverage` | Run PHPUnit with an HTML coverage report in `build/code-coverage/` |
 | `make shell` | Open an interactive shell inside the container |
 | `make composer ARGS="..."` | Run any Composer command, e.g. `make composer ARGS="update"` |
