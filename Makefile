@@ -30,7 +30,7 @@ shell: build
 	$(DOCKER_RUN) "$(TAG)" bash
 
 phpunit: build
-	$(DOCKER_RUN) "$(TAG)" vendor/bin/phpunit
+	$(DOCKER_RUN) "$(TAG)" vendor/bin/phpunit --no-coverage
 
 phpstan: build
 	$(DOCKER_RUN) "$(TAG)" composer phpstan
@@ -49,7 +49,7 @@ coverage-floor: build
 	$(DOCKER_RUN) --env "XDEBUG_MODE=coverage" "$(TAG)" sh -c 'vendor/bin/phpunit --coverage-text && scripts/check-coverage-floor.sh'
 
 test: build
-	$(DOCKER_RUN) "$(TAG)" sh -c "if [ ! -f vendor/autoload.php ]; then composer install; fi; vendor/bin/phpunit"
+	$(DOCKER_RUN) "$(TAG)" sh -c "if [ ! -f vendor/autoload.php ]; then composer install; fi; vendor/bin/phpunit --no-coverage"
 
 clean:
-	rm -rf build vendor composer.lock .php-cs-fixer.cache .phpunit.result.cache
+	rm -rf build vendor composer.lock .php-cs-fixer.cache .phpunit.result.cache .phpunit.cache
