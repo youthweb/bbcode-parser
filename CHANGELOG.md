@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 - Require `league/commonmark` ^2.0
 - Require `youthweb/urllinker` ^2.3 (was ^1.4); its newer top-level-domain list changes which bare addresses such as `example.web` or `foo.helsinki` are turned into links
+- Require `cache/void-adapter` ^3.0 (was ^1.1), so the library now requires `psr/cache` ^3: a cache pool given as the config option `cacheitempool` has to implement the `psr/cache` 3 interface (with return types), and a project that still has `psr/cache` 1 or 2 has to update it
 
 ### Removed
 
