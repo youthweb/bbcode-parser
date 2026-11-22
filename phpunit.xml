@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" forceCoversAnnotation="true" failOnRisky="true" backupStaticAttributes="false" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" processIsolation="false" stopOnFailure="false" stopOnError="false" stopOnIncomplete="false" stopOnSkipped="false" bootstrap="vendor/autoload.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" failOnRisky="true" colors="true" processIsolation="false" stopOnFailure="false" stopOnError="false" stopOnIncomplete="false" stopOnSkipped="false" bootstrap="vendor/autoload.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd" cacheDirectory=".phpunit.cache" backupStaticProperties="false" requireCoverageMetadata="true">
   <coverage>
-    <include>
-      <directory suffix=".php">src/</directory>
-    </include>
     <report>
       <clover outputFile="build/logs/clover.xml"/>
     </report>
@@ -20,4 +17,9 @@
       <directory suffix="Test.php">tests/Integration/</directory>
     </testsuite>
   </testsuites>
+  <source>
+    <include>
+      <directory suffix=".php">src/</directory>
+    </include>
+  </source>
 </phpunit>
