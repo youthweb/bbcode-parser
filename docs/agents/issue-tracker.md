@@ -59,3 +59,4 @@ Used by `/continuous-refactoring-run`.
 - **Blocked by**: a line `Blocked by: #<n>, #<n>` in the issue's description. The issue is unblocked when every issue on that line is done.
 - **BC promise**: the project's promise to code outside it is `docs/bc-promise.md`; read it before changing what it covers.
 - **Candidate**: the label `refactoring`. List the open ones with `gh issue list --state open --label refactoring --json number,title,state,labels,updatedAt`.
+- **Housekeeping**: the template is `docs/refactoring/housekeeping-template.md`. The next ticket is made with `gh issue create`: a title that names Housekeeping and the date the ticket is due from ("Housekeeping, due 2026-11-29"), a line `Due: <date>` in the text, a line naming the template, and the template's tasks as a checklist. The open ones are listed with `gh issue list --state open --search "Housekeeping in:title" --json number,title,body`.
