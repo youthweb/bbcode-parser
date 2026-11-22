@@ -35,7 +35,7 @@ class UnderlineTest extends \PHPUnit\Framework\TestCase
      * @param mixed $attribute
      * @param mixed $expected
      */
-    public function testAsHtml($text, $attribute, $expected)
+    public function testAsHtml($text, $attribute, $expected): void
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
@@ -51,7 +51,7 @@ class UnderlineTest extends \PHPUnit\Framework\TestCase
      * @param mixed $attribute
      * @param mixed $expected
      */
-    public function testAsText($text, $attribute, $expected)
+    public function testAsText($text, $attribute, $expected): void
     {
         $elementNode = $this->buildElementNodeMock($text, null);
 

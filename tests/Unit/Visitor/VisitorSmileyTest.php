@@ -26,7 +26,7 @@ class VisitorSmileyTest extends \PHPUnit\Framework\TestCase
     /**
      * @test create
      */
-    public function testCreate()
+    public function testCreate(): void
     {
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
             ->disableOriginalConstructor()
@@ -44,7 +44,7 @@ class VisitorSmileyTest extends \PHPUnit\Framework\TestCase
     /**
      * @test visitDocumentElement
      */
-    public function testVisitDocumentElement()
+    public function testVisitDocumentElement(): void
     {
         $visitor = new VisitorSmiley();
 
@@ -74,7 +74,7 @@ class VisitorSmileyTest extends \PHPUnit\Framework\TestCase
     /**
      * @test visitElementNode
      */
-    public function testVisitElementNode()
+    public function testVisitElementNode(): void
     {
         $visitor = new VisitorSmiley();
 
@@ -119,7 +119,7 @@ class VisitorSmileyTest extends \PHPUnit\Framework\TestCase
      * @param mixed $src
      * @param mixed $expected
      */
-    public function testvisitTextNode($src, $expected)
+    public function testvisitTextNode($src, $expected): void
     {
         $textnode = $this->getMockBuilder(\JBBCode\TextNode::class)
             ->disableOriginalConstructor()

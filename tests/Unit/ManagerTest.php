@@ -29,7 +29,7 @@ class ManagerTest extends TestCase
     /**
      * @test
      */
-    public function testParseWithoutDefinitions()
+    public function testParseWithoutDefinitions(): void
     {
         $manager = new Manager();
 
@@ -46,7 +46,7 @@ class ManagerTest extends TestCase
     /**
      * @test
      */
-    public function parseWillUseTheVisitorCollection()
+    public function parseWillUseTheVisitorCollection(): void
     {
         $visitor = $this->createMock(VisitorInterface::class);
 

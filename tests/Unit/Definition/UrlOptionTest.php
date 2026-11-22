@@ -35,7 +35,7 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
      * @param mixed $attribute
      * @param mixed $expected
      */
-    public function testAsHtml($text, $attribute, $expected)
+    public function testAsHtml($text, $attribute, $expected): void
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
@@ -63,7 +63,7 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function testAsHtmlWithShortenLongUrl()
+    public function testAsHtmlWithShortenLongUrl(): void
     {
         $text = 'a very long text, that should not be shorten';
         $attribute = 'http://example.org/this/is/a/very/long/url.with?query=params';
@@ -94,7 +94,7 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function testAsHtmlWithShortenShortUrl()
+    public function testAsHtmlWithShortenShortUrl(): void
     {
         $text = 'a very long text, that should not be shorten';
         $attribute = 'http://example.org/this/is/a/very/long/url.with?query=params';
@@ -125,7 +125,7 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function testAsHtmlWithoutTarget()
+    public function testAsHtmlWithoutTarget(): void
     {
         $text = 'a very long text, that should not be shorten';
         $attribute = 'http://example.org/this/is/a/very/long/url.with?query=params';
@@ -156,7 +156,7 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function testAsHtmlWithTargetOnYouthwebUrl()
+    public function testAsHtmlWithTargetOnYouthwebUrl(): void
     {
         $text = 'a very long text, that should not be shorten';
         $attribute = 'http://youthweb.net/this/is/a/very/long/url.with?query=params';
@@ -187,7 +187,7 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function testAsHtmlWithTargetOnYouthwebUrlWithoutHttp()
+    public function testAsHtmlWithTargetOnYouthwebUrlWithoutHttp(): void
     {
         $text = 'a very long text, that should not be shorten';
         $attribute = 'ftp://youthweb.net/this/is/a/very/long/url.with?query=params';

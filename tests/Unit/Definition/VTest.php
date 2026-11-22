@@ -36,7 +36,7 @@ class VTest extends \PHPUnit\Framework\TestCase
      * @param mixed $attribute
      * @param mixed $expected
      */
-    public function testAsHtml($text, $attribute, $expected)
+    public function testAsHtml($text, $attribute, $expected): void
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
@@ -92,7 +92,7 @@ class VTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function testAsHtmlWithFilter()
+    public function testAsHtmlWithFilter(): void
     {
         $text = 'http://example.org/video.mp4';
         $attribute = null;
@@ -130,7 +130,7 @@ class VTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function testAsHtmlWithFilterException()
+    public function testAsHtmlWithFilterException(): void
     {
         $text = 'http://example.org/video.mp4';
         $attribute = null;

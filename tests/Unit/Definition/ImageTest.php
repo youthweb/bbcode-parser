@@ -36,7 +36,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
      * @param mixed $attribute
      * @param mixed $expected
      */
-    public function testAsHtml($text, $attribute, $expected)
+    public function testAsHtml($text, $attribute, $expected): void
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
@@ -62,7 +62,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function testAsHtmlWithFilter()
+    public function testAsHtmlWithFilter(): void
     {
         $text = 'http://example.org/this/is/a/very/long/url.with?query=params';
         $attribute = null;
@@ -100,7 +100,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function testAsHtmlWithFilterException()
+    public function testAsHtmlWithFilterException(): void
     {
         $text = 'http://example.org/image.jpg';
         $attribute = null;
@@ -138,7 +138,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function testAsHtmlWithUrlParent()
+    public function testAsHtmlWithUrlParent(): void
     {
         $text = 'http://example.org/image.jpg';
         $attribute = null;
@@ -171,7 +171,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function testAsHtmlWithForceCheck()
+    public function testAsHtmlWithForceCheck(): void
     {
         $text = 'http://example.org/not-an-image.txt';
         $attribute = null;
@@ -219,7 +219,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function testAsHtmlWithForceCheckAndAnchor()
+    public function testAsHtmlWithForceCheckAndAnchor(): void
     {
         $text = 'http://example.org/not-an-image.txt';
         $attribute = null;

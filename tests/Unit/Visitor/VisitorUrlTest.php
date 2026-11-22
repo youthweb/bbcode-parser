@@ -26,7 +26,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
     /**
      * @test create
      */
-    public function testCreate()
+    public function testCreate(): void
     {
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
             ->disableOriginalConstructor()
@@ -45,7 +45,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
     /**
      * @test visitDocumentElement
      */
-    public function testVisitDocumentElement()
+    public function testVisitDocumentElement(): void
     {
         $visitor = new VisitorUrl();
 
@@ -78,7 +78,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
     /**
      * @test visitElementNode
      */
-    public function testVisitElementNode()
+    public function testVisitElementNode(): void
     {
         $visitor = new VisitorUrl();
 
@@ -126,7 +126,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
      * @param mixed $src
      * @param mixed $expected
      */
-    public function testVisitTextNode($src, $expected)
+    public function testVisitTextNode($src, $expected): void
     {
         $textnode = $this->getMockBuilder(\JBBCode\TextNode::class)
             ->disableOriginalConstructor()
