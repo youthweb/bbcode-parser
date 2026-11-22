@@ -35,7 +35,7 @@ use Youthweb\BBCodeParser\Html;
 class VisitorUrl implements VisitorInterface
 {
     /**
-     * @var Youthweb\BBCodeParser\Config
+     * @var Config
      */
     private $config;
 

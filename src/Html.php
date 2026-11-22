@@ -32,9 +32,8 @@ class Html
     /**
      * Generates a html un-ordered list tag
      *
-     * @param	array			list items, may be nested
-     * @param	array|string	outer list attributes
-     * @param mixed $attr
+     * @param array $list list items, may be nested
+     * @param array|string|false $attr outer list attributes
      *
      * @return string
      */
@@ -46,9 +45,8 @@ class Html
     /**
      * Generates a html ordered list tag
      *
-     * @param	array			list items, may be nested
-     * @param	array|string	outer list attributes
-     * @param mixed $attr
+     * @param array $list list items, may be nested
+     * @param array|string|false $attr outer list attributes
      *
      * @return string
      */
@@ -60,12 +58,9 @@ class Html
     /**
      * Creates a mailto link.
      *
-     * @param	string	The email address
-     * @param	string	The text value
-     * @param	string	The subject
-     * @param mixed      $email
-     * @param null|mixed $text
-     * @param null|mixed $subject
+     * @param string $email The email address
+     * @param string|null $text The text value
+     * @param string|null $subject The subject
      * @param mixed      $attr
      *
      * @return string The mailto link
@@ -85,14 +80,10 @@ class Html
      * Creates a mailto link with Javascript to prevent bots from picking up the
      * email address.
      *
-     * @param	string	the email address
-     * @param	string	the text value
-     * @param	string	the subject
-     * @param	array	attributes for the tag
-     * @param mixed      $email
-     * @param null|mixed $text
-     * @param null|mixed $subject
-     * @param mixed      $attr
+     * @param string $email the email address
+     * @param string|null $text the text value
+     * @param string|null $subject the subject
+     * @param array $attr attributes for the tag
      *
      * @return string the javascript code containg email
      */
@@ -181,14 +172,10 @@ class Html
     /**
      * Creates a html link
      *
-     * @param	string	the url
-     * @param	string	the text value
-     * @param	array	the attributes array
-     * @param	bool	true to force https, false to force http
-     * @param mixed      $href
-     * @param null|mixed $text
-     * @param mixed      $attr
-     * @param null|mixed $secure
+     * @param string $href the url
+     * @param string|null $text the text value
+     * @param array $attr the attributes array
+     * @param bool|null $secure true to force https, false to force http
      *
      * @return string the html link
      */
@@ -214,10 +201,8 @@ class Html
      *
      * Sets the alt atribute to filename of it is not supplied.
      *
-     * @param	string	the source
-     * @param	array	the attributes array
-     * @param mixed $src
-     * @param mixed $attr
+     * @param string $src the source
+     * @param array $attr the attributes array
      *
      * @return string the image tag
      */
@@ -236,10 +221,8 @@ class Html
     /**
      * Creates a html span tag
      *
-     * @param	string	the content
-     * @param	array	the attributes array
-     * @param mixed $content
-     * @param mixed $attr
+     * @param string $content the content
+     * @param array $attr the attributes array
      *
      * @return string the span tag
      */
@@ -262,13 +245,10 @@ class Html
     /**
      * Generates the html for the list methods
      *
-     * @param	string	list type (ol or ul)
-     * @param	array	list items, may be nested
-     * @param	array	tag attributes
-     * @param	string	indentation
-     * @param mixed $type
-     * @param mixed $attr
-     * @param mixed $indent
+     * @param string $type list type (ol or ul)
+     * @param array $list list items, may be nested
+     * @param array|string|false $attr tag attributes
+     * @param string $indent indentation
      *
      * @return string
      */
@@ -290,12 +270,9 @@ class Html
     /**
      * Create a XHTML tag
      *
-     * @param	string			The tag name
-     * @param	array|string	The tag attributes
-     * @param	string|bool		The content to place in the tag, or false for no closing tag
-     * @param mixed $tag
-     * @param mixed $attr
-     * @param mixed $content
+     * @param string $tag The tag name
+     * @param array|string $attr The tag attributes
+     * @param string|bool $content The content to place in the tag, or false for no closing tag
      *
      * @return string
      */
@@ -361,14 +338,10 @@ class Html
      *
      * see http://www.php.net/manual/en/function.http-build-url.php#96335
      *
-     * @param   mixed   (Part(s) of) an URL in form of a string or associative array like parse_url() returns
-     * @param   mixed   Same as the first argument
-     * @param   int     A bitmask of binary or'ed HTTP_URL constants (Optional)HTTP_URL_REPLACE is the default
-     * @param   array   If set, it will be filled with the parts of the composed url like parse_url() would return
-     * @param mixed      $url
-     * @param mixed      $parts
-     * @param null|mixed $flags
-     * @param mixed      $new_url
+     * @param mixed $url (Part(s) of) an URL in form of a string or associative array like parse_url() returns
+     * @param mixed $parts Same as the first argument
+     * @param int|null $flags A bitmask of binary or'ed HTTP_URL constants (Optional)HTTP_URL_REPLACE is the default
+     * @param array|false $new_url If set, it will be filled with the parts of the composed url like parse_url() would return
      *
      * @return string constructed URL
      */

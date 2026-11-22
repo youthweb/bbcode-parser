@@ -30,7 +30,6 @@ interface ValidationInterface
     /**
      * Validate an email
      *
-     * @param   string
      * @param mixed $val
      *
      * @return bool
@@ -40,7 +39,6 @@ interface ValidationInterface
     /**
      * Validate an url
      *
-     * @param   string
      * @param mixed $val
      *
      * @return bool
@@ -50,7 +48,6 @@ interface ValidationInterface
     /**
      * Validate an image url
      *
-     * @param   string
      * @param mixed $val
      *
      * @return bool

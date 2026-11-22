@@ -38,14 +38,14 @@ class Manager
     protected $config = null;
 
     /**
-     * @var Youthweb\BBCodeParser\Visitor\VisitorCollection
+     * @var VisitorCollectionInterface
      */
     private $visitorCollection;
 
     /**
      * Create the Manager
      *
-     * @param Youthweb\BBCodeParser\Visitor\VisitorCollectionInterface|null $visitorCollection
+     * @param VisitorCollectionInterface|null $visitorCollection
      */
     public function __construct(?VisitorCollectionInterface $visitorCollection = null)
     {

@@ -41,9 +41,9 @@ class Validation implements ValidationInterface
     /**
      * construct
      *
-     * @param Cache
+     * @param Config $config
      *
-     * @return {11:return type}
+     * @return void
      */
     public function __construct(Config $config)
     {
@@ -55,7 +55,6 @@ class Validation implements ValidationInterface
     /**
      * Validate email using PHP's filter_var()
      *
-     * @param   string
      * @param mixed $val
      *
      * @return bool
@@ -68,7 +67,6 @@ class Validation implements ValidationInterface
     /**
      * Validate URL using PHP's filter_var()
      *
-     * @param   string
      * @param mixed $val
      *
      * @return bool
@@ -152,7 +150,6 @@ class Validation implements ValidationInterface
     /**
      * Special empty method because 0 and '0' are non-empty values
      *
-     * @param   mixed
      * @param mixed $val
      *
      * @return bool

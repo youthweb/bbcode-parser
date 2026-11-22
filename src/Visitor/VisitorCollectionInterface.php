@@ -30,14 +30,14 @@ interface VisitorCollectionInterface
     /**
      * Add a visitor
      *
-     * @param Youthweb\BBCodeParser\Visitor\VisitorInterface $visitor
+     * @param VisitorInterface $visitor
      */
     public function addVisitor(VisitorInterface $visitor);
 
     /**
      * Get all visitors
      *
-     * @param Youthweb\BBCodeParser\Visitor\VisitorInterface[]
+     * @return VisitorInterface[]
      */
     public function getVisitors();
 }

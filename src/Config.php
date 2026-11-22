@@ -135,7 +135,8 @@ class Config
      *
      * @param string $key   The key
      * @param mixed  $value The value
-     * @param  self
+     *
+     * @return self
      */
     public function set($key, $value)
     {
@@ -169,7 +170,8 @@ class Config
      *
      * @param string $key     The key
      * @param mixed  $default The default value
-     * @param  self
+     *
+     * @return mixed
      */
     public function get($key, $default = null)
     {
