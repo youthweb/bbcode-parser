@@ -48,7 +48,7 @@ The container runs PHP `8.2`, the lowest supported version. To run another versi
 make clean install phpunit PHP_VERSION=8.5
 ```
 
-Composer picks the PHPUnit version the PHP version can run: PHPUnit 11 on PHP 8.2, PHPUnit 12 on PHP 8.3 and newer (`composer.json` allows `^11.5 || ^12.5`). The tests, `phpunit.xml` and `scripts/check-coverage-floor.sh` work with both.
+Composer picks the PHPUnit version the PHP version can run: PHPUnit 11 on PHP 8.2, PHPUnit 12 on PHP 8.3, PHPUnit 13 on PHP 8.4 and newer (`composer.json` allows `^11.5 || ^12.5 || ^13.3`; PHPUnit 13 requires PHP 8.4.1). The tests, `phpunit.xml` and `scripts/check-coverage-floor.sh` work with all three. PHPUnit 13 counts one statement less than PHPUnit 12 (545 of 669 instead of 546 of 670), a difference far below the floor.
 
 Each version gets its own image (`bbcode-parser-php:<version>`). `vendor/` is shared, so run `make clean install` when you switch versions. The cross-version matrix runs in GitHub Actions.
 
