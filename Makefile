@@ -10,7 +10,7 @@ WORKDIR := /app
 DOCKER_RUN_ARGS := run --rm --user "$(shell id -u):$(shell id -g)" --env "HOME=/tmp" --volume "$(CURDIR):$(WORKDIR)" --workdir "$(WORKDIR)"
 DOCKER_RUN := $(DOCKER) $(DOCKER_RUN_ARGS)
 
-.PHONY: build check-docker clean codestyle composer coverage install phpstan phpunit shell test
+.PHONY: build check-docker clean codestyle composer coverage install phpstan phpunit rector shell test
 
 .DEFAULT_GOAL := test
 
@@ -37,6 +37,9 @@ phpstan: build
 
 codestyle: build
 	$(DOCKER_RUN) "$(TAG)" composer php-cs-fixer
+
+rector: build
+	$(DOCKER_RUN) "$(TAG)" composer rector -- $(ARGS)
 
 coverage: build
 	$(DOCKER_RUN) --env "XDEBUG_MODE=coverage" "$(TAG)" vendor/bin/phpunit --coverage-html="build/code-coverage"

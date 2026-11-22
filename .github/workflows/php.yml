@@ -89,3 +89,24 @@ jobs:
     # The level and paths come from phpstan.neon; any error fails the job.
     - name: Run PHPStan
       run: vendor/bin/phpstan analyse --no-progress
+
+  rector:
+    name: Rector
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    # PHP 7.4 is the lowest supported version, Rector runs on it like the code does.
+    - name: Setup PHP, with composer
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.4'
+        tools: composer
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
+
+    # Dry run: any change Rector would still make fails the job.
+    - name: Run Rector
+      run: vendor/bin/rector process --dry-run --no-progress-bar

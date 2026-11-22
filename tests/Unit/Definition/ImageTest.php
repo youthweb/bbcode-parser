@@ -40,7 +40,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $config = $this->getMockBuilder('Youthweb\BBCodeParser\Config')
+        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
             ->setMethods(['get'])
             ->getMock();
 
@@ -69,7 +69,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
         $expected = 'some value';
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $filter = $this->getMockBuilder('Youthweb\BBCodeParser\Filter\FilterInterface')
+        $filter = $this->getMockBuilder(\Youthweb\BBCodeParser\Filter\FilterInterface::class)
             ->setMethods(['setConfig', 'execute'])
             ->getMock();
 
@@ -77,7 +77,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
             ->method('execute')
             ->willReturn($expected);
 
-        $config = $this->getMockBuilder('Youthweb\BBCodeParser\Config')
+        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
             ->setMethods(['get'])
             ->getMock();
 
@@ -107,7 +107,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
         $expected = '<a target="_blank" href="http://example.org/image.jpg"><img class="img-responsive" border="0" src="http://example.org/image.jpg" alt="image" /></a>';
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $filter = $this->getMockBuilder('Youthweb\BBCodeParser\Filter\FilterInterface')
+        $filter = $this->getMockBuilder(\Youthweb\BBCodeParser\Filter\FilterInterface::class)
             ->setMethods(['setConfig', 'execute'])
             ->getMock();
 
@@ -115,7 +115,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
             ->method('execute')
             ->willThrowException(new FilterException());
 
-        $config = $this->getMockBuilder('Youthweb\BBCodeParser\Config')
+        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
             ->setMethods(['get'])
             ->getMock();
 
@@ -149,7 +149,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
             ->method('closestParentOfType')
             ->willReturn(true);
 
-        $config = $this->getMockBuilder('Youthweb\BBCodeParser\Config')
+        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
             ->setMethods(['get'])
             ->getMock();
 
@@ -182,7 +182,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
             ->method('closestParentOfType')
             ->willReturn(true);
 
-        $validation = $this->getMockBuilder('Youthweb\BBCodeParser\ValidationInterface')
+        $validation = $this->getMockBuilder(\Youthweb\BBCodeParser\ValidationInterface::class)
             ->getMock();
 
         $validation->expects($this->any())
@@ -193,7 +193,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
             ->method('isValidUrl')
             ->willReturn(true);
 
-        $config = $this->getMockBuilder('Youthweb\BBCodeParser\Config')
+        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
             ->setMethods(['get', 'getValidation'])
             ->getMock();
 
@@ -230,7 +230,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
             ->method('closestParentOfType')
             ->willReturn(false);
 
-        $validation = $this->getMockBuilder('Youthweb\BBCodeParser\ValidationInterface')
+        $validation = $this->getMockBuilder(\Youthweb\BBCodeParser\ValidationInterface::class)
             ->getMock();
 
         $validation->expects($this->any())
@@ -241,7 +241,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
             ->method('isValidUrl')
             ->willReturn(true);
 
-        $config = $this->getMockBuilder('Youthweb\BBCodeParser\Config')
+        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
             ->setMethods(['get', 'getValidation'])
             ->getMock();
 

@@ -30,7 +30,7 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
         stream_wrapper_unregister('http');
         stream_wrapper_register(
             'http',
-            'Youthweb\BBCodeParser\Tests\Fixtures\MockHttpStreamWrapper'
+            \Youthweb\BBCodeParser\Tests\Fixtures\MockHttpStreamWrapper::class
         ) or die('Failed to register protocol');
     }
 
@@ -43,7 +43,7 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
 
     public function getConfigMock()
     {
-        $config = $this->getMockBuilder('Youthweb\BBCodeParser\Config')
+        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
             ->setMethods(['get'])
             ->getMock();
 
