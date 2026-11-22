@@ -1,5 +1,7 @@
 parameters:
     level: 4
+    # jbbcode documents getAttribute() as array, but it returns a string for [tag=value]; the is_array() checks are real.
+    treatPhpDocTypesAsCertain: false
     paths:
         - src
     excludePaths:
