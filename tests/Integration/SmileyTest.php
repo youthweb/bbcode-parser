@@ -28,7 +28,7 @@ class SmileyTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function testParseSmileyCode()
+    public function testParseSmileyCode(): void
     {
         $text     = 'My mistake :-[';
         $expected = '<p>My mistake <img src="https://youthweb.net/vendor/smilies/49_2.gif" alt=":-[" title=":-[" /></p>';
@@ -48,7 +48,7 @@ class SmileyTest extends \PHPUnit\Framework\TestCase
      * @test
      * @dataProvider provideSmileyExamples
      */
-    public function parseSmileyWithCustomVisitor(string $text, string $expected)
+    public function parseSmileyWithCustomVisitor(string $text, string $expected): void
     {
         $visitor = new VisitorSmiley();
 

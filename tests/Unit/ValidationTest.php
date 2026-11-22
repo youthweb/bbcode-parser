@@ -65,7 +65,7 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function testValidImageUrl()
+    public function testValidImageUrl(): void
     {
         MockHttpStreamWrapper::$mockMetaData = [
             'Content-Type: image/jpeg',
@@ -82,7 +82,7 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function testMultipleValidImageUrl()
+    public function testMultipleValidImageUrl(): void
     {
         MockHttpStreamWrapper::$mockMetaData = [
             'Content-Type: image/jpeg',
@@ -100,7 +100,7 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function testCachedMultipleValidImageUrl()
+    public function testCachedMultipleValidImageUrl(): void
     {
         MockHttpStreamWrapper::$mockMetaData = [
             'Content-Type: image/jpeg',
@@ -118,7 +118,7 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function testValidImageUrlForceless()
+    public function testValidImageUrlForceless(): void
     {
         $validation = new Validation($this->getConfigMock());
 
@@ -128,7 +128,7 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function testValidImageUrlForcelessWithInvalidUrl()
+    public function testValidImageUrlForcelessWithInvalidUrl(): void
     {
         $validation = new Validation($this->getConfigMock());
 
@@ -143,7 +143,7 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
      * @param mixed $url
      * @param mixed $expected
      */
-    public function testValidUrl($url, $expected)
+    public function testValidUrl($url, $expected): void
     {
         $validation = new Validation($this->getConfigMock());
 

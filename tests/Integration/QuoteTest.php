@@ -26,7 +26,7 @@ class QuoteTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function testParseQutoeCode()
+    public function testParseQutoeCode(): void
     {
         $text     = '[q="Albert Einstein"]*bäh*[/q]';
         $expected = '<p><blockquote title="Zitat"><cite>Albert Einstein</cite>*bäh*</blockquote></p>';

@@ -30,7 +30,7 @@ class HtmlTest extends \PHPUnit\Framework\TestCase
      * @param mixed $attr
      * @param mixed $expected
      */
-    public function testImg($src, $attr, $expected)
+    public function testImg($src, $attr, $expected): void
     {
         $this->assertSame($expected, Html::img($src, $attr));
     }
@@ -61,7 +61,7 @@ class HtmlTest extends \PHPUnit\Framework\TestCase
      * @param mixed $attr
      * @param mixed $expected
      */
-    public function testList($src, $attr, $expected)
+    public function testList($src, $attr, $expected): void
     {
         $this->assertSame($expected, Html::ul($src, $attr));
     }

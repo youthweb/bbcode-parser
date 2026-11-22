@@ -37,7 +37,7 @@ class ParsingTest extends TestCase
      * @param mixed $text
      * @param mixed $expected
      */
-    public function testParseBBCode($text, array $config, $expected)
+    public function testParseBBCode($text, array $config, $expected): void
     {
         $this->assertSame($expected, $this->parser->parse($text, $config));
     }
