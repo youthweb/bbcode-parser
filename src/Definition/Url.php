@@ -62,7 +62,7 @@ class Url extends CodeDefinition
             $param = array_shift($param);
         }
 
-        $param = trim($param);
+        $param = trim((string) $param);
 
         if ($content === '' && $param === '') {
             return '';
