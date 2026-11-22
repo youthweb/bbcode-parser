@@ -35,7 +35,7 @@ class Manager
     /**
      * @var Config The config object
      */
-    protected $config = null;
+    protected $config;
 
     /**
      * @var VisitorCollectionInterface
@@ -44,8 +44,6 @@ class Manager
 
     /**
      * Create the Manager
-     *
-     * @param VisitorCollectionInterface|null $visitorCollection
      */
     public function __construct(?VisitorCollectionInterface $visitorCollection = null)
     {
@@ -143,7 +141,7 @@ class Manager
 
         // Sollen Headlines [h1]-[h6] geparset werden? (Nur für News, Hilfe, etc)
         if ($this->config->get('parse_headlines')) {
-            $sets[] = new HeadlineSet($this->config);
+            $sets[] = new HeadlineSet();
         }
 
         return $sets;
@@ -206,8 +204,7 @@ class Manager
         $text = str_ireplace(' yw ', ' <acronym title="Youthweb">YW</acronym> ', $text);
         $text = str_ireplace('{{{lt}}}', '<', $text);
         $text = str_ireplace('{{{gt}}}', '>', $text);
-        $text = str_ireplace('{{{quot}}}', '"', $text);
 
-        return $text;
+        return str_ireplace('{{{quot}}}', '"', $text);
     }
 }
