@@ -91,6 +91,59 @@ class HtmlTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
+    #[DataProvider('WellFormedUrlDataProvider')]
+    public function testBuildUrlKeepsWellFormedUrl(string $url): void
+    {
+        $this->assertSame($url, $this->buildUrl($url));
+    }
+
+    public static function WellFormedUrlDataProvider()
+    {
+        return [
+            'host only' => ['http://example.org'],
+            'trailing slash' => ['http://example.org/'],
+            'path' => ['https://example.org/path/to/page.html'],
+            'query' => ['http://example.org/?a=1&b=2'],
+            'fragment' => ['http://example.org/#section'],
+            'path, query and fragment' => ['https://example.org/p?q=1#f'],
+            'port' => ['http://example.org:8080/'],
+            'user without password' => ['http://user@example.org/'],
+            'user with password' => ['http://user:pw@example.org/'],
+            'user, password and port' => ['http://user:pw@example.org:8080/x'],
+            'ipv6' => ['http://[::1]/'],
+            'ipv6 with port' => ['http://[2001:db8::1]:8080/x'],
+            'ftp' => ['ftp://ftp.example.org/file.txt'],
+        ];
+    }
+
+    #[DataProvider('NormalizedUrlDataProvider')]
+    public function testBuildUrlNormalizesUrl(string $url, string $expected): void
+    {
+        $this->assertSame($expected, $this->buildUrl($url));
+    }
+
+    public static function NormalizedUrlDataProvider()
+    {
+        return [
+            'path without scheme and host gets a leading slash' => ['example.org/image.jpg', '/example.org/image.jpg'],
+            'relative path gets a leading slash' => ['relative/path.png', '/relative/path.png'],
+            'scheme-relative url loses its slashes' => ['//example.org/x', 'example.org/x'],
+            'empty query is dropped' => ['http://example.org/?', 'http://example.org/'],
+            'empty fragment is dropped' => ['http://example.org/#', 'http://example.org/'],
+            'query 0 is dropped' => ['http://example.org/?0', 'http://example.org/'],
+            'fragment 0 is dropped' => ['http://example.org/#0', 'http://example.org/'],
+            'host 0 is dropped' => ['http://0/x', 'http:///x'],
+            'mailto gets slashes' => ['mailto:a@b.de', 'mailto:///a@b.de'],
+            'javascript gets slashes' => ['javascript:alert(1)', 'javascript:///alert(1)'],
+            'unparsable url gives an empty string' => ['http:///x', ''],
+        ];
+    }
+
+    private function buildUrl(string $url): string
+    {
+        return (new \ReflectionMethod(Html::class, 'buildUrl'))->invoke(null, $url);
+    }
+
     #[DataProvider('ListDataProvider')]
     public function testList(array $src, array $attr, string $expected): void
     {
