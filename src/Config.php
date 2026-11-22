@@ -33,7 +33,7 @@ class Config
     protected $data = [];
 
     /**
-     * @var ValidationInterface The validation class
+     * @var ValidationInterface|null The validation class
      */
     protected $validation;
 
