@@ -27,7 +27,7 @@ namespace Youthweb\BBCodeParser\Visitor;
 
 final class VisitorCollection implements VisitorCollectionInterface
 {
-    private $visitors = [];
+    private array $visitors = [];
 
     /**
      * Add a visitor

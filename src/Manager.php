@@ -37,10 +37,7 @@ class Manager
      */
     protected $config;
 
-    /**
-     * @var VisitorCollectionInterface
-     */
-    private $visitorCollection;
+    private \Youthweb\BBCodeParser\Visitor\VisitorCollectionInterface $visitorCollection;
 
     /**
      * Create the Manager
