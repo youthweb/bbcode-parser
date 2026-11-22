@@ -21,21 +21,19 @@
 namespace Youthweb\BBCodeParser\Tests\Unit\Visitor;
 
 use Youthweb\BBCodeParser\Visitor\VisitorUrl;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 
-/**
- * @covers \Youthweb\BBCodeParser\Visitor\VisitorUrl
- */
+#[CoversClass(VisitorUrl::class)]
 class VisitorUrlTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @test create
-     */
+    #[Test]
     public function testCreate(): void
     {
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
             ->disableOriginalConstructor()
             ->disableOriginalClone()
-            ->disableArgumentCloning()
             ->getMock();
 
         $visitor = new VisitorUrl();
@@ -46,9 +44,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(\Youthweb\BBCodeParser\Visitor\VisitorInterface::class, $visitor);
     }
 
-    /**
-     * @test visitDocumentElement
-     */
+    #[Test]
     public function testVisitDocumentElement(): void
     {
         $visitor = new VisitorUrl();
@@ -59,7 +55,6 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
         $child = $this->getMockBuilder(\JBBCode\Node::class)
             ->disableOriginalConstructor()
             ->disableOriginalClone()
-            ->disableArgumentCloning()
             ->getMock();
 
         $child->expects($this->once())
@@ -70,7 +65,6 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
         $element = $this->getMockBuilder(\JBBCode\DocumentElement::class)
             ->disableOriginalConstructor()
             ->disableOriginalClone()
-            ->disableArgumentCloning()
             ->getMock();
 
         $element->method('getChildren')
@@ -79,9 +73,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
         $visitor->visitDocumentElement($element);
     }
 
-    /**
-     * @test visitElementNode
-     */
+    #[Test]
     public function testVisitElementNode(): void
     {
         $visitor = new VisitorUrl();
@@ -92,7 +84,6 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
         $code_definition = $this->getMockBuilder(\JBBCode\CodeDefinition::class)
             ->disableOriginalConstructor()
             ->disableOriginalClone()
-            ->disableArgumentCloning()
             ->getMock();
 
         $code_definition->method('parseContent')
@@ -101,7 +92,6 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
         $child = $this->getMockBuilder(\JBBCode\Node::class)
             ->disableOriginalConstructor()
             ->disableOriginalClone()
-            ->disableArgumentCloning()
             ->getMock();
 
         $child->expects($this->once())
@@ -112,7 +102,6 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
         $element = $this->getMockBuilder(\JBBCode\ElementNode::class)
             ->disableOriginalConstructor()
             ->disableOriginalClone()
-            ->disableArgumentCloning()
             ->getMock();
 
         $element->method('getCodeDefinition')
@@ -124,15 +113,12 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
         $visitor->visitElementNode($element);
     }
 
-    /**
-     * @dataProvider SmileyDataProvider
-     */
+    #[DataProvider('SmileyDataProvider')]
     public function testVisitTextNode(string $src, string $expected): void
     {
         $textnode = $this->getMockBuilder(\JBBCode\TextNode::class)
             ->disableOriginalConstructor()
             ->disableOriginalClone()
-            ->disableArgumentCloning()
             ->getMock();
 
         $textnode->method('getValue')
@@ -154,7 +140,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
     /**
      * dataProvider
      */
-    public function SmileyDataProvider()
+    public static function SmileyDataProvider()
     {
         return [
             [

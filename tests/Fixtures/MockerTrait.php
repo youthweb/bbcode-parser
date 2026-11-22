@@ -35,11 +35,11 @@ trait MockerTrait
     {
         $child = $this->getMockBuilder(\JBBCode\TextNode::class)
             ->setConstructorArgs([$content])
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock();
 
         $elementNode = $this->getMockBuilder(\JBBCode\ElementNode::class)
-            ->setMethods(['getAttribute', 'getChildren', 'closestParentOfType'])
+            ->onlyMethods(['getAttribute', 'getChildren', 'closestParentOfType'])
             ->getMock();
 
         $elementNode->method('getAttribute')

@@ -24,17 +24,15 @@ use JBBCode\ElementNode;
 use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\Italic;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @covers \Youthweb\BBCodeParser\Definition\Italic
- */
+#[CoversClass(Italic::class)]
 class ItalicTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
-    /**
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function testAsHtml(string $text, null $attribute, string $expected): void
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
@@ -44,9 +42,7 @@ class ItalicTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $definition->asHtml($elementNode));
     }
 
-    /**
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function testAsText(string $text, null $attribute, string $expected): void
     {
         $elementNode = $this->buildElementNodeMock($text, null);
@@ -60,7 +56,7 @@ class ItalicTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public function dataProvider()
+    public static function dataProvider()
     {
         return [
             [

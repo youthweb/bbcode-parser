@@ -25,33 +25,30 @@ use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\Image;
 use Youthweb\BBCodeParser\Filter\FilterException;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 
-/**
- * @covers \Youthweb\BBCodeParser\Definition\Image
- */
+#[CoversClass(Image::class)]
 class ImageTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
-    /**
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function testAsHtml(string $text, null $attribute, string $expected): void
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->getMock();
 
         $config->expects($this->any())
             ->method('get')
-            ->will(
-                $this->returnValueMap(
-                    [
-                        ['callbacks.image.force_check', null, false],
-                    ],
-                ),
+            ->willReturnMap(
+                [
+                    ['callbacks.image.force_check', null, false],
+                ],
             );
 
         $definition = new Image($config);
@@ -59,9 +56,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $definition->asHtml($elementNode));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testAsHtmlWithFilter(): void
     {
         $text = 'http://example.org/this/is/a/very/long/url.with?query=params';
@@ -70,7 +65,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
         $filter = $this->getMockBuilder(\Youthweb\BBCodeParser\Filter\FilterInterface::class)
-            ->setMethods(['setConfig', 'execute'])
+            ->onlyMethods(['setConfig', 'execute'])
             ->getMock();
 
         $filter->expects($this->any())
@@ -78,18 +73,16 @@ class ImageTest extends \PHPUnit\Framework\TestCase
             ->willReturn($expected);
 
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->getMock();
 
         $config->expects($this->any())
             ->method('get')
-            ->will(
-                $this->returnValueMap(
-                    [
-                        ['callbacks.image.force_check', null, false],
-                        ['filter.image', null, $filter],
-                    ],
-                ),
+            ->willReturnMap(
+                [
+                    ['callbacks.image.force_check', null, false],
+                    ['filter.image', null, $filter],
+                ],
             );
 
         $definition = new Image($config);
@@ -97,9 +90,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $definition->asHtml($elementNode));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testAsHtmlWithFilterException(): void
     {
         $text = 'http://example.org/image.jpg';
@@ -108,7 +99,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
         $filter = $this->getMockBuilder(\Youthweb\BBCodeParser\Filter\FilterInterface::class)
-            ->setMethods(['setConfig', 'execute'])
+            ->onlyMethods(['setConfig', 'execute'])
             ->getMock();
 
         $filter->expects($this->any())
@@ -116,18 +107,16 @@ class ImageTest extends \PHPUnit\Framework\TestCase
             ->willThrowException(new FilterException());
 
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->getMock();
 
         $config->expects($this->any())
             ->method('get')
-            ->will(
-                $this->returnValueMap(
-                    [
-                        ['callbacks.image.force_check', null, false],
-                        ['filter.image', null, $filter],
-                    ],
-                ),
+            ->willReturnMap(
+                [
+                    ['callbacks.image.force_check', null, false],
+                    ['filter.image', null, $filter],
+                ],
             );
 
         $definition = new Image($config);
@@ -135,9 +124,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $definition->asHtml($elementNode));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testAsHtmlWithUrlParent(): void
     {
         $text = 'http://example.org/image.jpg';
@@ -150,17 +137,15 @@ class ImageTest extends \PHPUnit\Framework\TestCase
             ->willReturn(true);
 
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->getMock();
 
         $config->expects($this->any())
             ->method('get')
-            ->will(
-                $this->returnValueMap(
-                    [
-                        ['callbacks.image.force_check', null, false],
-                    ],
-                ),
+            ->willReturnMap(
+                [
+                    ['callbacks.image.force_check', null, false],
+                ],
             );
 
         $definition = new Image($config);
@@ -168,9 +153,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $definition->asHtml($elementNode));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testAsHtmlWithForceCheck(): void
     {
         $text = 'http://example.org/not-an-image.txt';
@@ -194,7 +177,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
             ->willReturn(true);
 
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->setMethods(['get', 'getValidation'])
+            ->onlyMethods(['get', 'getValidation'])
             ->getMock();
 
         $config->expects($this->any())
@@ -203,12 +186,10 @@ class ImageTest extends \PHPUnit\Framework\TestCase
 
         $config->expects($this->any())
             ->method('get')
-            ->will(
-                $this->returnValueMap(
-                    [
-                        ['callbacks.image.force_check', null, true],
-                    ],
-                ),
+            ->willReturnMap(
+                [
+                    ['callbacks.image.force_check', null, true],
+                ],
             );
 
         $definition = new Image($config);
@@ -216,9 +197,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $definition->asHtml($elementNode));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testAsHtmlWithForceCheckAndAnchor(): void
     {
         $text = 'http://example.org/not-an-image.txt';
@@ -242,7 +221,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
             ->willReturn(true);
 
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->setMethods(['get', 'getValidation'])
+            ->onlyMethods(['get', 'getValidation'])
             ->getMock();
 
         $config->expects($this->any())
@@ -251,12 +230,10 @@ class ImageTest extends \PHPUnit\Framework\TestCase
 
         $config->expects($this->any())
             ->method('get')
-            ->will(
-                $this->returnValueMap(
-                    [
-                        ['callbacks.image.force_check', null, true],
-                    ],
-                ),
+            ->willReturnMap(
+                [
+                    ['callbacks.image.force_check', null, true],
+                ],
             );
 
         $definition = new Image($config);
@@ -267,7 +244,7 @@ class ImageTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public function dataProvider()
+    public static function dataProvider()
     {
         return [
             [

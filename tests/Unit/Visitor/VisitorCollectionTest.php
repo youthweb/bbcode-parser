@@ -23,15 +23,13 @@ namespace Youthweb\BBCodeParser\Tests\Unit\Visitor;
 use PHPUnit\Framework\TestCase;
 use Youthweb\BBCodeParser\Visitor\VisitorCollection;
 use Youthweb\BBCodeParser\Visitor\VisitorInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 
-/**
- * @covers \Youthweb\BBCodeParser\Visitor\VisitorCollection
- */
+#[CoversClass(VisitorCollection::class)]
 class VisitorCollectionTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function getVisitorsReturnsEmptyArray(): void
     {
         $collection = new VisitorCollection();
@@ -39,9 +37,7 @@ class VisitorCollectionTest extends TestCase
         $this->assertSame([], $collection->getVisitors());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getVisitorsReturnsArrayWithOneElement(): void
     {
         $visitor = $this->createMock(VisitorInterface::class);
@@ -53,9 +49,7 @@ class VisitorCollectionTest extends TestCase
         $this->assertCount(1, $collection->getVisitors());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getVisitorsReturnsArrayWithMultipleElements(): void
     {
         $visitor = $this->createMock(VisitorInterface::class);

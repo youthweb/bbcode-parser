@@ -21,15 +21,14 @@
 namespace Youthweb\BBCodeParser\Tests\Unit;
 
 use Youthweb\BBCodeParser\Config;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 
-/**
- * @covers \Youthweb\BBCodeParser\Config
- */
+#[CoversClass(Config::class)]
 class ConfigTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @dataProvider SetterDataProvider
-     */
+    #[DataProvider('SetterDataProvider')]
     public function testSetter(string $key, null $default, string $value): void
     {
         $validation = $this->getMockBuilder(\Youthweb\BBCodeParser\ValidationInterface::class)
@@ -44,10 +43,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, $config->get($key));
     }
 
-    /**
-     * @SetterDataProvider
-     */
-    public function SetterDataProvider()
+    public static function SetterDataProvider()
     {
         return [
             [
@@ -68,9 +64,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testGetter(): void
     {
         $validation = $this->getMockBuilder(\Youthweb\BBCodeParser\ValidationInterface::class)

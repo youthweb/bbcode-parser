@@ -21,15 +21,13 @@
 namespace Youthweb\BBCodeParser\Tests\Integration;
 
 use Youthweb\BBCodeParser\Manager;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 
-/**
- * @covers \Youthweb\BBCodeParser\Manager
- */
+#[CoversClass(Manager::class)]
 class QuoteTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function testParseQutoeCode(): void
     {
         $text     = '[q="Albert Einstein"]*bäh*[/q]';

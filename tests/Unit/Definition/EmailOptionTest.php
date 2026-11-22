@@ -24,33 +24,29 @@ use JBBCode\ElementNode;
 use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\EmailOption;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @covers \Youthweb\BBCodeParser\Definition\EmailOption
- */
+#[CoversClass(EmailOption::class)]
 class EmailOptionTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
-    /**
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function testAsHtml(string $text, string|array $attribute, string $expected): void
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->getMock();
 
         $config->method('get')
-            ->will(
-                $this->returnValueMap(
-                    [
-                        ['cacheitempool', null, null],
-                        ['callbacks.email_content.protect_email', null, false],
-                    ],
-                ),
+            ->willReturnMap(
+                [
+                    ['cacheitempool', null, null],
+                    ['callbacks.email_content.protect_email', null, false],
+                ],
             );
 
         $definition = new EmailOption($config);
@@ -58,25 +54,21 @@ class EmailOptionTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $definition->asHtml($elementNode));
     }
 
-    /**
-     * @dataProvider dataProviderProtectedEmail
-     */
+    #[DataProvider('dataProviderProtectedEmail')]
     public function testAsHtmlWithProtectedEmail(string $text, string|array $attribute, string $expected): void
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->getMock();
 
         $config->method('get')
-            ->will(
-                $this->returnValueMap(
-                    [
-                        ['cacheitempool', null, null],
-                        ['callbacks.email_content.protect_email', null, true],
-                    ],
-                ),
+            ->willReturnMap(
+                [
+                    ['cacheitempool', null, null],
+                    ['callbacks.email_content.protect_email', null, true],
+                ],
             );
 
         $definition = new EmailOption($config);
@@ -87,7 +79,7 @@ class EmailOptionTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public function dataProvider()
+    public static function dataProvider()
     {
         return [
             [
@@ -116,7 +108,7 @@ class EmailOptionTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider for protected emails
      */
-    public function dataProviderProtectedEmail()
+    public static function dataProviderProtectedEmail()
     {
         return [
             [

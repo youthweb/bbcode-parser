@@ -23,15 +23,14 @@ namespace Youthweb\BBCodeParser\Tests\Integration;
 use Youthweb\BBCodeParser\Manager;
 use Youthweb\BBCodeParser\Visitor\VisitorCollection;
 use Youthweb\BBCodeParser\Visitor\VisitorSmiley;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 
-/**
- * @covers \Youthweb\BBCodeParser\Manager
- */
+#[CoversClass(Manager::class)]
 class SmileyTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function testParseSmileyCode(): void
     {
         $text     = 'My mistake :-[';
@@ -48,10 +47,8 @@ class SmileyTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $parser->parse($text, $config));
     }
 
-    /**
-     * @test
-     * @dataProvider provideSmileyExamples
-     */
+    #[Test]
+    #[DataProvider('provideSmileyExamples')]
     public function parseSmileyWithCustomVisitor(string $text, string $expected): void
     {
         $visitor = new VisitorSmiley();
@@ -69,7 +66,7 @@ class SmileyTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $parser->parse($text, $config));
     }
 
-    public function provideSmileyExamples()
+    public static function provideSmileyExamples()
     {
         return [
             [
