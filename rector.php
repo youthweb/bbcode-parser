@@ -18,5 +18,5 @@ return RectorConfig::configure()
     // Declared types, added through the library's guarded rules: a type on a
     // public or protected member of a non-final class would break subclasses
     // outside this repository (docs/bc-promise.md).
-    ->withRules(Set::withTypeCoverageLevel(25))
+    ->withRules(Set::withTypeCoverageLevel(30))
 ;
