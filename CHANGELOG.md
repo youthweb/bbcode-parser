@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Changed
 
 - Require `league/commonmark` ^2.0
+- Require `youthweb/urllinker` ^2.3 (was ^1.4); its newer top-level-domain list changes which bare addresses such as `example.web` or `foo.helsinki` are turned into links
 
 ### Removed
 
