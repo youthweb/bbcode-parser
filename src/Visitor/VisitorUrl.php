@@ -63,12 +63,12 @@ class VisitorUrl implements VisitorInterface
     public function visitTextNode(TextNode $text_node)
     {
         $urllinker = new UrlLinker([
-            'emailLinkCreator' => fn($email, $content) =>
+            'emailLinkCreator' => fn($email, $content)
                 // Email-Adressen sollen nicht verlinkt werden
-                $email,
-            'htmlLinkCreator' => fn($url, $content) =>
+                => $email,
+            'htmlLinkCreator' => fn($url, $content)
                 // Wir vergeben extra zweimal $url, weil $content durch UrlLinker gekürzt wird
-                Html::anchorFromConfig($url, $url, $this->config),
+                => Html::anchorFromConfig($url, $url, $this->config),
         ]);
 
         $text_node->setValue($urllinker->linkUrlsAndEscapeHtml($text_node->getValue()));
