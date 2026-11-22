@@ -34,10 +34,8 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider dataProvider
-     *
-     * @param mixed $attribute
      */
-    public function testAsHtml(string $text, $attribute, string $expected): void
+    public function testAsHtml(string $text, null $attribute, string $expected): void
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
@@ -62,10 +60,8 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider dataProviderProtectedEmail
-     *
-     * @param mixed $attribute
      */
-    public function testAsHtmlWithProtectedEmail(string $text, $attribute, string $expected): void
+    public function testAsHtmlWithProtectedEmail(string $text, null $attribute, string $expected): void
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 

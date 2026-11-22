@@ -34,10 +34,8 @@ class ColorOptionTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider dataProvider
-     *
-     * @param mixed $attribute
      */
-    public function testAsHtml(string $text, $attribute, string $expected): void
+    public function testAsHtml(string $text, string|array|null $attribute, string $expected): void
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
