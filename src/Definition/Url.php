@@ -63,14 +63,14 @@ class Url extends CodeDefinition
 
         $param = trim($param);
 
-        if ($content == '' and $param == '') {
+        if ($content === '' && $param === '') {
             return '';
         }
 
         $short_url = $this->config->get('callbacks.url_content.short_url');
 
         // Url finden
-        if ($param == '') {
+        if ($param === '') {
             // Die Url steht im Content
             $url = $content;
 

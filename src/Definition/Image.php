@@ -56,7 +56,7 @@ class Image extends CodeDefinition
         try {
             $filter = $this->config->get('filter.image', null);
 
-            if (is_object($filter) and $filter instanceof FilterInterface) {
+            if ($filter instanceof FilterInterface) {
                 $filter->setConfig($this->config);
 
                 return $filter->execute($el);
@@ -82,18 +82,18 @@ class Image extends CodeDefinition
         $url = trim($content);
 
         // URL Schema voranstellen, wenn nichts angegeben wurde
-        if ($url !== '' and parse_url($url, PHP_URL_SCHEME) === null) {
+        if ($url !== '' && parse_url($url, PHP_URL_SCHEME) === null) {
             $url = 'http://' . $url;
         }
 
         // Wenn die URL nicht gültig ist, zeigen wir nur den Text
-        if ($url === '' or ! $this->config->getValidation()->isValidUrl($url)) {
+        if ($url === '' || ! $this->config->getValidation()->isValidUrl($url)) {
             return $content;
         }
 
         // Prüfen, ob die URL wirklich auf ein Bild zeigt
         // Wenn es kein Bild ist, nicht einbetten, sondern nur verlinken
-        if ($this->config->get('callbacks.image.force_check') and ! $this->config->getValidation()->isValidImageUrl($url)) {
+        if ($this->config->get('callbacks.image.force_check') && ! $this->config->getValidation()->isValidImageUrl($url)) {
             // Bild nicht verlinken
             if (! $use_anchor) {
                 return $content;

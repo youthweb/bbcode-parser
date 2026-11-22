@@ -31,6 +31,8 @@ final class VisitorCollection implements VisitorCollectionInterface
 
     /**
      * Add a visitor
+     *
+     * @param VisitorInterface $visitor
      */
     public function addVisitor(VisitorInterface $visitor)
     {
@@ -40,7 +42,7 @@ final class VisitorCollection implements VisitorCollectionInterface
     /**
      * Get all visitors
      *
-     * @param Youthweb\BBCodeParser\Visitor\VisitorInterface[]
+     * @return VisitorInterface[]
      */
     public function getVisitors()
     {

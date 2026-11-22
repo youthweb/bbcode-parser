@@ -39,7 +39,7 @@
     "scripts": {
         "php-cs-fixer": "vendor/bin/php-cs-fixer fix",
         "rector": "vendor/bin/rector process",
-        "phpstan": "vendor/bin/phpstan --level=1 analyze src"
+        "phpstan": "vendor/bin/phpstan analyse --no-progress"
     },
     "config": {
         "sort-packages": true

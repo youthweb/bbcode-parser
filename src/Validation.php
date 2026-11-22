@@ -41,21 +41,20 @@ class Validation implements ValidationInterface
     /**
      * construct
      *
-     * @param Cache
+     * @param Config $config
      *
-     * @return {11:return type}
+     * @return void
      */
     public function __construct(Config $config)
     {
         $cache = $config->get('cacheitempool');
 
-        $this->cache = (! is_object($cache) or ! $cache instanceof CacheItemPoolInterface) ? new VoidCachePool() : $cache;
+        $this->cache = (! is_object($cache) || ! $cache instanceof CacheItemPoolInterface) ? new VoidCachePool() : $cache;
     }
 
     /**
      * Validate email using PHP's filter_var()
      *
-     * @param   string
      * @param mixed $val
      *
      * @return bool
@@ -68,7 +67,6 @@ class Validation implements ValidationInterface
     /**
      * Validate URL using PHP's filter_var()
      *
-     * @param   string
      * @param mixed $val
      *
      * @return bool
@@ -105,7 +103,7 @@ class Validation implements ValidationInterface
             }
 
             // FIXME: Bilderüberprüfung kann bei vielen Bildern zu langen Ladezeiten führen. Kennt jemand eine bessere Idee?
-            if ($is_valid and $force_check) {
+            if ($is_valid && $force_check) {
                 // via http://stackoverflow.com/questions/676949/best-way-to-determine-if-a-url-is-an-image-in-php, thanks!
                 $is_valid = false;
                 $params = ['http' => ['method' => 'HEAD', 'timeout' => 5.0]];
@@ -125,7 +123,7 @@ class Validation implements ValidationInterface
 
                     fclose($fp);
 
-                    if (is_array($wrapper_data) or $wrapper_data instanceof \ArrayAccess) {
+                    if (is_array($wrapper_data) || $wrapper_data instanceof \ArrayAccess) {
                         foreach ($wrapper_data as $hh) {
                             if (substr($hh, 0, 19) == 'Content-Type: image') { // strlen("Content-Type: image") == 19
                                 $is_valid = true;
@@ -152,13 +150,12 @@ class Validation implements ValidationInterface
     /**
      * Special empty method because 0 and '0' are non-empty values
      *
-     * @param   mixed
      * @param mixed $val
      *
      * @return bool
      */
     protected function _empty($val)
     {
-        return ($val === false or $val === null or $val === '' or $val === []);
+        return ($val === false || $val === null || $val === '' || $val === []);
     }
 }

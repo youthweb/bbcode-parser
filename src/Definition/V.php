@@ -56,7 +56,7 @@ class V extends CodeDefinition
         try {
             $filter = $this->config->get('filter.video', null);
 
-            if (is_object($filter) and $filter instanceof FilterInterface) {
+            if ($filter instanceof FilterInterface) {
                 $filter->setConfig($this->config);
 
                 return $filter->execute($el);

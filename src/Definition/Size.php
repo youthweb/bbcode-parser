@@ -66,7 +66,7 @@ class Size extends CodeDefinition
 
         $param = trim($param);
 
-        if ($content == '') {
+        if ($content === '') {
             return '';
         }
 

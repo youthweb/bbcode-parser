@@ -35,19 +35,21 @@ class Manager
     /**
      * @var Config The config object
      */
-    protected $config;
+    protected $config = null;
 
     /**
-     * @var Youthweb\BBCodeParser\Visitor\VisitorCollection
+     * @var VisitorCollectionInterface
      */
     private $visitorCollection;
 
     /**
      * Create the Manager
+     *
+     * @param VisitorCollectionInterface|null $visitorCollection
      */
     public function __construct(?VisitorCollectionInterface $visitorCollection = null)
     {
-        if ($visitorCollection === null) {
+        if (!$visitorCollection instanceof \Youthweb\BBCodeParser\Visitor\VisitorCollectionInterface) {
             $visitorCollection = new VisitorCollection();
         }
 
@@ -72,7 +74,7 @@ class Manager
         $visitors = $this->visitorCollection->getVisitors();
 
         // Wenn keine Definitions oder Visitors definiert wurden, brechen wir ab
-        if (count($definition_sets) === 0 and count($visitors) === 0) {
+        if (count($definition_sets) === 0 && count($visitors) === 0) {
             return $text;
         }
 
@@ -87,7 +89,7 @@ class Manager
         if ($this->config->get('parse_urls')) {
             $visitor = $this->config->get('visitor.url');
 
-            if (is_object($visitor) and $visitor instanceof VisitorInterface) {
+            if ($visitor instanceof VisitorInterface) {
                 $visitor->setConfig($this->config);
 
                 $parser->accept($visitor);
@@ -103,7 +105,7 @@ class Manager
         if ($this->config->get('parse_smilies')) {
             $visitor = $this->config->get('visitor.smiley');
 
-            if (is_object($visitor) and $visitor instanceof \JBBCode\NodeVisitor) {
+            if ($visitor instanceof \JBBCode\NodeVisitor) {
                 // BC: VisitorInterface wurde erst mit v1.1 eingeführt
                 if ($visitor instanceof VisitorInterface) {
                     $visitor->setConfig($this->config);
@@ -136,12 +138,12 @@ class Manager
 
         // BBCode-Regeln holen
         if ($this->config->get('parse_default')) {
-            array_push($sets, new DefaultSet($this->config));
+            $sets[] = new DefaultSet($this->config);
         }
 
         // Sollen Headlines [h1]-[h6] geparset werden? (Nur für News, Hilfe, etc)
         if ($this->config->get('parse_headlines')) {
-            array_push($sets, new HeadlineSet());
+            $sets[] = new HeadlineSet($this->config);
         }
 
         return $sets;
@@ -164,9 +166,9 @@ class Manager
         $new_text = '';
 
         foreach ($parts as $part) {
-            $in_p = ($in_p === false) ? true : false;
+            $in_p = $in_p === false;
 
-            if (trim($part) == '') {
+            if (trim($part) === '') {
                 continue;
             }
 
@@ -204,7 +206,8 @@ class Manager
         $text = str_ireplace(' yw ', ' <acronym title="Youthweb">YW</acronym> ', $text);
         $text = str_ireplace('{{{lt}}}', '<', $text);
         $text = str_ireplace('{{{gt}}}', '>', $text);
+        $text = str_ireplace('{{{quot}}}', '"', $text);
 
-        return str_ireplace('{{{quot}}}', '"', $text);
+        return $text;
     }
 }
