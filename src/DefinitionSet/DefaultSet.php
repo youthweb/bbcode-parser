@@ -26,6 +26,8 @@ use Youthweb\BBCodeParser\Definition;
 
 /**
  * Standardsatz an BBCode Definitionen
+ *
+ * @internal
  */
 
 class DefaultSet implements CodeDefinitionSet

@@ -25,6 +25,8 @@ namespace Youthweb\BBCodeParser\Definition;
  * [q=Author]
  * Quotetext
  * [/q]
+ *
+ * @internal
  */
 
 class QOption extends Q

@@ -31,6 +31,8 @@ use Youthweb\BBCodeParser\Html;
  * [*] second item
  * [*] third item
  * [/list]
+ *
+ * @internal
  */
 
 class ListDefinition extends CodeDefinition

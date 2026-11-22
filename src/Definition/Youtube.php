@@ -25,6 +25,8 @@ use Youthweb\BBCodeParser\Config;
  * Implements a [youtube] code definition that provides the following syntax:
  *
  * [youtube]http://www.youtube.com/watch?v=x_O0YiUFtxc[/youtube]
+ *
+ * @internal
  */
 
 class Youtube extends V

@@ -25,6 +25,8 @@ use Youthweb\BBCodeParser\Config;
  * Implements a [YWLINK] code definition that provides the following syntax:
  *
  * [YWLINK=example.com]Click me[/YWLINK]
+ *
+ * @internal
  */
 
 class YwlinkOption extends UrlOption

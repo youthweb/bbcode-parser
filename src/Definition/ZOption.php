@@ -25,6 +25,8 @@ namespace Youthweb\BBCodeParser\Definition;
  * [Z=Author]
  * Quotetext
  * [/Z]
+ *
+ * @internal
  */
 
 class ZOption extends Z

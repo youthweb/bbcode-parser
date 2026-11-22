@@ -29,6 +29,8 @@ use Youthweb\BBCodeParser\Validation;
  * Implements a [email] code definition that provides the following syntax:
  *
  * [email]mail@example.com[/email]
+ *
+ * @internal
  */
 
 class Email extends CodeDefinition

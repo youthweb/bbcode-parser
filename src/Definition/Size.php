@@ -28,6 +28,8 @@ use Youthweb\BBCodeParser\Html;
  * Implements a [size] code definition that provides the following syntax:
  *
  * [size=75]small text[/size]
+ *
+ * @internal
  */
 
 class Size extends CodeDefinition

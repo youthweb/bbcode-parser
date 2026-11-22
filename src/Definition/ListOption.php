@@ -27,6 +27,8 @@ namespace Youthweb\BBCodeParser\Definition;
  * [*] second item
  * [*] third item
  * [/list]
+ *
+ * @internal
  */
 
 class ListOption extends ListDefinition

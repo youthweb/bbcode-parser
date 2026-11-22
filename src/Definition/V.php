@@ -32,6 +32,8 @@ use Youthweb\BBCodeParser\Filter\FilterException;
  * [v]http://vimeo.com/11902475[/v]
  * [v]http://www.dailymotion.com/video/x10hfkd_1-minute-countdown-clock-timer_videogames[/v]
  * [v]https://youtu.be/x_O0YiUFtxc[/v]
+ *
+ * @internal
  */
 
 class V extends CodeDefinition

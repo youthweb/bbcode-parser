@@ -25,6 +25,8 @@ use Youthweb\BBCodeParser\Config;
  * Implements a [color] code definition that provides the following syntax:
  *
  * [color=green]green text comes here[/color]
+ *
+ * @internal
  */
 
 class ColorOption extends Color

@@ -28,6 +28,8 @@ use Youthweb\BBCodeParser\Html;
  * Implements a [u] code definition that provides the following syntax:
  *
  * [u]this text will be underlined[/u]
+ *
+ * @internal
  */
 
 class Underline extends CodeDefinition

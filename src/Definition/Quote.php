@@ -25,6 +25,8 @@ namespace Youthweb\BBCodeParser\Definition;
  * [quote]
  * Quotetext
  * [/qoute]
+ *
+ * @internal
  */
 
 class Quote extends Q
