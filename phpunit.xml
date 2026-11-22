@@ -6,10 +6,6 @@
     </report>
   </coverage>
   <testsuites>
-    <testsuite name="all">
-      <directory suffix="Test.php">tests/Unit/</directory>
-      <directory suffix="Test.php">tests/Integration/</directory>
-    </testsuite>
     <testsuite name="unit">
       <directory suffix="Test.php">tests/Unit/</directory>
     </testsuite>
