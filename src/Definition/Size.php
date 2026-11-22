@@ -65,7 +65,7 @@ class Size extends CodeDefinition
             $param = array_shift($param);
         }
 
-        $param = trim($param);
+        $param = trim((string) $param);
 
         if ($content === '') {
             return '';

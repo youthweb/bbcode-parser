@@ -75,7 +75,7 @@ class ListDefinition extends CodeDefinition
         }
 
         //Wir prüfen, ob eine Zahl angegeben wurde
-        if (!$list_type && preg_match('/^(-){0,1}\d+$/', $param)) {
+        if (!$list_type && preg_match('/^(-){0,1}\d+$/', (string) $param)) {
             $list_type = 'ol';
             $list_attr['start'] = intval($param);
         }
