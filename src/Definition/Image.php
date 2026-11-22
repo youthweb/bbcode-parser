@@ -62,7 +62,7 @@ class Image extends CodeDefinition
 
                 return $filter->execute($el);
             }
-        } catch (FilterException $e) {
+        } catch (FilterException) {
         }
 
         $content = '';

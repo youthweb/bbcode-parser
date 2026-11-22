@@ -38,7 +38,7 @@ class Manager
      */
     protected $config;
 
-    private \Youthweb\BBCodeParser\Visitor\VisitorCollectionInterface $visitorCollection;
+    private readonly \Youthweb\BBCodeParser\Visitor\VisitorCollectionInterface $visitorCollection;
 
     /**
      * Create the Manager

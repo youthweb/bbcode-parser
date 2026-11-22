@@ -87,7 +87,7 @@ class ListDefinition extends CodeDefinition
         }
 
         $delimiter = '[*]';
-        if (substr($content, 0, strlen($delimiter)) === $delimiter) {
+        if (str_starts_with($content, $delimiter)) {
             $content = substr_replace($content, '', 0, strlen($delimiter));
         }
 
