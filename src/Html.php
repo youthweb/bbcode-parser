@@ -269,7 +269,7 @@ class Html
      * Create a XHTML tag
      *
      * @param string $tag The tag name
-     * @param array|string $attr The tag attributes
+     * @param array|string|false $attr The tag attributes
      * @param string|bool $content The content to place in the tag, or false for no closing tag
      *
      * @return string
