@@ -48,6 +48,11 @@ jobs:
     - name: Run test suite
       run: vendor/bin/phpunit --coverage-text
 
+    # Fails when a fresh run is below the value in .coverage-floor. The floor only climbs:
+    # raise it in a reviewed commit when coverage grew, never lower it to make the job pass.
+    - name: Check coverage floor
+      run: scripts/check-coverage-floor.sh
+
   code-style:
     name: Code style (PHP CS Fixer)
     runs-on: ubuntu-latest

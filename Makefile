@@ -10,7 +10,7 @@ WORKDIR := /app
 DOCKER_RUN_ARGS := run --rm --user "$(shell id -u):$(shell id -g)" --env "HOME=/tmp" --volume "$(CURDIR):$(WORKDIR)" --workdir "$(WORKDIR)"
 DOCKER_RUN := $(DOCKER) $(DOCKER_RUN_ARGS)
 
-.PHONY: build check-docker clean codestyle composer coverage install phpstan phpunit rector shell test
+.PHONY: build check-docker clean codestyle composer coverage coverage-floor install phpstan phpunit rector shell test
 
 .DEFAULT_GOAL := test
 
@@ -43,6 +43,10 @@ rector: build
 
 coverage: build
 	$(DOCKER_RUN) --env "XDEBUG_MODE=coverage" "$(TAG)" vendor/bin/phpunit --coverage-html="build/code-coverage"
+
+# Xdebug does not exist for PHP 7.4, run it with a newer version: make coverage-floor PHP_VERSION=8.3
+coverage-floor: build
+	$(DOCKER_RUN) --env "XDEBUG_MODE=coverage" "$(TAG)" sh -c 'vendor/bin/phpunit --coverage-text && scripts/check-coverage-floor.sh'
 
 test: build
 	$(DOCKER_RUN) "$(TAG)" sh -c "if [ ! -f vendor/autoload.php ]; then composer install; fi; vendor/bin/phpunit"
