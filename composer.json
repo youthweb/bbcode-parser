@@ -21,7 +21,7 @@
         "youthweb/urllinker": "^1.4"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.3",
+        "friendsofphp/php-cs-fixer": "^3.86",
         "phpstan/phpstan": "^1.2",
         "phpunit/phpunit": "^9"
     },
