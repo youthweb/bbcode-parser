@@ -21,10 +21,11 @@
         "youthweb/urllinker": "^1.4"
     },
     "require-dev": {
+        "art4/rector-bc-library": "^1.4",
         "friendsofphp/php-cs-fixer": "^3.86",
-        "phpstan/phpstan": "^1.2",
+        "phpstan/phpstan": "^2.1",
         "phpunit/phpunit": "^9",
-        "rector/rector": "^1.2"
+        "rector/rector": "^2.6.7"
     },
     "autoload": {
         "psr-4": {
