@@ -39,17 +39,11 @@ class ImageTest extends \PHPUnit\Framework\TestCase
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get'])
-            ->getMock();
-
-        $config->expects($this->any())
-            ->method('get')
-            ->willReturnMap(
-                [
-                    ['callbacks.image.force_check', null, false],
-                ],
-            );
+        $config = $this->buildConfigStub(
+            [
+                ['callbacks.image.force_check', null, false],
+            ],
+        );
 
         $definition = new Image($config);
 
@@ -64,26 +58,17 @@ class ImageTest extends \PHPUnit\Framework\TestCase
         $expected = 'some value';
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $filter = $this->getMockBuilder(\Youthweb\BBCodeParser\Filter\FilterInterface::class)
-            ->onlyMethods(['setConfig', 'execute'])
-            ->getMock();
+        $filter = $this->createStub(\Youthweb\BBCodeParser\Filter\FilterInterface::class);
 
-        $filter->expects($this->any())
-            ->method('execute')
+        $filter->method('execute')
             ->willReturn($expected);
 
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get'])
-            ->getMock();
-
-        $config->expects($this->any())
-            ->method('get')
-            ->willReturnMap(
-                [
-                    ['callbacks.image.force_check', null, false],
-                    ['filter.image', null, $filter],
-                ],
-            );
+        $config = $this->buildConfigStub(
+            [
+                ['callbacks.image.force_check', null, false],
+                ['filter.image', null, $filter],
+            ],
+        );
 
         $definition = new Image($config);
 
@@ -98,26 +83,17 @@ class ImageTest extends \PHPUnit\Framework\TestCase
         $expected = '<a target="_blank" href="http://example.org/image.jpg"><img class="img-responsive" border="0" src="http://example.org/image.jpg" alt="image" /></a>';
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $filter = $this->getMockBuilder(\Youthweb\BBCodeParser\Filter\FilterInterface::class)
-            ->onlyMethods(['setConfig', 'execute'])
-            ->getMock();
+        $filter = $this->createStub(\Youthweb\BBCodeParser\Filter\FilterInterface::class);
 
-        $filter->expects($this->any())
-            ->method('execute')
+        $filter->method('execute')
             ->willThrowException(new FilterException());
 
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get'])
-            ->getMock();
-
-        $config->expects($this->any())
-            ->method('get')
-            ->willReturnMap(
-                [
-                    ['callbacks.image.force_check', null, false],
-                    ['filter.image', null, $filter],
-                ],
-            );
+        $config = $this->buildConfigStub(
+            [
+                ['callbacks.image.force_check', null, false],
+                ['filter.image', null, $filter],
+            ],
+        );
 
         $definition = new Image($config);
 
@@ -132,21 +108,14 @@ class ImageTest extends \PHPUnit\Framework\TestCase
         $expected = '<img class="img-responsive" border="0" src="http://example.org/image.jpg" alt="image" />';
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $elementNode->expects($this->any())
-            ->method('closestParentOfType')
+        $elementNode->method('closestParentOfType')
             ->willReturn(true);
 
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get'])
-            ->getMock();
-
-        $config->expects($this->any())
-            ->method('get')
-            ->willReturnMap(
-                [
-                    ['callbacks.image.force_check', null, false],
-                ],
-            );
+        $config = $this->buildConfigStub(
+            [
+                ['callbacks.image.force_check', null, false],
+            ],
+        );
 
         $definition = new Image($config);
 
@@ -161,31 +130,23 @@ class ImageTest extends \PHPUnit\Framework\TestCase
         $expected = 'http://example.org/not-an-image.txt';
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $elementNode->expects($this->any())
-            ->method('closestParentOfType')
+        $elementNode->method('closestParentOfType')
             ->willReturn(true);
 
-        $validation = $this->getMockBuilder(\Youthweb\BBCodeParser\ValidationInterface::class)
-            ->getMock();
+        $validation = $this->createStub(\Youthweb\BBCodeParser\ValidationInterface::class);
 
-        $validation->expects($this->any())
-            ->method('isValidImageUrl')
+        $validation->method('isValidImageUrl')
             ->willReturn(false);
 
-        $validation->expects($this->any())
-            ->method('isValidUrl')
+        $validation->method('isValidUrl')
             ->willReturn(true);
 
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get', 'getValidation'])
-            ->getMock();
+        $config = $this->createStub(\Youthweb\BBCodeParser\Config::class);
 
-        $config->expects($this->any())
-            ->method('getValidation')
+        $config->method('getValidation')
             ->willReturn($validation);
 
-        $config->expects($this->any())
-            ->method('get')
+        $config->method('get')
             ->willReturnMap(
                 [
                     ['callbacks.image.force_check', null, true],
@@ -205,31 +166,23 @@ class ImageTest extends \PHPUnit\Framework\TestCase
         $expected = '<a href="http://example.org/not-an-image.txt">http://example.org/not-an-image.txt</a>';
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $elementNode->expects($this->any())
-            ->method('closestParentOfType')
+        $elementNode->method('closestParentOfType')
             ->willReturn(false);
 
-        $validation = $this->getMockBuilder(\Youthweb\BBCodeParser\ValidationInterface::class)
-            ->getMock();
+        $validation = $this->createStub(\Youthweb\BBCodeParser\ValidationInterface::class);
 
-        $validation->expects($this->any())
-            ->method('isValidImageUrl')
+        $validation->method('isValidImageUrl')
             ->willReturn(false);
 
-        $validation->expects($this->any())
-            ->method('isValidUrl')
+        $validation->method('isValidUrl')
             ->willReturn(true);
 
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get', 'getValidation'])
-            ->getMock();
+        $config = $this->createStub(\Youthweb\BBCodeParser\Config::class);
 
-        $config->expects($this->any())
-            ->method('getValidation')
+        $config->method('getValidation')
             ->willReturn($validation);
 
-        $config->expects($this->any())
-            ->method('get')
+        $config->method('get')
             ->willReturnMap(
                 [
                     ['callbacks.image.force_check', null, true],

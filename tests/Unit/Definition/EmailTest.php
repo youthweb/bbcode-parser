@@ -37,17 +37,12 @@ class EmailTest extends \PHPUnit\Framework\TestCase
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get'])
-            ->getMock();
-
-        $config->method('get')
-            ->willReturnMap(
-                [
-                    ['cacheitempool', null, null],
-                    ['callbacks.email_content.protect_email', null, false],
-                ],
-            );
+        $config = $this->buildConfigStub(
+            [
+                ['cacheitempool', null, null],
+                ['callbacks.email_content.protect_email', null, false],
+            ],
+        );
 
         $definition = new Email($config);
 
@@ -59,17 +54,12 @@ class EmailTest extends \PHPUnit\Framework\TestCase
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get'])
-            ->getMock();
-
-        $config->method('get')
-            ->willReturnMap(
-                [
-                    ['cacheitempool', null, null],
-                    ['callbacks.email_content.protect_email', null, true],
-                ],
-            );
+        $config = $this->buildConfigStub(
+            [
+                ['cacheitempool', null, null],
+                ['callbacks.email_content.protect_email', null, true],
+            ],
+        );
 
         $definition = new Email($config);
 

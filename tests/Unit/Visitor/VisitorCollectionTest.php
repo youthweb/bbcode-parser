@@ -40,7 +40,7 @@ class VisitorCollectionTest extends TestCase
     #[Test]
     public function getVisitorsReturnsArrayWithOneElement(): void
     {
-        $visitor = $this->createMock(VisitorInterface::class);
+        $visitor = $this->createStub(VisitorInterface::class);
 
         $collection = new VisitorCollection();
         $collection->addVisitor($visitor);
@@ -52,7 +52,7 @@ class VisitorCollectionTest extends TestCase
     #[Test]
     public function getVisitorsReturnsArrayWithMultipleElements(): void
     {
-        $visitor = $this->createMock(VisitorInterface::class);
+        $visitor = $this->createStub(VisitorInterface::class);
 
         $collection = new VisitorCollection();
         $collection->addVisitor($visitor);

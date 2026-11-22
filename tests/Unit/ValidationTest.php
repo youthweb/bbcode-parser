@@ -48,14 +48,11 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
         ValidationMock::resetImageCounter();
     }
 
-    public function getConfigMock(): \PHPUnit\Framework\MockObject\MockObject
+    public function getConfigMock(): \Youthweb\BBCodeParser\Config
     {
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get'])
-            ->getMock();
+        $config = $this->createStub(\Youthweb\BBCodeParser\Config::class);
 
-        $config->expects($this->any())
-            ->method('get')
+        $config->method('get')
             ->willReturnMap(
                 [
                     ['cacheitempool', null, null],

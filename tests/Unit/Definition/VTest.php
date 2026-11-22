@@ -39,18 +39,12 @@ class VTest extends \PHPUnit\Framework\TestCase
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get'])
-            ->getMock();
-
-        $config->expects($this->any())
-            ->method('get')
-            ->willReturnMap(
-                [
-                    ['callbacks.url_content.target', null, '_blank'],
-                    ['filter.video', null, false],
-                ],
-            );
+        $config = $this->buildConfigStub(
+            [
+                ['callbacks.url_content.target', null, '_blank'],
+                ['filter.video', null, false],
+            ],
+        );
 
         $definition = new V($config);
 
@@ -94,26 +88,17 @@ class VTest extends \PHPUnit\Framework\TestCase
         $expected = 'some value';
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $filter = $this->getMockBuilder(\Youthweb\BBCodeParser\Filter\FilterInterface::class)
-            ->onlyMethods(['setConfig', 'execute'])
-            ->getMock();
+        $filter = $this->createStub(\Youthweb\BBCodeParser\Filter\FilterInterface::class);
 
-        $filter->expects($this->any())
-            ->method('execute')
+        $filter->method('execute')
             ->willReturn($expected);
 
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get'])
-            ->getMock();
-
-        $config->expects($this->any())
-            ->method('get')
-            ->willReturnMap(
-                [
-                    ['callbacks.url_content.target', null, '_blank'],
-                    ['filter.video', null, $filter],
-                ],
-            );
+        $config = $this->buildConfigStub(
+            [
+                ['callbacks.url_content.target', null, '_blank'],
+                ['filter.video', null, $filter],
+            ],
+        );
 
         $definition = new V($config);
 
@@ -128,26 +113,17 @@ class VTest extends \PHPUnit\Framework\TestCase
         $expected = '<a target="_blank" href="http://example.org/video.mp4">http://example.org/video.mp4</a>';
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $filter = $this->getMockBuilder(\Youthweb\BBCodeParser\Filter\FilterInterface::class)
-            ->onlyMethods(['setConfig', 'execute'])
-            ->getMock();
+        $filter = $this->createStub(\Youthweb\BBCodeParser\Filter\FilterInterface::class);
 
-        $filter->expects($this->any())
-            ->method('execute')
+        $filter->method('execute')
             ->willThrowException(new FilterException());
 
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get'])
-            ->getMock();
-
-        $config->expects($this->any())
-            ->method('get')
-            ->willReturnMap(
-                [
-                    ['callbacks.url_content.target', null, '_blank'],
-                    ['filter.video', null, $filter],
-                ],
-            );
+        $config = $this->buildConfigStub(
+            [
+                ['callbacks.url_content.target', null, '_blank'],
+                ['filter.video', null, $filter],
+            ],
+        );
 
         $definition = new V($config);
 

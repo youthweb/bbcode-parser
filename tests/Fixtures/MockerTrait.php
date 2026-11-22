@@ -26,21 +26,16 @@ namespace Youthweb\BBCodeParser\Tests\Fixtures;
 trait MockerTrait
 {
     /**
-     * Builds a ElementNode Mock
+     * Builds an ElementNode stub
      *
      * @param mixed $content
      * @param mixed $attribute
      */
     public function buildElementNodeMock($content, $attribute)
     {
-        $child = $this->getMockBuilder(\JBBCode\TextNode::class)
-            ->setConstructorArgs([$content])
-            ->onlyMethods([])
-            ->getMock();
+        $child = new \JBBCode\TextNode($content);
 
-        $elementNode = $this->getMockBuilder(\JBBCode\ElementNode::class)
-            ->onlyMethods(['getAttribute', 'getChildren', 'closestParentOfType'])
-            ->getMock();
+        $elementNode = $this->createStub(\JBBCode\ElementNode::class);
 
         $elementNode->method('getAttribute')
             ->willReturn($attribute);
@@ -49,5 +44,27 @@ trait MockerTrait
             ->willReturn([$child]);
 
         return $elementNode;
+    }
+
+    /**
+     * Builds a Config stub that answers get() from a value map and returns
+     * the real Validation from getValidation()
+     *
+     * createStub() stubs every method, so getValidation() has to be configured
+     * for the definitions that validate through it.
+     *
+     * @param array<int, array<int, mixed>> $valueMap Rows of [key, default, value]
+     */
+    public function buildConfigStub(array $valueMap)
+    {
+        $config = $this->createStub(\Youthweb\BBCodeParser\Config::class);
+
+        $config->method('get')
+            ->willReturnMap($valueMap);
+
+        $config->method('getValidation')
+            ->willReturn(new \Youthweb\BBCodeParser\Validation($config));
+
+        return $config;
     }
 }

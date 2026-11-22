@@ -38,19 +38,13 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get'])
-            ->getMock();
-
-        $config->expects($this->any())
-            ->method('get')
-            ->willReturnMap(
-                [
-                    ['callbacks.url_content.short_url', null, false],
-                    ['callbacks.url_content.short_url_length', null, 55],
-                    ['callbacks.url_content.target', null, '_blank'],
-                ],
-            );
+        $config = $this->buildConfigStub(
+            [
+                ['callbacks.url_content.short_url', null, false],
+                ['callbacks.url_content.short_url_length', null, 55],
+                ['callbacks.url_content.target', null, '_blank'],
+            ],
+        );
 
         $definition = new UrlOption($config);
 
@@ -66,18 +60,13 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
 
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get'])
-            ->getMock();
-
-        $config->method('get')
-            ->willReturnMap(
-                [
-                    ['callbacks.url_content.short_url', null, true],
-                    ['callbacks.url_content.short_url_length', null, 30],
-                    ['callbacks.url_content.target', null, '_blank'],
-                ],
-            );
+        $config = $this->buildConfigStub(
+            [
+                ['callbacks.url_content.short_url', null, true],
+                ['callbacks.url_content.short_url_length', null, 30],
+                ['callbacks.url_content.target', null, '_blank'],
+            ],
+        );
 
         $definition = new UrlOption($config);
 
@@ -93,18 +82,13 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
 
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get'])
-            ->getMock();
-
-        $config->method('get')
-            ->willReturnMap(
-                [
-                    ['callbacks.url_content.short_url', null, true],
-                    ['callbacks.url_content.short_url_length', null, 20],
-                    ['callbacks.url_content.target', null, '_blank'],
-                ],
-            );
+        $config = $this->buildConfigStub(
+            [
+                ['callbacks.url_content.short_url', null, true],
+                ['callbacks.url_content.short_url_length', null, 20],
+                ['callbacks.url_content.target', null, '_blank'],
+            ],
+        );
 
         $definition = new UrlOption($config);
 
@@ -120,18 +104,13 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
 
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get'])
-            ->getMock();
-
-        $config->method('get')
-            ->willReturnMap(
-                [
-                    ['callbacks.url_content.short_url', null, true],
-                    ['callbacks.url_content.short_url_length', null, 55],
-                    ['callbacks.url_content.target', null, null],
-                ],
-            );
+        $config = $this->buildConfigStub(
+            [
+                ['callbacks.url_content.short_url', null, true],
+                ['callbacks.url_content.short_url_length', null, 55],
+                ['callbacks.url_content.target', null, null],
+            ],
+        );
 
         $definition = new UrlOption($config);
 
@@ -147,18 +126,13 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
 
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get'])
-            ->getMock();
-
-        $config->method('get')
-            ->willReturnMap(
-                [
-                    ['callbacks.url_content.short_url', null, true],
-                    ['callbacks.url_content.short_url_length', null, 55],
-                    ['callbacks.url_content.target', null, '_blank'],
-                ],
-            );
+        $config = $this->buildConfigStub(
+            [
+                ['callbacks.url_content.short_url', null, true],
+                ['callbacks.url_content.short_url_length', null, 55],
+                ['callbacks.url_content.target', null, '_blank'],
+            ],
+        );
 
         $definition = new UrlOption($config);
 
@@ -174,18 +148,13 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
 
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get'])
-            ->getMock();
-
-        $config->method('get')
-            ->willReturnMap(
-                [
-                    ['callbacks.url_content.short_url', null, true],
-                    ['callbacks.url_content.short_url_length', null, 55],
-                    ['callbacks.url_content.target', null, '_blank'],
-                ],
-            );
+        $config = $this->buildConfigStub(
+            [
+                ['callbacks.url_content.short_url', null, true],
+                ['callbacks.url_content.short_url_length', null, 55],
+                ['callbacks.url_content.target', null, '_blank'],
+            ],
+        );
 
         $definition = new UrlOption($config);
 

@@ -48,7 +48,7 @@ class ManagerTest extends TestCase
     #[Test]
     public function parseWillUseTheVisitorCollection(): void
     {
-        $visitor = $this->createMock(VisitorInterface::class);
+        $visitor = $this->createStub(VisitorInterface::class);
 
         $visitorCollection = $this->createMock(VisitorCollectionInterface::class);
         $visitorCollection->expects($this->once())->method('getVisitors')->willReturn([$visitor]);
