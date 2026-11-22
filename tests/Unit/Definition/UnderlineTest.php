@@ -25,6 +25,9 @@ use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\Underline;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
 
+/**
+ * @covers \Youthweb\BBCodeParser\Definition\Underline
+ */
 class UnderlineTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;

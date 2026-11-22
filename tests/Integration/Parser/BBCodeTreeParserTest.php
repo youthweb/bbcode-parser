@@ -11,6 +11,9 @@ use Youthweb\BBCodeParser\Parser\SpikeHtmlRenderer;
 
 /**
  * Back-to-back test of the spike (#45): 1.x engine against the league node tree.
+ *
+ * @covers \Youthweb\BBCodeParser\Parser\BBCodeTreeParser
+ * @covers \Youthweb\BBCodeParser\Parser\SpikeHtmlRenderer
  */
 final class BBCodeTreeParserTest extends TestCase
 {

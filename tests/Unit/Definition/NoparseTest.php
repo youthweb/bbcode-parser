@@ -25,6 +25,9 @@ use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\Noparse;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
 
+/**
+ * @covers \Youthweb\BBCodeParser\Definition\Noparse
+ */
 class NoparseTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;

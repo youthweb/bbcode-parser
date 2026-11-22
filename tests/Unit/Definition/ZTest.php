@@ -25,6 +25,9 @@ use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\Z;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
 
+/**
+ * @covers \Youthweb\BBCodeParser\Definition\Z
+ */
 class ZTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;

@@ -24,6 +24,9 @@ use PHPUnit\Framework\TestCase;
 use Youthweb\BBCodeParser\Visitor\VisitorCollection;
 use Youthweb\BBCodeParser\Visitor\VisitorInterface;
 
+/**
+ * @covers \Youthweb\BBCodeParser\Visitor\VisitorCollection
+ */
 class VisitorCollectionTest extends TestCase
 {
     /**

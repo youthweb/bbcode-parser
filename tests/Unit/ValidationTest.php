@@ -24,6 +24,9 @@ use Youthweb\BBCodeParser\Tests\Fixtures\MockHttpStreamWrapper;
 use Youthweb\BBCodeParser\Tests\Fixtures\ValidationMock;
 use Youthweb\BBCodeParser\Validation;
 
+/**
+ * @covers \Youthweb\BBCodeParser\Validation
+ */
 class ValidationTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp(): void

@@ -25,6 +25,9 @@ use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\ColorOption;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
 
+/**
+ * @covers \Youthweb\BBCodeParser\Definition\ColorOption
+ */
 class ColorOptionTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;

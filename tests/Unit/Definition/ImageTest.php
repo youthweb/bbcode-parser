@@ -26,6 +26,9 @@ use Youthweb\BBCodeParser\Definition\Image;
 use Youthweb\BBCodeParser\Filter\FilterException;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
 
+/**
+ * @covers \Youthweb\BBCodeParser\Definition\Image
+ */
 class ImageTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;

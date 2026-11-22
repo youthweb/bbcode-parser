@@ -22,6 +22,9 @@ namespace Youthweb\BBCodeParser\Tests\Unit;
 
 use Youthweb\BBCodeParser\Config;
 
+/**
+ * @covers \Youthweb\BBCodeParser\Config
+ */
 class ConfigTest extends \PHPUnit\Framework\TestCase
 {
     /**

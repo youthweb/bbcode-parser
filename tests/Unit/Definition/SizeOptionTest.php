@@ -25,6 +25,9 @@ use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\SizeOption;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
 
+/**
+ * @covers \Youthweb\BBCodeParser\Definition\SizeOption
+ */
 class SizeOptionTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;

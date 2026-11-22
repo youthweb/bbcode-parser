@@ -25,6 +25,9 @@ use Youthweb\BBCodeParser\Manager;
 use Youthweb\BBCodeParser\Visitor\VisitorCollectionInterface;
 use Youthweb\BBCodeParser\Visitor\VisitorInterface;
 
+/**
+ * @covers \Youthweb\BBCodeParser\Manager
+ */
 class ManagerTest extends TestCase
 {
     /**
