@@ -32,12 +32,12 @@ trait MockerTrait
      */
     public function buildElementNodeMock($content, $attribute)
     {
-        $child = $this->getMockBuilder('JBBCode\TextNode')
+        $child = $this->getMockBuilder(\JBBCode\TextNode::class)
             ->setConstructorArgs([$content])
             ->setMethods(null)
             ->getMock();
 
-        $elementNode = $this->getMockBuilder('JBBCode\ElementNode')
+        $elementNode = $this->getMockBuilder(\JBBCode\ElementNode::class)
             ->setMethods(['getAttribute', 'getChildren', 'closestParentOfType'])
             ->getMock();
 
