@@ -1,4 +1,5 @@
 <?php
+
 /*
  * A BBCode-to-HTML parser for youthweb.net
  * Copyright (C) 2016-2021  Youthweb e.V. <info@youthweb.net>
