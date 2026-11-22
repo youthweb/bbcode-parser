@@ -21,7 +21,6 @@ namespace Youthweb\BBCodeParser\DefinitionSet;
 
 use JBBCode\CodeDefinitionSet;
 use JBBCode\CodeDefinitionBuilder;
-use Youthweb\BBCodeParser\Config;
 
 /**
  * Headlinesatz an BBCode Definitionen
