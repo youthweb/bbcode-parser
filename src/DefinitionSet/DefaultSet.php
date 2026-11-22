@@ -41,66 +41,66 @@ class DefaultSet implements CodeDefinitionSet
     public function __construct(Config $config)
     {
         /* [b] bold tag */
-        array_push($this->definitions, new Definition\Bold());
+        $this->definitions[] = new Definition\Bold();
         // Depreacated [F] tag
         $definition = new Definition\Bold();
         $definition->setTagName('F');
-        array_push($this->definitions, $definition);
+        $this->definitions[] = $definition;
 
         /* [i] italics tag */
-        array_push($this->definitions, new Definition\Italic());
+        $this->definitions[] = new Definition\Italic();
         // Depreacated [K] tag
         $definition = new Definition\Italic();
         $definition->setTagName('K');
-        array_push($this->definitions, $definition);
+        $this->definitions[] = $definition;
 
         /* [u] underline tag */
-        array_push($this->definitions, new Definition\Underline());
+        $this->definitions[] = new Definition\Underline();
 
         /* [code] code tag */
-        array_push($this->definitions, new Definition\Code());
+        $this->definitions[] = new Definition\Code();
 
         /* [noparse] noparse tag */
-        array_push($this->definitions, new Definition\Noparse());
+        $this->definitions[] = new Definition\Noparse();
 
         /* [list] list tag */
-        array_push($this->definitions, new Definition\ListDefinition());
-        array_push($this->definitions, new Definition\ListOption());
+        $this->definitions[] = new Definition\ListDefinition();
+        $this->definitions[] = new Definition\ListOption();
 
         /* [q] quote tag */
-        array_push($this->definitions, new Definition\Q());
-        array_push($this->definitions, new Definition\QOption());
-        array_push($this->definitions, new Definition\Quote());
-        array_push($this->definitions, new Definition\QuoteOption());
+        $this->definitions[] = new Definition\Q();
+        $this->definitions[] = new Definition\QOption();
+        $this->definitions[] = new Definition\Quote();
+        $this->definitions[] = new Definition\QuoteOption();
         // Deprecated Z tag
-        array_push($this->definitions, new Definition\Z());
-        array_push($this->definitions, new Definition\ZOption());
+        $this->definitions[] = new Definition\Z();
+        $this->definitions[] = new Definition\ZOption();
 
         /* [email] email tag */
-        array_push($this->definitions, new Definition\Email($config));
-        array_push($this->definitions, new Definition\EmailOption($config));
+        $this->definitions[] = new Definition\Email($config);
+        $this->definitions[] = new Definition\EmailOption($config);
 
         /* [url] url tag */
-        array_push($this->definitions, new Definition\Url($config));
-        array_push($this->definitions, new Definition\UrlOption($config));
-        array_push($this->definitions, new Definition\YwlinkOption($config));
+        $this->definitions[] = new Definition\Url($config);
+        $this->definitions[] = new Definition\UrlOption($config);
+        $this->definitions[] = new Definition\YwlinkOption($config);
 
         /* [img] image tag */
-        array_push($this->definitions, new Definition\Image($config));
-        array_push($this->definitions, new Definition\Pic($config));
+        $this->definitions[] = new Definition\Image($config);
+        $this->definitions[] = new Definition\Pic($config);
 
         /* [v] video tag */
-        array_push($this->definitions, new Definition\V($config));
-        array_push($this->definitions, new Definition\Video($config));
-        array_push($this->definitions, new Definition\Youtube($config));
+        $this->definitions[] = new Definition\V($config);
+        $this->definitions[] = new Definition\Video($config);
+        $this->definitions[] = new Definition\Youtube($config);
 
         /* [color] color tag */
-        array_push($this->definitions, new Definition\Color($config));
-        array_push($this->definitions, new Definition\ColorOption($config));
+        $this->definitions[] = new Definition\Color($config);
+        $this->definitions[] = new Definition\ColorOption($config);
 
         /* [size] size tag */
-        array_push($this->definitions, new Definition\Size($config));
-        array_push($this->definitions, new Definition\SizeOption($config));
+        $this->definitions[] = new Definition\Size($config);
+        $this->definitions[] = new Definition\SizeOption($config);
     }
 
     /**
