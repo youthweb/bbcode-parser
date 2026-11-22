@@ -32,7 +32,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
      */
     public function testSetter($key, $default, $value)
     {
-        $validation = $this->getMockBuilder('Youthweb\BBCodeParser\ValidationInterface')
+        $validation = $this->getMockBuilder(\Youthweb\BBCodeParser\ValidationInterface::class)
             ->getMock();
 
         $config = new Config($validation);
@@ -73,7 +73,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetter()
     {
-        $validation = $this->getMockBuilder('Youthweb\BBCodeParser\ValidationInterface')
+        $validation = $this->getMockBuilder(\Youthweb\BBCodeParser\ValidationInterface::class)
             ->getMock();
 
         $config = new Config($validation);

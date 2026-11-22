@@ -40,7 +40,7 @@ class VTest extends \PHPUnit\Framework\TestCase
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $config = $this->getMockBuilder('Youthweb\BBCodeParser\Config')
+        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
             ->setMethods(['get'])
             ->getMock();
 
@@ -99,7 +99,7 @@ class VTest extends \PHPUnit\Framework\TestCase
         $expected = 'some value';
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $filter = $this->getMockBuilder('Youthweb\BBCodeParser\Filter\FilterInterface')
+        $filter = $this->getMockBuilder(\Youthweb\BBCodeParser\Filter\FilterInterface::class)
             ->setMethods(['setConfig', 'execute'])
             ->getMock();
 
@@ -107,7 +107,7 @@ class VTest extends \PHPUnit\Framework\TestCase
             ->method('execute')
             ->willReturn($expected);
 
-        $config = $this->getMockBuilder('Youthweb\BBCodeParser\Config')
+        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
             ->setMethods(['get'])
             ->getMock();
 
@@ -137,7 +137,7 @@ class VTest extends \PHPUnit\Framework\TestCase
         $expected = '<a target="_blank" href="http://example.org/video.mp4">http://example.org/video.mp4</a>';
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $filter = $this->getMockBuilder('Youthweb\BBCodeParser\Filter\FilterInterface')
+        $filter = $this->getMockBuilder(\Youthweb\BBCodeParser\Filter\FilterInterface::class)
             ->setMethods(['setConfig', 'execute'])
             ->getMock();
 
@@ -145,7 +145,7 @@ class VTest extends \PHPUnit\Framework\TestCase
             ->method('execute')
             ->willThrowException(new FilterException());
 
-        $config = $this->getMockBuilder('Youthweb\BBCodeParser\Config')
+        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
             ->setMethods(['get'])
             ->getMock();
 

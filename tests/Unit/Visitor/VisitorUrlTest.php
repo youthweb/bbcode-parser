@@ -28,7 +28,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
      */
     public function testCreate()
     {
-        $config = $this->getMockBuilder('Youthweb\BBCodeParser\Config')
+        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
             ->disableOriginalConstructor()
             ->disableOriginalClone()
             ->disableArgumentCloning()
@@ -39,7 +39,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
         $config = new \Youthweb\BBCodeParser\Config();
         $visitor->setConfig($config);
 
-        $this->assertInstanceOf('Youthweb\BBCodeParser\Visitor\VisitorInterface', $visitor);
+        $this->assertInstanceOf(\Youthweb\BBCodeParser\Visitor\VisitorInterface::class, $visitor);
     }
 
     /**
@@ -52,7 +52,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
         $config = new \Youthweb\BBCodeParser\Config();
         $visitor->setConfig($config);
 
-        $child = $this->getMockBuilder('JBBCode\Node')
+        $child = $this->getMockBuilder(\JBBCode\Node::class)
             ->disableOriginalConstructor()
             ->disableOriginalClone()
             ->disableArgumentCloning()
@@ -63,7 +63,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
             ->with($visitor)
             ->willReturn(null);
 
-        $element = $this->getMockBuilder('JBBCode\DocumentElement')
+        $element = $this->getMockBuilder(\JBBCode\DocumentElement::class)
             ->disableOriginalConstructor()
             ->disableOriginalClone()
             ->disableArgumentCloning()
@@ -85,7 +85,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
         $config = new \Youthweb\BBCodeParser\Config();
         $visitor->setConfig($config);
 
-        $code_definition = $this->getMockBuilder('JBBCode\CodeDefinition')
+        $code_definition = $this->getMockBuilder(\JBBCode\CodeDefinition::class)
             ->disableOriginalConstructor()
             ->disableOriginalClone()
             ->disableArgumentCloning()
@@ -94,7 +94,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
         $code_definition->method('parseContent')
             ->willReturn(true);
 
-        $child = $this->getMockBuilder('JBBCode\Node')
+        $child = $this->getMockBuilder(\JBBCode\Node::class)
             ->disableOriginalConstructor()
             ->disableOriginalClone()
             ->disableArgumentCloning()
@@ -105,7 +105,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
             ->with($visitor)
             ->willReturn(null);
 
-        $element = $this->getMockBuilder('JBBCode\ElementNode')
+        $element = $this->getMockBuilder(\JBBCode\ElementNode::class)
             ->disableOriginalConstructor()
             ->disableOriginalClone()
             ->disableArgumentCloning()
@@ -128,7 +128,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
      */
     public function testVisitTextNode($src, $expected)
     {
-        $textnode = $this->getMockBuilder('JBBCode\TextNode')
+        $textnode = $this->getMockBuilder(\JBBCode\TextNode::class)
             ->disableOriginalConstructor()
             ->disableOriginalClone()
             ->disableArgumentCloning()

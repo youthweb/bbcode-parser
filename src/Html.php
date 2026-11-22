@@ -228,7 +228,7 @@ class Html
         }
 
         $attr['src'] = $src;
-        $attr['alt'] = (isset($attr['alt'])) ? $attr['alt'] : pathinfo($src, PATHINFO_FILENAME);
+        $attr['alt'] ??= pathinfo($src, PATHINFO_FILENAME);
 
         return static::html_tag('img', $attr);
     }

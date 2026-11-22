@@ -39,7 +39,7 @@ class SizeTest extends \PHPUnit\Framework\TestCase
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $config = $this->getMockBuilder('Youthweb\BBCodeParser\Config')
+        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
             ->setMethods(['get'])
             ->getMock();
 
