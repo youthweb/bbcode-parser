@@ -82,16 +82,16 @@ class HtmlTest extends \PHPUnit\Framework\TestCase
                     'item 2',
                 ],
                 [],
-                '<ul>' . PHP_EOL .
-                "\t" . '<li>item one</li>' . PHP_EOL .
-                "\t" . '<li>' . PHP_EOL .
-                "\t\t" . '<ul>' . PHP_EOL .
-                "\t\t\t" . '<li>item 1.1</li>' . PHP_EOL .
-                "\t\t\t" . '<li>item 1.2</li>' . PHP_EOL .
-                "\t\t" . '</ul>' . PHP_EOL .
-                "\t" . '</li>' . PHP_EOL .
-                "\t" . '<li>item 2</li>' . PHP_EOL .
-                '</ul>' . PHP_EOL,
+                '<ul>' . PHP_EOL
+                . "\t" . '<li>item one</li>' . PHP_EOL
+                . "\t" . '<li>' . PHP_EOL
+                . "\t\t" . '<ul>' . PHP_EOL
+                . "\t\t\t" . '<li>item 1.1</li>' . PHP_EOL
+                . "\t\t\t" . '<li>item 1.2</li>' . PHP_EOL
+                . "\t\t" . '</ul>' . PHP_EOL
+                . "\t" . '</li>' . PHP_EOL
+                . "\t" . '<li>item 2</li>' . PHP_EOL
+                . '</ul>' . PHP_EOL,
             ],
         ];
     }

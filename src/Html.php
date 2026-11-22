@@ -145,10 +145,10 @@ class Html
                 // Bsp.: Aus http://www.example.com/irgend/eine/lange/url.html wird
                 if ($max_length < 30) {
                     // www.example.com/ir…
-                    $content = substr($content, 0, $max_length-2) . '…';
+                    $content = substr($content, 0, $max_length - 2) . '…';
                 } else {
                     // www.example.com/ir…e/url.html
-                    $content = substr($content, 0, $max_length-12) . '…' . substr($content, -10);
+                    $content = substr($content, 0, $max_length - 12) . '…' . substr($content, -10);
                 }
             }
         }
