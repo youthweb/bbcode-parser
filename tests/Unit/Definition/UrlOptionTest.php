@@ -24,35 +24,32 @@ use JBBCode\ElementNode;
 use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\UrlOption;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 
-/**
- * @covers \Youthweb\BBCodeParser\Definition\UrlOption
- */
+#[CoversClass(UrlOption::class)]
 class UrlOptionTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
-    /**
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function testAsHtml(string $text, string|array $attribute, string $expected): void
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->getMock();
 
         $config->expects($this->any())
             ->method('get')
-            ->will(
-                $this->returnValueMap(
-                    [
-                        ['callbacks.url_content.short_url', null, false],
-                        ['callbacks.url_content.short_url_length', null, 55],
-                        ['callbacks.url_content.target', null, '_blank'],
-                    ],
-                ),
+            ->willReturnMap(
+                [
+                    ['callbacks.url_content.short_url', null, false],
+                    ['callbacks.url_content.short_url_length', null, 55],
+                    ['callbacks.url_content.target', null, '_blank'],
+                ],
             );
 
         $definition = new UrlOption($config);
@@ -60,9 +57,7 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $definition->asHtml($elementNode));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testAsHtmlWithShortenLongUrl(): void
     {
         $text = 'a very long text, that should not be shorten';
@@ -72,18 +67,16 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->getMock();
 
         $config->method('get')
-            ->will(
-                $this->returnValueMap(
-                    [
-                        ['callbacks.url_content.short_url', null, true],
-                        ['callbacks.url_content.short_url_length', null, 30],
-                        ['callbacks.url_content.target', null, '_blank'],
-                    ],
-                ),
+            ->willReturnMap(
+                [
+                    ['callbacks.url_content.short_url', null, true],
+                    ['callbacks.url_content.short_url_length', null, 30],
+                    ['callbacks.url_content.target', null, '_blank'],
+                ],
             );
 
         $definition = new UrlOption($config);
@@ -91,9 +84,7 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $definition->asHtml($elementNode));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testAsHtmlWithShortenShortUrl(): void
     {
         $text = 'a very long text, that should not be shorten';
@@ -103,18 +94,16 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->getMock();
 
         $config->method('get')
-            ->will(
-                $this->returnValueMap(
-                    [
-                        ['callbacks.url_content.short_url', null, true],
-                        ['callbacks.url_content.short_url_length', null, 20],
-                        ['callbacks.url_content.target', null, '_blank'],
-                    ],
-                ),
+            ->willReturnMap(
+                [
+                    ['callbacks.url_content.short_url', null, true],
+                    ['callbacks.url_content.short_url_length', null, 20],
+                    ['callbacks.url_content.target', null, '_blank'],
+                ],
             );
 
         $definition = new UrlOption($config);
@@ -122,9 +111,7 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $definition->asHtml($elementNode));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testAsHtmlWithoutTarget(): void
     {
         $text = 'a very long text, that should not be shorten';
@@ -134,18 +121,16 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->getMock();
 
         $config->method('get')
-            ->will(
-                $this->returnValueMap(
-                    [
-                        ['callbacks.url_content.short_url', null, true],
-                        ['callbacks.url_content.short_url_length', null, 55],
-                        ['callbacks.url_content.target', null, null],
-                    ],
-                ),
+            ->willReturnMap(
+                [
+                    ['callbacks.url_content.short_url', null, true],
+                    ['callbacks.url_content.short_url_length', null, 55],
+                    ['callbacks.url_content.target', null, null],
+                ],
             );
 
         $definition = new UrlOption($config);
@@ -153,9 +138,7 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $definition->asHtml($elementNode));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testAsHtmlWithTargetOnYouthwebUrl(): void
     {
         $text = 'a very long text, that should not be shorten';
@@ -165,18 +148,16 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->getMock();
 
         $config->method('get')
-            ->will(
-                $this->returnValueMap(
-                    [
-                        ['callbacks.url_content.short_url', null, true],
-                        ['callbacks.url_content.short_url_length', null, 55],
-                        ['callbacks.url_content.target', null, '_blank'],
-                    ],
-                ),
+            ->willReturnMap(
+                [
+                    ['callbacks.url_content.short_url', null, true],
+                    ['callbacks.url_content.short_url_length', null, 55],
+                    ['callbacks.url_content.target', null, '_blank'],
+                ],
             );
 
         $definition = new UrlOption($config);
@@ -184,9 +165,7 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $definition->asHtml($elementNode));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testAsHtmlWithTargetOnYouthwebUrlWithoutHttp(): void
     {
         $text = 'a very long text, that should not be shorten';
@@ -196,18 +175,16 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->getMock();
 
         $config->method('get')
-            ->will(
-                $this->returnValueMap(
-                    [
-                        ['callbacks.url_content.short_url', null, true],
-                        ['callbacks.url_content.short_url_length', null, 55],
-                        ['callbacks.url_content.target', null, '_blank'],
-                    ],
-                ),
+            ->willReturnMap(
+                [
+                    ['callbacks.url_content.short_url', null, true],
+                    ['callbacks.url_content.short_url_length', null, 55],
+                    ['callbacks.url_content.target', null, '_blank'],
+                ],
             );
 
         $definition = new UrlOption($config);
@@ -218,7 +195,7 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public function dataProvider()
+    public static function dataProvider()
     {
         return [
             [

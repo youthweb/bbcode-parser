@@ -23,10 +23,11 @@ namespace Youthweb\BBCodeParser\Tests\Unit;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockHttpStreamWrapper;
 use Youthweb\BBCodeParser\Tests\Fixtures\ValidationMock;
 use Youthweb\BBCodeParser\Validation;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 
-/**
- * @covers \Youthweb\BBCodeParser\Validation
- */
+#[CoversClass(Validation::class)]
 class ValidationTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp(): void
@@ -50,25 +51,21 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
     public function getConfigMock(): \PHPUnit\Framework\MockObject\MockObject
     {
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->getMock();
 
         $config->expects($this->any())
             ->method('get')
-            ->will(
-                $this->returnValueMap(
-                    [
-                        ['cacheitempool', null, null],
-                    ],
-                ),
+            ->willReturnMap(
+                [
+                    ['cacheitempool', null, null],
+                ],
             );
 
         return $config;
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testValidImageUrl(): void
     {
         MockHttpStreamWrapper::$mockMetaData = [
@@ -83,9 +80,7 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($validation->isValidImageUrl('http://example.org/image.jpg', true));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testMultipleValidImageUrl(): void
     {
         MockHttpStreamWrapper::$mockMetaData = [
@@ -101,9 +96,7 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($validation->isValidImageUrl('http://example.org/image2.jpg', true));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testCachedMultipleValidImageUrl(): void
     {
         MockHttpStreamWrapper::$mockMetaData = [
@@ -119,9 +112,7 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($validation->isValidImageUrl('http://example.org/image.jpg', true));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testValidImageUrlForceless(): void
     {
         $validation = new Validation($this->getConfigMock());
@@ -129,9 +120,7 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($validation->isValidImageUrl('http://example.org/image.jpg', false));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testValidImageUrlForcelessWithInvalidUrl(): void
     {
         $validation = new Validation($this->getConfigMock());
@@ -141,9 +130,8 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
 
     /**
      * test valid url
-     *
-     * @dataProvider providerValidUrl
      */
+    #[DataProvider('providerValidUrl')]
     public function testValidUrl(string $url, bool $expected): void
     {
         $validation = new Validation($this->getConfigMock());
@@ -151,7 +139,7 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $validation->isValidUrl($url));
     }
 
-    public function providerValidUrl()
+    public static function providerValidUrl()
     {
         return [
             [

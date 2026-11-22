@@ -24,34 +24,30 @@ use JBBCode\ElementNode;
 use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\Color;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @covers \Youthweb\BBCodeParser\Definition\Color
- */
+#[CoversClass(Color::class)]
 class ColorTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
-    /**
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function testAsHtml(string $text, null $attribute, string $expected): void
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->getMock();
 
         $config->expects($this->any())
             ->method('get')
-            ->will(
-                $this->returnValueMap(
-                    [
-                        ['callbacks.color_param.allowed_colors', null, ['Red', 'Yellow']],
-                        ['callbacks.color_param.default_color', null, 'Red'],
-                    ],
-                ),
+            ->willReturnMap(
+                [
+                    ['callbacks.color_param.allowed_colors', null, ['Red', 'Yellow']],
+                    ['callbacks.color_param.default_color', null, 'Red'],
+                ],
             );
 
         $definition = new Color($config);
@@ -62,7 +58,7 @@ class ColorTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public function dataProvider()
+    public static function dataProvider()
     {
         return [
             [

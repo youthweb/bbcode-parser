@@ -22,10 +22,10 @@ namespace Youthweb\BBCodeParser\Tests\Integration;
 
 use PHPUnit\Framework\TestCase;
 use Youthweb\BBCodeParser\Manager;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @covers \Youthweb\BBCodeParser\Manager
- */
+#[CoversClass(Manager::class)]
 class ParsingTest extends TestCase
 {
     private \Youthweb\BBCodeParser\Manager $parser;
@@ -35,15 +35,13 @@ class ParsingTest extends TestCase
         $this->parser = new Manager();
     }
 
-    /**
-     * @dataProvider providerParseBBCode
-     */
+    #[DataProvider('providerParseBBCode')]
     public function testParseBBCode(string $text, array $config, string $expected): void
     {
         $this->assertSame($expected, $this->parser->parse($text, $config));
     }
 
-    public function providerParseBBCode()
+    public static function providerParseBBCode()
     {
         return [
             [

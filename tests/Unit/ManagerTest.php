@@ -24,15 +24,13 @@ use PHPUnit\Framework\TestCase;
 use Youthweb\BBCodeParser\Manager;
 use Youthweb\BBCodeParser\Visitor\VisitorCollectionInterface;
 use Youthweb\BBCodeParser\Visitor\VisitorInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 
-/**
- * @covers \Youthweb\BBCodeParser\Manager
- */
+#[CoversClass(Manager::class)]
 class ManagerTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function testParseWithoutDefinitions(): void
     {
         $manager = new Manager();
@@ -47,9 +45,7 @@ class ManagerTest extends TestCase
         $this->assertSame($text, $manager->parse($text, $config));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function parseWillUseTheVisitorCollection(): void
     {
         $visitor = $this->createMock(VisitorInterface::class);

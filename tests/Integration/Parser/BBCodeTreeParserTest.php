@@ -8,13 +8,14 @@ use PHPUnit\Framework\TestCase;
 use Youthweb\BBCodeParser\Manager;
 use Youthweb\BBCodeParser\Parser\BBCodeTreeParser;
 use Youthweb\BBCodeParser\Parser\SpikeHtmlRenderer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Back-to-back test of the spike (#45): 1.x engine against the league node tree.
- *
- * @covers \Youthweb\BBCodeParser\Parser\BBCodeTreeParser
- * @covers \Youthweb\BBCodeParser\Parser\SpikeHtmlRenderer
  */
+#[CoversClass(BBCodeTreeParser::class)]
+#[CoversClass(SpikeHtmlRenderer::class)]
 final class BBCodeTreeParserTest extends TestCase
 {
     /**
@@ -22,7 +23,7 @@ final class BBCodeTreeParserTest extends TestCase
      *
      * @return iterable<string, array{string}>
      */
-    public function identicalProvider(): iterable
+    public static function identicalProvider(): iterable
     {
         yield 'plain text' => ['text[/b]'];
         yield 'soft break' => ["Zeile1\nZeile2"];
@@ -37,9 +38,7 @@ final class BBCodeTreeParserTest extends TestCase
         yield 'unknown tag' => ['[unknown]x[/unknown]'];
     }
 
-    /**
-     * @dataProvider identicalProvider
-     */
+    #[DataProvider('identicalProvider')]
     public function testIdenticalToOldEngine(string $input): void
     {
         self::assertSame($this->old($input), $this->new($input));
@@ -51,7 +50,7 @@ final class BBCodeTreeParserTest extends TestCase
      *
      * @return iterable<string, array{string}>
      */
-    public function sameStructureProvider(): iterable
+    public static function sameStructureProvider(): iterable
     {
         yield 'bold' => ['[b]Hello[/b]'];
         yield 'bold in text' => ['Hallo [b]fett[/b] Welt'];
@@ -68,9 +67,7 @@ final class BBCodeTreeParserTest extends TestCase
         yield 'url unclosed' => ['[url=http://a.de]'];
     }
 
-    /**
-     * @dataProvider sameStructureProvider
-     */
+    #[DataProvider('sameStructureProvider')]
     public function testSameStructureAsOldEngine(string $input): void
     {
         $normalized = strtr($this->new($input), [
@@ -89,7 +86,7 @@ final class BBCodeTreeParserTest extends TestCase
      *
      * @return iterable<string, array{string, string, string}>
      */
-    public function differenceProvider(): iterable
+    public static function differenceProvider(): iterable
     {
         yield 'unsafe url is dropped, 1.x rewrites it to http://x' => [
             '[url=javascript:alert(1)]x[/url]',
@@ -108,9 +105,7 @@ final class BBCodeTreeParserTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider differenceProvider
-     */
+    #[DataProvider('differenceProvider')]
     public function testDocumentedDifferences(string $input, string $old, string $new): void
     {
         self::assertSame($old, $this->old($input));

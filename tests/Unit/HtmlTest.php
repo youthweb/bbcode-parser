@@ -21,24 +21,19 @@
 namespace Youthweb\BBCodeParser\Tests\Unit;
 
 use Youthweb\BBCodeParser\Html;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @covers \Youthweb\BBCodeParser\Html
- */
+#[CoversClass(Html::class)]
 class HtmlTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @dataProvider ImageDataProvider
-     */
+    #[DataProvider('ImageDataProvider')]
     public function testImg(string $src, array $attr, string $expected): void
     {
         $this->assertSame($expected, Html::img($src, $attr));
     }
 
-    /**
-     * @ImageDataProvider
-     */
-    public function ImageDataProvider()
+    public static function ImageDataProvider()
     {
         return [
             [
@@ -54,18 +49,13 @@ class HtmlTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    /**
-     * @dataProvider ListDataProvider
-     */
+    #[DataProvider('ListDataProvider')]
     public function testList(array $src, array $attr, string $expected): void
     {
         $this->assertSame($expected, Html::ul($src, $attr));
     }
 
-    /**
-     * @ImageDataProvider
-     */
-    public function ListDataProvider()
+    public static function ListDataProvider()
     {
         return [
             [

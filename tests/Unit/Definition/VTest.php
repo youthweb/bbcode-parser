@@ -25,34 +25,31 @@ use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\V;
 use Youthweb\BBCodeParser\Filter\FilterException;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 
-/**
- * @covers \Youthweb\BBCodeParser\Definition\V
- */
+#[CoversClass(V::class)]
 class VTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
-    /**
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function testAsHtml(string $text, null $attribute, string $expected): void
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->getMock();
 
         $config->expects($this->any())
             ->method('get')
-            ->will(
-                $this->returnValueMap(
-                    [
-                        ['callbacks.url_content.target', null, '_blank'],
-                        ['filter.video', null, false],
-                    ],
-                ),
+            ->willReturnMap(
+                [
+                    ['callbacks.url_content.target', null, '_blank'],
+                    ['filter.video', null, false],
+                ],
             );
 
         $definition = new V($config);
@@ -63,7 +60,7 @@ class VTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public function dataProvider()
+    public static function dataProvider()
     {
         return [
             [
@@ -89,9 +86,7 @@ class VTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testAsHtmlWithFilter(): void
     {
         $text = 'http://example.org/video.mp4';
@@ -100,7 +95,7 @@ class VTest extends \PHPUnit\Framework\TestCase
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
         $filter = $this->getMockBuilder(\Youthweb\BBCodeParser\Filter\FilterInterface::class)
-            ->setMethods(['setConfig', 'execute'])
+            ->onlyMethods(['setConfig', 'execute'])
             ->getMock();
 
         $filter->expects($this->any())
@@ -108,18 +103,16 @@ class VTest extends \PHPUnit\Framework\TestCase
             ->willReturn($expected);
 
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->getMock();
 
         $config->expects($this->any())
             ->method('get')
-            ->will(
-                $this->returnValueMap(
-                    [
-                        ['callbacks.url_content.target', null, '_blank'],
-                        ['filter.video', null, $filter],
-                    ],
-                ),
+            ->willReturnMap(
+                [
+                    ['callbacks.url_content.target', null, '_blank'],
+                    ['filter.video', null, $filter],
+                ],
             );
 
         $definition = new V($config);
@@ -127,9 +120,7 @@ class VTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $definition->asHtml($elementNode));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testAsHtmlWithFilterException(): void
     {
         $text = 'http://example.org/video.mp4';
@@ -138,7 +129,7 @@ class VTest extends \PHPUnit\Framework\TestCase
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
         $filter = $this->getMockBuilder(\Youthweb\BBCodeParser\Filter\FilterInterface::class)
-            ->setMethods(['setConfig', 'execute'])
+            ->onlyMethods(['setConfig', 'execute'])
             ->getMock();
 
         $filter->expects($this->any())
@@ -146,18 +137,16 @@ class VTest extends \PHPUnit\Framework\TestCase
             ->willThrowException(new FilterException());
 
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->getMock();
 
         $config->expects($this->any())
             ->method('get')
-            ->will(
-                $this->returnValueMap(
-                    [
-                        ['callbacks.url_content.target', null, '_blank'],
-                        ['filter.video', null, $filter],
-                    ],
-                ),
+            ->willReturnMap(
+                [
+                    ['callbacks.url_content.target', null, '_blank'],
+                    ['filter.video', null, $filter],
+                ],
             );
 
         $definition = new V($config);

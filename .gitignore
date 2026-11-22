@@ -6,3 +6,4 @@ composer.lock
 php-cs-fixer.phar
 vendor
 build
+.phpunit.cache
