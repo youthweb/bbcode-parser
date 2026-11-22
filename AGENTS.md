@@ -1,24 +1,20 @@
 # bbcode-parser – Notes for agents
 
-PHP library `youthweb/bbcode-parser`: converts BBCode to HTML. Built on `jbbcode/jbbcode`, uses `youthweb/urllinker`. Consumed by `youthweb`. Namespace `Youthweb\BBCodeParser`, PHP `^7.4 || ^8.0`, license GPL-3.0-or-later.
+PHP library `youthweb/bbcode-parser`: converts BBCode to HTML. See `README.md` for purpose and usage, `composer.json` for dependencies, namespace, PHP versions and license.
 
 ## Structure
 
-- `Manager::parse($text, array $config = [])` is the entry point. Flow: merge config → build definition sets (`DefaultSet`, optionally `HeadlineSet` for `[h1]`–`[h6]`) → visitors (URL autolinking, custom visitors, smileys) → `getAsHtml()` → `<p>` paragraphs (marker `<!-- no_p -->`) → replace placeholders (`{{{lt}}}`, `{{{gt}}}`, `{{{quot}}}`, ` yw ` → `<acronym>`).
-- `src/Definition/`: one class per tag, with an `…Option` variant for `[tag=value]` (Bold, Italic, Underline, Code, Noparse, List, Q/Quote/Z, Email, Url, Ywlink, Image/Pic, V/Video/Youtube, Color, Size). Deprecated: `[F]`, `[K]`, `[Z]`.
-- `src/Visitor/`: `VisitorUrl` (urllinker), `VisitorSmiley`, `VisitorCollection`.
-- `src/Config.php` (nested config), `src/Validation.php` and `src/Filter/` (input validation). A PSR-6 cache can be injected via config; the default is `cache/void-adapter`.
-- Tests: `tests/Unit/` (per definition/visitor), `tests/Integration/` (`ParsingTest`, `SmileyTest`, `QuoteTest`), mocks in `tests/Fixtures/`.
+The entry point is `Manager::parse()`. Learn the rest from `src/` and `tests/`; do not rely on a description here.
 
 ## PHP only in Docker
 
-PHP, Composer and every PHP tool (`vendor/bin/*`, PHPUnit, PHPStan, PHP CS Fixer, Rector) run **only inside the Docker dev container, never on the host system**. Do not invoke `php`, `composer` or `vendor/bin/*` on the host, not even for a quick check. Use the `make` targets listed below. If a command needs PHP, run it through `make shell` or `make composer ARGS="..."`.
+PHP, Composer and every PHP tool (`vendor/bin/*`, PHPUnit, PHPStan, PHP CS Fixer, Rector) run **only inside the Docker dev container, never on the host system**. Do not invoke `php`, `composer` or `vendor/bin/*` on the host, not even for a quick check. Use the `make` targets from `docs/dev-environment.md`. If a command needs PHP, run it through `make shell` or `make composer ARGS="..."`.
 
 ## Development
 
 - The default branch is `master` (not `main`).
-- The dev container runs PHP 7.4, the lowest supported version. Use the Makefile: `make build`, `make install`, `make test` (default; PHPUnit), `make phpunit`, `make phpstan`, `make codestyle` (this **rewrites files**), `make coverage`, `make shell`, `make composer ARGS="..."`, `make clean`. Other PHP versions: `make test PHP_VERSION=8.5` (after `make clean install`). See `docs/dev-environment.md`.
-- Under the hood: `vendor/bin/phpunit` (suites `all`, `unit`, `integration`), `composer php-cs-fixer` (PSR-12), `composer phpstan`. `composer.lock` is gitignored.
+- Use the Makefile for every task, see `docs/dev-environment.md` for targets and PHP versions. `make codestyle` **rewrites files**.
+- `composer.lock` is gitignored.
 
 ## Known issues
 
