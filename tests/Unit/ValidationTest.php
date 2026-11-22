@@ -28,10 +28,12 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
     public function setUp(): void
     {
         stream_wrapper_unregister('http');
-        stream_wrapper_register(
+        if (!stream_wrapper_register(
             'http',
             \Youthweb\BBCodeParser\Tests\Fixtures\MockHttpStreamWrapper::class
-        ) or die('Failed to register protocol');
+        )) {
+            die('Failed to register protocol');
+        }
     }
 
     public function tearDown(): void

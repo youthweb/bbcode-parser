@@ -67,9 +67,9 @@ class Html
      */
     public static function mail_to($email, $text = null, $subject = null, $attr = [])
     {
-        $text or $text = $email;
+        $text || ($text = $email);
 
-        $subject and $subject = '?subject=' . $subject;
+        $subject && ($subject = '?subject=' . $subject);
 
         return static::html_tag('a', [
             'href' => 'mailto:' . $email . $subject,
@@ -89,11 +89,11 @@ class Html
      */
     public static function mail_to_safe($email, $text = null, $subject = null, $attr = [])
     {
-        $text or $text = str_replace('@', '[at]', $email);
+        $text || ($text = str_replace('@', '[at]', $email));
 
         $email = explode('@', $email);
 
-        $subject and $subject = '?subject=' . $subject;
+        $subject && ($subject = '?subject=' . $subject);
 
         $attr = static::array_to_attr($attr);
         $attr = ($attr == '' ? '' : ' ') . $attr;
@@ -124,7 +124,7 @@ class Html
         $short_url = $config->get('callbacks.url_content.short_url');
 
         // Lange URLs ggf. kürzen
-        if ($short_url === true and $url === $content) {
+        if ($short_url === true && $url === $content) {
             // Mindestlänge: 20
             $max_length = max(20, $config->get('callbacks.url_content.short_url_length'));
 
@@ -158,7 +158,7 @@ class Html
             if (stripos($url, $delimiter) !== false) {
                 $protocol = strtolower(strstr($url, $delimiter, true));
 
-                if ($protocol !== 'https' and $protocol !== 'http') {
+                if ($protocol !== 'https' && $protocol !== 'http') {
                     $attr['target'] = $target;
                 }
             } else {
@@ -189,7 +189,9 @@ class Html
         }
 
         // Create and display a URL hyperlink
-        is_null($text) and $text = $href;
+        if (is_null($text)) {
+            $text = $href;
+        }
 
         $attr['href'] = static::escapeSpecialChars($href);
 
@@ -290,7 +292,7 @@ class Html
 
         // construct the HTML
         $html = '<' . $tag;
-        $html .= (! empty($attr)) ? ' ' . (is_array($attr) ? static::array_to_attr($attr) : $attr) : '';
+        $html .= (empty($attr)) ? '' : ' ' . (is_array($attr) ? static::array_to_attr($attr) : $attr);
 
         // a void element?
         if (in_array(strtolower($tag), $void_elements)) {
@@ -317,7 +319,7 @@ class Html
 
         foreach ((array) $attr as $property => $value) {
             // Ignore null/false
-            if ($value === null or $value === false) {
+            if ($value === null || $value === false) {
                 continue;
             }
 

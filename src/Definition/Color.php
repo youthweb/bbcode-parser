@@ -66,7 +66,7 @@ class Color extends CodeDefinition
 
         $param = trim($param);
 
-        if ($content == '' and $param == '') {
+        if ($content === '' && $param === '') {
             return '';
         }
 
@@ -78,7 +78,7 @@ class Color extends CodeDefinition
         // Wenn im Parameter keine erlaubte Farbe steht
         if (! in_array($color, $allowed_colors)) {
             // Prüfen, ob eine hexadezimale Farbe angegeben wurde
-            if (strlen($param) == 7 && $param[0] == '#' and preg_match('~#[a-f0-9]{6}~i', $param)) {
+            if (strlen($param) == 7 && $param[0] === '#' && preg_match('~#[a-f0-9]{6}~i', $param)) {
                 $color = $param;
             } else {
                 $color = $this->config->get('callbacks.color_param.default_color');

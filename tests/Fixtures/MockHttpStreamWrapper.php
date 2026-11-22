@@ -103,7 +103,7 @@ class MockHttpStreamWrapper implements \IteratorAggregate, \ArrayAccess, \Counta
         $this->bodyData = self::$mockBodyData;
         $this->responseCode = self::$mockResponseCode;
         $this->metaData = self::$mockMetaData;
-        array_push($this->metaData, self::$mockResponseCode);
+        $this->metaData[] = self::$mockResponseCode;
 
         return true;
     }

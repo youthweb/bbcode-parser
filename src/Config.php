@@ -192,7 +192,7 @@ class Config
                 break;
             }
 
-            if ($keys) {
+            if ($keys !== []) {
                 if (! is_array($array[$_key])) {
                     // Unable to dig deeper
                     break;

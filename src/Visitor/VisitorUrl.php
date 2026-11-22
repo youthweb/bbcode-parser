@@ -77,7 +77,7 @@ class VisitorUrl implements VisitorInterface
     public function visitElementNode(ElementNode $element_node)
     {
         // Nur nach Urls suchen, wenn nicht in URL-Tag und der Content geparst werden soll
-        if ($element_node->getCodeDefinition()->getTagName() !== 'url' and $element_node->getCodeDefinition()->parseContent()) {
+        if ($element_node->getCodeDefinition()->getTagName() !== 'url' && $element_node->getCodeDefinition()->parseContent()) {
             foreach ($element_node->getChildren() as $child) {
                 $child->accept($this);
             }

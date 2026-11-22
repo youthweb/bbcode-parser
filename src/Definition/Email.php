@@ -63,11 +63,11 @@ class Email extends CodeDefinition
 
         $param = trim($param);
 
-        if ($content == '' and $param == '') {
+        if ($content === '' && $param === '') {
             return '';
         }
 
-        if ($param == '') {
+        if ($param === '') {
             // Die Email steht im Content
             $email = '';
 
