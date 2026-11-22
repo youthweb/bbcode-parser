@@ -55,6 +55,10 @@ Default vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-
 
 Single-context: one `GLOSSARY.md` and `docs/adr/` at the repo root. See `docs/agents/domain.md`.
 
+### Refactoring ideas
+
+When you notice a possible refactoring while doing other work, post it straight away as a comment on the open Housekeeping ticket (`docs/agents/issue-tracker.md`, **Housekeeping**): where it is, what would change, and why. It needs no question to the human first. When two Housekeeping tickets are open, use the younger.
+
 ### Releasing
 
 Releases are developer-initiated, never agent-launched. Prepare up to the release pull request and stop there; tagging and the GitHub release are the developer's. See `docs/agents/releasing.md`.
