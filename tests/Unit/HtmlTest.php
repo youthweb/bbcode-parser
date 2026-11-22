@@ -49,6 +49,120 @@ class HtmlTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
+    #[DataProvider('AnchorUrlDataProvider')]
+    public function testAnchorCompletesUrl(string $href, string $expected): void
+    {
+        $this->assertSame('<a href="' . $expected . '">text</a>', Html::anchor($href, 'text'));
+    }
+
+    public static function AnchorUrlDataProvider()
+    {
+        return [
+            'userinfo, port, query and fragment' => ['http://user:pw@example.org:8080/p?q=1#frag', 'http://user:pw@example.org:8080/p?q=1#frag'],
+            'user without password' => ['http://user@example.org', 'http://user@example.org'],
+            'port and trailing slash' => ['http://example.org:8080/', 'http://example.org:8080'],
+            'fragment' => ['https://example.org/page#section', 'https://example.org/page#section'],
+            'query is escaped' => ['http://example.org/?a=b&c=d', 'http://example.org/?a=b&amp;c=d'],
+            'empty query and fragment are dropped' => ['http://example.org/?#', 'http://example.org'],
+            'ipv6 host with port' => ['http://[::1]:8080/x', 'http://[::1]:8080/x'],
+            'path 0 is kept' => ['http://example.org/0', 'http://example.org/0'],
+            'percent encoding is kept' => ['http://example.org/a%20b', 'http://example.org/a%20b'],
+            'scheme and host case is kept' => ['HTTP://EXAMPLE.ORG/A', 'HTTP://EXAMPLE.ORG/A'],
+            'scheme-relative url loses its slashes' => ['//example.org/x', 'example.org/x'],
+            'absolute path' => ['/relative/path', '/relative/path'],
+            'mailto gets slashes' => ['mailto:a@b.de', 'mailto:///a@b.de'],
+            'unparsable url gives an empty href' => ['http:///x', ''],
+        ];
+    }
+
+    #[DataProvider('ImageUrlWithoutSchemeDataProvider')]
+    public function testImgCompletesUrlWithoutScheme(string $src, string $expected): void
+    {
+        $this->assertStringStartsWith('<img src="' . $expected . '" ', Html::img($src));
+    }
+
+    public static function ImageUrlWithoutSchemeDataProvider()
+    {
+        return [
+            'scheme-relative url loses its slashes' => ['//example.org/x', 'example.org/x'],
+            'absolute path' => ['/relative/path', '/relative/path'],
+            'relative path gets a slash' => ['relative/path.png', '/relative/path.png'],
+            'mailto gets slashes' => ['mailto:a@b.de', 'mailto:///a@b.de'],
+        ];
+    }
+
+    #[DataProvider('WellFormedUrlDataProvider')]
+    public function testBuildUrlKeepsWellFormedUrl(string $url): void
+    {
+        $this->assertSame($url, $this->buildUrl($url));
+    }
+
+    public static function WellFormedUrlDataProvider()
+    {
+        return [
+            'host only' => ['http://example.org'],
+            'trailing slash' => ['http://example.org/'],
+            'path' => ['https://example.org/path/to/page.html'],
+            'query' => ['http://example.org/?a=1&b=2'],
+            'fragment' => ['http://example.org/#section'],
+            'path, query and fragment' => ['https://example.org/p?q=1#f'],
+            'port' => ['http://example.org:8080/'],
+            'user without password' => ['http://user@example.org/'],
+            'user with password' => ['http://user:pw@example.org/'],
+            'user, password and port' => ['http://user:pw@example.org:8080/x'],
+            'ipv6' => ['http://[::1]/'],
+            'ipv6 with port' => ['http://[2001:db8::1]:8080/x'],
+            'ftp' => ['ftp://ftp.example.org/file.txt'],
+        ];
+    }
+
+    #[DataProvider('NormalizedUrlDataProvider')]
+    public function testBuildUrlNormalizesUrl(string $url, string $expected): void
+    {
+        $this->assertSame($expected, $this->buildUrl($url));
+    }
+
+    public static function NormalizedUrlDataProvider()
+    {
+        return [
+            'path without scheme and host gets a leading slash' => ['example.org/image.jpg', '/example.org/image.jpg'],
+            'relative path gets a leading slash' => ['relative/path.png', '/relative/path.png'],
+            'scheme-relative url loses its slashes' => ['//example.org/x', 'example.org/x'],
+            'empty query is dropped' => ['http://example.org/?', 'http://example.org/'],
+            'empty fragment is dropped' => ['http://example.org/#', 'http://example.org/'],
+            'query 0 is dropped' => ['http://example.org/?0', 'http://example.org/'],
+            'fragment 0 is dropped' => ['http://example.org/#0', 'http://example.org/'],
+            'host 0 is dropped' => ['http://0/x', 'http:///x'],
+            'mailto gets slashes' => ['mailto:a@b.de', 'mailto:///a@b.de'],
+            'javascript gets slashes' => ['javascript:alert(1)', 'javascript:///alert(1)'],
+            'unparsable url gives an empty string' => ['http:///x', ''],
+        ];
+    }
+
+    public function testBuildUrlGivesEmptyStringForNullWithoutDeprecation(): void
+    {
+        $deprecations = [];
+        set_error_handler(static function (int $errno, string $errstr) use (&$deprecations): bool {
+            $deprecations[] = $errstr;
+
+            return true;
+        }, E_DEPRECATED);
+
+        try {
+            $result = (new \ReflectionMethod(Html::class, 'buildUrl'))->invoke(null, null);
+        } finally {
+            restore_error_handler();
+        }
+
+        $this->assertSame('', $result);
+        $this->assertSame([], $deprecations);
+    }
+
+    private function buildUrl(string $url): string
+    {
+        return (new \ReflectionMethod(Html::class, 'buildUrl'))->invoke(null, $url);
+    }
+
     #[DataProvider('ListDataProvider')]
     public function testList(array $src, array $attr, string $expected): void
     {

@@ -15,7 +15,6 @@
     "require": {
         "php": "^8.2",
         "cache/void-adapter": "^1.1",
-        "jakeasmith/http_build_url": "^1",
         "jbbcode/jbbcode": "^1.4",
         "league/commonmark": "^2.0",
         "youthweb/urllinker": "^2.3"
