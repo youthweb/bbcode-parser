@@ -25,6 +25,9 @@ use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\QuoteOption;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
 
+/**
+ * @covers \Youthweb\BBCodeParser\Definition\QuoteOption
+ */
 class QuoteOptionTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;

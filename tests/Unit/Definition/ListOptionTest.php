@@ -25,6 +25,9 @@ use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\ListOption;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
 
+/**
+ * @covers \Youthweb\BBCodeParser\Definition\ListOption
+ */
 class ListOptionTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;

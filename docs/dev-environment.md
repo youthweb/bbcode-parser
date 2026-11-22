@@ -38,7 +38,7 @@ make test
 
 ## Coverage floor
 
-`.coverage-floor` holds the lowest line coverage (in percent) a run may reach. CI fails when a fresh run is below it. The value only climbs: when coverage has grown, raise it in a reviewed commit to the figure PHPUnit reports; never lower it to make a run pass.
+`.coverage-floor` holds the lowest line coverage (in percent) a run may reach. CI fails when a fresh run is below it. The value only climbs: when coverage has grown, raise it in a reviewed commit to the figure PHPUnit reports; never lower it to make a run pass. The one exception is a reset when a change redefines what counts as covered, measured and recorded in that pull request (so far: `forceCoversAnnotation`, #74). Tests state what they cover (`forceCoversAnnotation`), so the figure counts a class only where a test of it covers it; the rules are in `tests/README.md`.
 
 ## PHP version
 

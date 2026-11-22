@@ -26,6 +26,9 @@ use Youthweb\BBCodeParser\Definition\V;
 use Youthweb\BBCodeParser\Filter\FilterException;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
 
+/**
+ * @covers \Youthweb\BBCodeParser\Definition\V
+ */
 class VTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;

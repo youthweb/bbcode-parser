@@ -22,6 +22,9 @@ namespace Youthweb\BBCodeParser\Tests\Integration;
 
 use Youthweb\BBCodeParser\Manager;
 
+/**
+ * @covers \Youthweb\BBCodeParser\Manager
+ */
 class QuoteTest extends \PHPUnit\Framework\TestCase
 {
     /**

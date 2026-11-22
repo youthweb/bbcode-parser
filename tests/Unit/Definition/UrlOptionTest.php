@@ -25,6 +25,9 @@ use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\UrlOption;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
 
+/**
+ * @covers \Youthweb\BBCodeParser\Definition\UrlOption
+ */
 class UrlOptionTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;

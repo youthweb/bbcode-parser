@@ -24,6 +24,9 @@ use Youthweb\BBCodeParser\Manager;
 use Youthweb\BBCodeParser\Visitor\VisitorCollection;
 use Youthweb\BBCodeParser\Visitor\VisitorSmiley;
 
+/**
+ * @covers \Youthweb\BBCodeParser\Manager
+ */
 class SmileyTest extends \PHPUnit\Framework\TestCase
 {
     /**

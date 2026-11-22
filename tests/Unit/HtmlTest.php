@@ -22,6 +22,9 @@ namespace Youthweb\BBCodeParser\Tests\Unit;
 
 use Youthweb\BBCodeParser\Html;
 
+/**
+ * @covers \Youthweb\BBCodeParser\Html
+ */
 class HtmlTest extends \PHPUnit\Framework\TestCase
 {
     /**

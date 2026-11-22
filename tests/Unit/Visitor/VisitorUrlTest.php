@@ -22,6 +22,9 @@ namespace Youthweb\BBCodeParser\Tests\Unit\Visitor;
 
 use Youthweb\BBCodeParser\Visitor\VisitorUrl;
 
+/**
+ * @covers \Youthweb\BBCodeParser\Visitor\VisitorUrl
+ */
 class VisitorUrlTest extends \PHPUnit\Framework\TestCase
 {
     /**

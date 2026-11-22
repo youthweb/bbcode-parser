@@ -25,6 +25,9 @@ use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\EmailOption;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
 
+/**
+ * @covers \Youthweb\BBCodeParser\Definition\EmailOption
+ */
 class EmailOptionTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;

@@ -23,6 +23,9 @@ namespace Youthweb\BBCodeParser\Tests\Integration;
 use PHPUnit\Framework\TestCase;
 use Youthweb\BBCodeParser\Manager;
 
+/**
+ * @covers \Youthweb\BBCodeParser\Manager
+ */
 class ParsingTest extends TestCase
 {
     private \Youthweb\BBCodeParser\Manager $parser;

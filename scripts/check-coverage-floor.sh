@@ -2,6 +2,8 @@
 # Fails when the line coverage in the Clover report is below the value in .coverage-floor.
 # Usage: scripts/check-coverage-floor.sh [clover.xml] [floor file]
 # The floor only climbs: raise it in a reviewed commit, never lower it to make a run pass.
+# Exception: one documented reset when a change redefines what counts as covered
+# (so far: forceCoversAnnotation, #74), measured and recorded in that pull request.
 set -eu
 
 clover="${1:-build/logs/clover.xml}"
