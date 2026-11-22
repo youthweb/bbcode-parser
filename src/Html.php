@@ -114,9 +114,8 @@ class Html
         $output .= 'var server = "' . $email[1] . '";';
         $output .= "document.write('<a href=\"' + 'mail' + 'to:' + user + at + server + '$subject\"$attr>$text</a>');";
         $output .= '})();';
-        $output .= '</script>';
 
-        return $output;
+        return $output . '</script>';
     }
 
     /**
@@ -275,16 +274,15 @@ class Html
     protected static function build_list($type = 'ul', array $list = [], $attr = false, $indent = '')
     {
         $out = '';
-        foreach ($list as $key => $val) {
+        foreach ($list as $val) {
             if (! is_array($val)) {
                 $out .= $indent . "\t" . static::html_tag('li', false, $val) . PHP_EOL;
             } else {
                 $out .= $indent . "\t" . static::html_tag('li', false, PHP_EOL . static::build_list($type, $val, '', $indent . "\t\t") . $indent . "\t") . PHP_EOL;
             }
         }
-        $result = $indent . static::html_tag($type, $attr, PHP_EOL . $out . $indent) . PHP_EOL;
 
-        return $result;
+        return $indent . static::html_tag($type, $attr, PHP_EOL . $out . $indent) . PHP_EOL;
     }
 
     /**

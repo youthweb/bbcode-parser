@@ -365,35 +365,4 @@ møøse.kwi.dk/阿驼鹿一旦咬了我的妹妹/من-اليمين-إلى-الي
             ],
         ];
     }
-
-    /**
-     * Ermittelt den EOL-Typ für Debug-Zwecke
-     *
-     * @see https://stackoverflow.com/a/24927253
-     *
-     * @param mixed $str
-     */
-    private function detectEOL($str)
-    {
-        $eols = [
-            'lfcr' => "\n\r", // 0x0A - 0x0D - acorn BBC
-            'crlf' => "\r\n", // 0x0D - 0x0A - Windows, DOS OS/2
-            'lf'   => "\n",   // 0x0A -      - Unix, OSX
-            'cr'   => "\r",   // 0x0D -      - Apple ][, TRS80
-        ];
-
-        $key = '';
-        $curCount = 0;
-        $curEol = '';
-
-        foreach ($eols as $k => $eol) {
-            if (($count = substr_count($str, $eol)) > $curCount) {
-                $curCount = $count;
-                $curEol = $eol;
-                $key = $k;
-            }
-        }
-
-        return $key;
-    }
 }

@@ -33,11 +33,6 @@ use Youthweb\BBCodeParser\Config;
 class VisitorSmiley implements VisitorInterface
 {
     /**
-     * @var Youthweb\BBCodeParser\Config
-     */
-    private $config;
-
-    /**
      * Set the config
      *
      * @param Config $config The config object
@@ -46,8 +41,6 @@ class VisitorSmiley implements VisitorInterface
      */
     public function setConfig(Config $config)
     {
-        $this->config = $config;
-
         return $this;
     }
 
@@ -100,8 +93,6 @@ class VisitorSmiley implements VisitorInterface
             $html[] = '{{{lt}}}img src={{{quot}}}' . $url . '{{{quot}}} alt={{{quot}}}' . $code . '{{{quot}}} title={{{quot}}}' . $code . '{{{quot}}} /{{{gt}}}';
         }
 
-        $rules = [$codes, $html];
-
-        return $rules;
+        return [$codes, $html];
     }
 }
