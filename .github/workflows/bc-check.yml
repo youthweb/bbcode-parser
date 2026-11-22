@@ -22,12 +22,9 @@ jobs:
     - name: Trust the workspace inside the action container
       run: mkdir -p "$RUNNER_TEMP/_github_home" && HOME="$RUNNER_TEMP/_github_home" git config --global --add safe.directory /github/workspace
 
-    # --from: the classes outside the BC promise were marked @internal after the tag 1.7.1 (#32),
-    # which the tool reports as 32 breaks against that tag. Compare against the merge commit of
-    # that change until the next release, then remove --from so the newest tag is used again.
     # Both formats are printed: the console list shows every break in the log, github-actions
     # adds an annotation for each.
     - name: Roave Backward Compatibility Check
       uses: docker://nyholm/roave-bc-check-ga
       with:
-        args: --from=d5057e5 --format=console --format=github-actions
+        args: --format=console --format=github-actions
