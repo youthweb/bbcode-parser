@@ -43,7 +43,7 @@ interface FilterInterface
      *
      * @param ElementNode $el The element node
      *
-     * @throws Filter_Exception If the node can't be filtered
+     * @throws FilterException If the node can't be filtered
      *
      * @return string HTML
      */

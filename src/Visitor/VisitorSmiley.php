@@ -33,7 +33,7 @@ use Youthweb\BBCodeParser\Config;
 class VisitorSmiley implements VisitorInterface
 {
     /**
-     * @var Youthweb\BBCodeParser\Config
+     * @var Config
      */
     private $config;
 
