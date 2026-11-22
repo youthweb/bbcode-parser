@@ -28,7 +28,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(Manager::class)]
-class ManagerTest extends TestCase
+final class ManagerTest extends TestCase
 {
     #[Test]
     public function testParseWithoutDefinitions(): void

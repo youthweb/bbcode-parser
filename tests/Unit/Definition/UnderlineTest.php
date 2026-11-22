@@ -28,7 +28,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 #[CoversClass(Underline::class)]
-class UnderlineTest extends \PHPUnit\Framework\TestCase
+final class UnderlineTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
@@ -56,14 +56,12 @@ class UnderlineTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public static function dataProvider()
+    public static function dataProvider(): \Iterator
     {
-        return [
-            [
-                'This text should be underlined.',
-                null,
-                '<u>This text should be underlined.</u>',
-            ],
+        yield [
+            'This text should be underlined.',
+            null,
+            '<u>This text should be underlined.</u>',
         ];
     }
 }

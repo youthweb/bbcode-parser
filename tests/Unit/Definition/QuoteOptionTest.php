@@ -28,7 +28,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 #[CoversClass(QuoteOption::class)]
-class QuoteOptionTest extends \PHPUnit\Framework\TestCase
+final class QuoteOptionTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
@@ -45,24 +45,22 @@ class QuoteOptionTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public static function dataProvider()
+    public static function dataProvider(): \Iterator
     {
-        return [
-            [
-                'quote content',
-                'someone',
-                '<blockquote title="Zitat"><cite>someone</cite>quote content</blockquote>',
-            ],
-            [
-                'quote content',
-                ['someone'],
-                '<blockquote title="Zitat"><cite>someone</cite>quote content</blockquote>',
-            ],
-            [
-                '<blockquote title="Zitat"><cite>first</cite>content 1</blockquote>content 2',
-                'second',
-                '<blockquote title="Zitat"><blockquote title="Zitat"><cite>first</cite>content 1</blockquote><cite>second</cite>content 2</blockquote>',
-            ],
+        yield [
+            'quote content',
+            'someone',
+            '<blockquote title="Zitat"><cite>someone</cite>quote content</blockquote>',
+        ];
+        yield [
+            'quote content',
+            ['someone'],
+            '<blockquote title="Zitat"><cite>someone</cite>quote content</blockquote>',
+        ];
+        yield [
+            '<blockquote title="Zitat"><cite>first</cite>content 1</blockquote>content 2',
+            'second',
+            '<blockquote title="Zitat"><blockquote title="Zitat"><cite>first</cite>content 1</blockquote><cite>second</cite>content 2</blockquote>',
         ];
     }
 }

@@ -28,7 +28,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 #[CoversClass(Color::class)]
-class ColorTest extends \PHPUnit\Framework\TestCase
+final class ColorTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
@@ -55,19 +55,17 @@ class ColorTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public static function dataProvider()
+    public static function dataProvider(): \Iterator
     {
-        return [
-            [
-                'some text',
-                null,
-                '<span style="color:Red;">some text</span>',
-            ],
-            [
-                '',
-                null,
-                '',
-            ],
+        yield [
+            'some text',
+            null,
+            '<span style="color:Red;">some text</span>',
+        ];
+        yield [
+            '',
+            null,
+            '',
         ];
     }
 }

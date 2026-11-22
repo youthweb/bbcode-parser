@@ -26,7 +26,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(Config::class)]
-class ConfigTest extends \PHPUnit\Framework\TestCase
+final class ConfigTest extends \PHPUnit\Framework\TestCase
 {
     #[DataProvider('SetterDataProvider')]
     public function testSetter(string $key, null $default, string $value): void
@@ -42,24 +42,22 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($value, $config->get($key));
     }
 
-    public static function SetterDataProvider()
+    public static function SetterDataProvider(): \Iterator
     {
-        return [
-            [
-                'foobar',
-                null,
-                'baz',
-            ],
-            [
-                'foo.bar',
-                null,
-                'baz',
-            ],
-            [
-                'foo.0.bar',
-                null,
-                'baz',
-            ],
+        yield [
+            'foobar',
+            null,
+            'baz',
+        ];
+        yield [
+            'foo.bar',
+            null,
+            'baz',
+        ];
+        yield [
+            'foo.0.bar',
+            null,
+            'baz',
         ];
     }
 

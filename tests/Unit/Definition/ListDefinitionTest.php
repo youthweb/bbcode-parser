@@ -28,7 +28,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 #[CoversClass(ListDefinition::class)]
-class ListDefinitionTest extends \PHPUnit\Framework\TestCase
+final class ListDefinitionTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
@@ -45,34 +45,32 @@ class ListDefinitionTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public static function dataProvider()
+    public static function dataProvider(): \Iterator
     {
-        return [
-            [
-                '[*]Hello World!
+        yield [
+            '[*]Hello World!
 [*]foobar',
-                null,
-                '<!-- no_p --><ul type="disc">' . PHP_EOL
-                . "\t" . '<li>Hello World!</li>' . PHP_EOL
-                . "\t" . '<li>foobar</li>' . PHP_EOL
-                . '</ul>' . PHP_EOL
-                . '<!-- no_p -->',
-            ],
-            [
-                '',
-                null,
-                '',
-            ],
-            [
-                'line1
+            null,
+            '<!-- no_p --><ul type="disc">' . PHP_EOL
+            . "\t" . '<li>Hello World!</li>' . PHP_EOL
+            . "\t" . '<li>foobar</li>' . PHP_EOL
+            . '</ul>' . PHP_EOL
+            . '<!-- no_p -->',
+        ];
+        yield [
+            '',
+            null,
+            '',
+        ];
+        yield [
+            'line1
 line2',
-                null,
-                '<!-- no_p --><ul type="disc">' . PHP_EOL
-                . "\t" . '<li>line1
+            null,
+            '<!-- no_p --><ul type="disc">' . PHP_EOL
+            . "\t" . '<li>line1
 line2</li>' . PHP_EOL
-                . '</ul>' . PHP_EOL
-                . '<!-- no_p -->',
-            ],
+            . '</ul>' . PHP_EOL
+            . '<!-- no_p -->',
         ];
     }
 }

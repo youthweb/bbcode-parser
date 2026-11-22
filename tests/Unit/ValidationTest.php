@@ -28,7 +28,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(Validation::class)]
-class ValidationTest extends \PHPUnit\Framework\TestCase
+final class ValidationTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp(): void
     {
@@ -136,25 +136,23 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $validation->isValidUrl($url));
     }
 
-    public static function providerValidUrl()
+    public static function providerValidUrl(): \Iterator
     {
-        return [
-            [
-                'http://example.com',
-                true,
-            ],
-            [
-                'http://www.example.com/irgend/eine/lange/url/die/gek&uuml;rzt/werden/soll.html',
-                true,
-            ],
-            [
-                'http://www.example.com/irgend/eine/lange/url/die/gek%C3%BCrzt/werden/soll.html',
-                true,
-            ],
-            [
-                'http://www.example.com/irgend/eine/lange/url/die/gekürzt/werden/soll.html',
-                false,
-            ],
+        yield [
+            'http://example.com',
+            true,
+        ];
+        yield [
+            'http://www.example.com/irgend/eine/lange/url/die/gek&uuml;rzt/werden/soll.html',
+            true,
+        ];
+        yield [
+            'http://www.example.com/irgend/eine/lange/url/die/gek%C3%BCrzt/werden/soll.html',
+            true,
+        ];
+        yield [
+            'http://www.example.com/irgend/eine/lange/url/die/gekürzt/werden/soll.html',
+            false,
         ];
     }
 }

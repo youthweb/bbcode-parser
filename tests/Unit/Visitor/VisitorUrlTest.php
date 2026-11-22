@@ -26,7 +26,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(VisitorUrl::class)]
-class VisitorUrlTest extends \PHPUnit\Framework\TestCase
+final class VisitorUrlTest extends \PHPUnit\Framework\TestCase
 {
     #[Test]
     public function testCreate(): void
@@ -49,10 +49,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
         $config = new \Youthweb\BBCodeParser\Config();
         $visitor->setConfig($config);
 
-        $child = $this->getMockBuilder(\JBBCode\Node::class)
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->getMock();
+        $child = $this->createMock(\JBBCode\Node::class);
 
         $child->expects($this->once())
             ->method('accept')
@@ -80,10 +77,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
         $code_definition->method('parseContent')
             ->willReturn(true);
 
-        $child = $this->getMockBuilder(\JBBCode\Node::class)
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->getMock();
+        $child = $this->createMock(\JBBCode\Node::class);
 
         $child->expects($this->once())
             ->method('accept')
@@ -104,10 +98,7 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
     #[DataProvider('SmileyDataProvider')]
     public function testVisitTextNode(string $src, string $expected): void
     {
-        $textnode = $this->getMockBuilder(\JBBCode\TextNode::class)
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->getMock();
+        $textnode = $this->createMock(\JBBCode\TextNode::class);
 
         $textnode->method('getValue')
             ->willReturn($src);
@@ -128,17 +119,15 @@ class VisitorUrlTest extends \PHPUnit\Framework\TestCase
     /**
      * dataProvider
      */
-    public static function SmileyDataProvider()
+    public static function SmileyDataProvider(): \Iterator
     {
-        return [
-            [
-                'example.org',
-                '<a target="_blank" href="http://example.org">http://example.org</a>',
-            ],
-            [
-                'Hier ist meine Webseite: example.org',
-                'Hier ist meine Webseite: <a target="_blank" href="http://example.org">http://example.org</a>',
-            ],
+        yield [
+            'example.org',
+            '<a target="_blank" href="http://example.org">http://example.org</a>',
+        ];
+        yield [
+            'Hier ist meine Webseite: example.org',
+            'Hier ist meine Webseite: <a target="_blank" href="http://example.org">http://example.org</a>',
         ];
     }
 }

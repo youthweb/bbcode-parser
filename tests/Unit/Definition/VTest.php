@@ -30,7 +30,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(V::class)]
-class VTest extends \PHPUnit\Framework\TestCase
+final class VTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
@@ -54,29 +54,27 @@ class VTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public static function dataProvider()
+    public static function dataProvider(): \Iterator
     {
-        return [
-            [
-                'http://example.org/video.mp4',
-                null,
-                '<a target="_blank" href="http://example.org/video.mp4">http://example.org/video.mp4</a>',
-            ],
-            [
-                'example.org/video.mp4',
-                null,
-                '<a target="_blank" href="http://example.org/video.mp4">example.org/video.mp4</a>',
-            ],
-            [
-                'invalid url',
-                null,
-                'invalid url',
-            ],
-            [
-                '',
-                null,
-                '',
-            ],
+        yield [
+            'http://example.org/video.mp4',
+            null,
+            '<a target="_blank" href="http://example.org/video.mp4">http://example.org/video.mp4</a>',
+        ];
+        yield [
+            'example.org/video.mp4',
+            null,
+            '<a target="_blank" href="http://example.org/video.mp4">example.org/video.mp4</a>',
+        ];
+        yield [
+            'invalid url',
+            null,
+            'invalid url',
+        ];
+        yield [
+            '',
+            null,
+            '',
         ];
     }
 

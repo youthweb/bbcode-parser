@@ -30,7 +30,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(Image::class)]
-class ImageTest extends \PHPUnit\Framework\TestCase
+final class ImageTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
@@ -197,29 +197,27 @@ class ImageTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public static function dataProvider()
+    public static function dataProvider(): \Iterator
     {
-        return [
-            [
-                'http://example.org/image.jpg',
-                null,
-                '<a target="_blank" href="http://example.org/image.jpg"><img class="img-responsive" border="0" src="http://example.org/image.jpg" alt="image" /></a>',
-            ],
-            [
-                'example.org/image.jpg',
-                null,
-                '<a target="_blank" href="http://example.org/image.jpg"><img class="img-responsive" border="0" src="http://example.org/image.jpg" alt="image" /></a>',
-            ],
-            [
-                'invalid url',
-                null,
-                'invalid url',
-            ],
-            [
-                '',
-                null,
-                '',
-            ],
+        yield [
+            'http://example.org/image.jpg',
+            null,
+            '<a target="_blank" href="http://example.org/image.jpg"><img class="img-responsive" border="0" src="http://example.org/image.jpg" alt="image" /></a>',
+        ];
+        yield [
+            'example.org/image.jpg',
+            null,
+            '<a target="_blank" href="http://example.org/image.jpg"><img class="img-responsive" border="0" src="http://example.org/image.jpg" alt="image" /></a>',
+        ];
+        yield [
+            'invalid url',
+            null,
+            'invalid url',
+        ];
+        yield [
+            '',
+            null,
+            '',
         ];
     }
 }

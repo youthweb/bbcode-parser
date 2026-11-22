@@ -41,7 +41,7 @@ final class BBCodeTreeParserTest extends TestCase
     #[DataProvider('identicalProvider')]
     public function testIdenticalToOldEngine(string $input): void
     {
-        self::assertSame($this->old($input), $this->new($input));
+        $this->assertSame($this->old($input), $this->new($input));
     }
 
     /**
@@ -78,7 +78,7 @@ final class BBCodeTreeParserTest extends TestCase
             '<a href' => '<a target="_blank" href',
         ]);
 
-        self::assertSame($this->old($input), $normalized);
+        $this->assertSame($this->old($input), $normalized);
     }
 
     /**
@@ -108,8 +108,8 @@ final class BBCodeTreeParserTest extends TestCase
     #[DataProvider('differenceProvider')]
     public function testDocumentedDifferences(string $input, string $old, string $new): void
     {
-        self::assertSame($old, $this->old($input));
-        self::assertSame($new, $this->new($input));
+        $this->assertSame($old, $this->old($input));
+        $this->assertSame($new, $this->new($input));
     }
 
     private function old(string $input): string

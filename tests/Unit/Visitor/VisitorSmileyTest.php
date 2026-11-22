@@ -26,7 +26,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(VisitorSmiley::class)]
-class VisitorSmileyTest extends \PHPUnit\Framework\TestCase
+final class VisitorSmileyTest extends \PHPUnit\Framework\TestCase
 {
     #[Test]
     public function testCreate(): void
@@ -45,10 +45,7 @@ class VisitorSmileyTest extends \PHPUnit\Framework\TestCase
     {
         $visitor = new VisitorSmiley();
 
-        $child = $this->getMockBuilder(\JBBCode\Node::class)
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->getMock();
+        $child = $this->createMock(\JBBCode\Node::class);
 
         $child->expects($this->once())
             ->method('accept')
@@ -73,10 +70,7 @@ class VisitorSmileyTest extends \PHPUnit\Framework\TestCase
         $code_definition->method('parseContent')
             ->willReturn(true);
 
-        $child = $this->getMockBuilder(\JBBCode\Node::class)
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->getMock();
+        $child = $this->createMock(\JBBCode\Node::class);
 
         $child->expects($this->once())
             ->method('accept')
@@ -97,10 +91,7 @@ class VisitorSmileyTest extends \PHPUnit\Framework\TestCase
     #[DataProvider('SmileyDataProvider')]
     public function testvisitTextNode(string $src, string $expected): void
     {
-        $textnode = $this->getMockBuilder(\JBBCode\TextNode::class)
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->getMock();
+        $textnode = $this->createMock(\JBBCode\TextNode::class);
 
         $textnode->method('getValue')
             ->willReturn($src);
@@ -118,17 +109,15 @@ class VisitorSmileyTest extends \PHPUnit\Framework\TestCase
     /**
      * dataProvider
      */
-    public static function SmileyDataProvider()
+    public static function SmileyDataProvider(): \Iterator
     {
-        return [
-            [
-                'Hi :-)',
-                'Hi {{{lt}}}img src={{{quot}}}https://youthweb.net/vendor/smilies/smile0001.gif{{{quot}}} alt={{{quot}}}:-){{{quot}}} title={{{quot}}}:-){{{quot}}} /{{{gt}}}',
-            ],
-            [
-                'Hey :super: Das war sehr gut.',
-                'Hey {{{lt}}}img src={{{quot}}}https://youthweb.net/vendor/smilies/489.gif{{{quot}}} alt={{{quot}}}:super:{{{quot}}} title={{{quot}}}:super:{{{quot}}} /{{{gt}}} Das war sehr gut.',
-            ],
+        yield [
+            'Hi :-)',
+            'Hi {{{lt}}}img src={{{quot}}}https://youthweb.net/vendor/smilies/smile0001.gif{{{quot}}} alt={{{quot}}}:-){{{quot}}} title={{{quot}}}:-){{{quot}}} /{{{gt}}}',
+        ];
+        yield [
+            'Hey :super: Das war sehr gut.',
+            'Hey {{{lt}}}img src={{{quot}}}https://youthweb.net/vendor/smilies/489.gif{{{quot}}} alt={{{quot}}}:super:{{{quot}}} title={{{quot}}}:super:{{{quot}}} /{{{gt}}} Das war sehr gut.',
         ];
     }
 }

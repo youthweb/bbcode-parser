@@ -27,7 +27,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(VisitorCollection::class)]
-class VisitorCollectionTest extends TestCase
+final class VisitorCollectionTest extends TestCase
 {
     #[Test]
     public function getVisitorsReturnsEmptyArray(): void

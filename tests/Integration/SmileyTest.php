@@ -28,7 +28,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(Manager::class)]
-class SmileyTest extends \PHPUnit\Framework\TestCase
+final class SmileyTest extends \PHPUnit\Framework\TestCase
 {
     #[Test]
     public function testParseSmileyCode(): void
@@ -66,21 +66,19 @@ class SmileyTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $parser->parse($text, $config));
     }
 
-    public static function provideSmileyExamples()
+    public static function provideSmileyExamples(): \Iterator
     {
-        return [
-            [
-                'My mistake :-[',
-                '<p>My mistake <img src="https://youthweb.net/vendor/smilies/49_2.gif" alt=":-[" title=":-[" /></p>',
-            ],
-            [
-                'My mistake <span> :-[',
-                '<p>My mistake <span> <img src="https://youthweb.net/vendor/smilies/49_2.gif" alt=":-[" title=":-[" /></p>',
-            ],
-            [
-                '[b]My mistake :-[[/b]',
-                '<p><b>My mistake <img src="https://youthweb.net/vendor/smilies/49_2.gif" alt=":-[" title=":-[" /></b></p>',
-            ],
+        yield [
+            'My mistake :-[',
+            '<p>My mistake <img src="https://youthweb.net/vendor/smilies/49_2.gif" alt=":-[" title=":-[" /></p>',
+        ];
+        yield [
+            'My mistake <span> :-[',
+            '<p>My mistake <span> <img src="https://youthweb.net/vendor/smilies/49_2.gif" alt=":-[" title=":-[" /></p>',
+        ];
+        yield [
+            '[b]My mistake :-[[/b]',
+            '<p><b>My mistake <img src="https://youthweb.net/vendor/smilies/49_2.gif" alt=":-[" title=":-[" /></b></p>',
         ];
     }
 }
