@@ -21,22 +21,17 @@
 namespace Youthweb\BBCodeParser\Tests\Unit\Visitor;
 
 use Youthweb\BBCodeParser\Visitor\VisitorSmiley;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 
-#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(VisitorSmiley::class)]
 class VisitorSmileyTest extends \PHPUnit\Framework\TestCase
 {
     #[Test]
     public function testCreate(): void
     {
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->getMock();
+        $config = $this->createStub(\Youthweb\BBCodeParser\Config::class);
 
         $visitor = new VisitorSmiley();
 
@@ -60,10 +55,7 @@ class VisitorSmileyTest extends \PHPUnit\Framework\TestCase
             ->with($visitor)
             ->willReturn(null);
 
-        $element = $this->getMockBuilder(\JBBCode\DocumentElement::class)
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->getMock();
+        $element = $this->createStub(\JBBCode\DocumentElement::class);
 
         $element->method('getChildren')
             ->willReturn([$child]);
@@ -76,10 +68,7 @@ class VisitorSmileyTest extends \PHPUnit\Framework\TestCase
     {
         $visitor = new VisitorSmiley();
 
-        $code_definition = $this->getMockBuilder(\JBBCode\CodeDefinition::class)
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->getMock();
+        $code_definition = $this->createStub(\JBBCode\CodeDefinition::class);
 
         $code_definition->method('parseContent')
             ->willReturn(true);
@@ -94,10 +83,7 @@ class VisitorSmileyTest extends \PHPUnit\Framework\TestCase
             ->with($visitor)
             ->willReturn(null);
 
-        $element = $this->getMockBuilder(\JBBCode\ElementNode::class)
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->getMock();
+        $element = $this->createStub(\JBBCode\ElementNode::class);
 
         $element->method('getCodeDefinition')
             ->willReturn($code_definition);

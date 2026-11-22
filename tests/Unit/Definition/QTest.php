@@ -24,11 +24,9 @@ use JBBCode\ElementNode;
 use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\Q;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(Q::class)]
 class QTest extends \PHPUnit\Framework\TestCase
 {

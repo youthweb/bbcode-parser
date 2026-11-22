@@ -24,11 +24,9 @@ use JBBCode\ElementNode;
 use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\Email;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(Email::class)]
 class EmailTest extends \PHPUnit\Framework\TestCase
 {
@@ -39,17 +37,12 @@ class EmailTest extends \PHPUnit\Framework\TestCase
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get'])
-            ->getMock();
-
-        $config->method('get')
-            ->willReturnMap(
-                [
-                    ['cacheitempool', null, null],
-                    ['callbacks.email_content.protect_email', null, false],
-                ],
-            );
+        $config = $this->buildConfigStub(
+            [
+                ['cacheitempool', null, null],
+                ['callbacks.email_content.protect_email', null, false],
+            ],
+        );
 
         $definition = new Email($config);
 
@@ -61,17 +54,12 @@ class EmailTest extends \PHPUnit\Framework\TestCase
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get'])
-            ->getMock();
-
-        $config->method('get')
-            ->willReturnMap(
-                [
-                    ['cacheitempool', null, null],
-                    ['callbacks.email_content.protect_email', null, true],
-                ],
-            );
+        $config = $this->buildConfigStub(
+            [
+                ['cacheitempool', null, null],
+                ['callbacks.email_content.protect_email', null, true],
+            ],
+        );
 
         $definition = new Email($config);
 

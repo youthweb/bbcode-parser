@@ -23,12 +23,10 @@ namespace Youthweb\BBCodeParser\Tests\Unit;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockHttpStreamWrapper;
 use Youthweb\BBCodeParser\Tests\Fixtures\ValidationMock;
 use Youthweb\BBCodeParser\Validation;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 
-#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(Validation::class)]
 class ValidationTest extends \PHPUnit\Framework\TestCase
 {
@@ -50,14 +48,11 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
         ValidationMock::resetImageCounter();
     }
 
-    public function getConfigMock(): \PHPUnit\Framework\MockObject\MockObject
+    public function getConfigMock(): \Youthweb\BBCodeParser\Config
     {
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get'])
-            ->getMock();
+        $config = $this->createStub(\Youthweb\BBCodeParser\Config::class);
 
-        $config->expects($this->any())
-            ->method('get')
+        $config->method('get')
             ->willReturnMap(
                 [
                     ['cacheitempool', null, null],

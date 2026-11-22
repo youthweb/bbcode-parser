@@ -24,11 +24,9 @@ use JBBCode\ElementNode;
 use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\Color;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(Color::class)]
 class ColorTest extends \PHPUnit\Framework\TestCase
 {
@@ -39,12 +37,9 @@ class ColorTest extends \PHPUnit\Framework\TestCase
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
-        $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
-            ->onlyMethods(['get'])
-            ->getMock();
+        $config = $this->createStub(\Youthweb\BBCodeParser\Config::class);
 
-        $config->expects($this->any())
-            ->method('get')
+        $config->method('get')
             ->willReturnMap(
                 [
                     ['callbacks.color_param.allowed_colors', null, ['Red', 'Yellow']],

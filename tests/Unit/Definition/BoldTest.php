@@ -24,11 +24,9 @@ use JBBCode\ElementNode;
 use JBBCode\TextNode;
 use Youthweb\BBCodeParser\Definition\Bold;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockerTrait;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(Bold::class)]
 class BoldTest extends \PHPUnit\Framework\TestCase
 {
