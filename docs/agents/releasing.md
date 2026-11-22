@@ -35,7 +35,7 @@ Commit it as `Release <X.Y.Z>`, always with the full number, for example `Releas
 _Done_: the diff shows only the moved section, the new heading and the changed `[Unreleased]` link. No entry was dropped or reworded.
 
 **4. Validate**
-Run `make test` inside the Docker dev container (PHP 7.4).
+Run `make test` inside the Docker dev container (PHP 8.2).
 _Done_: the tests pass.
 
 **5. Open the pull request** [agent proposes a draft, developer approves and merges]
