@@ -141,7 +141,7 @@ class Manager
 
         // Sollen Headlines [h1]-[h6] geparset werden? (Nur für News, Hilfe, etc)
         if ($this->config->get('parse_headlines')) {
-            array_push($sets, new HeadlineSet($this->config));
+            array_push($sets, new HeadlineSet());
         }
 
         return $sets;
