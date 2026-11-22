@@ -40,9 +40,6 @@ class Validation implements ValidationInterface
 
     /**
      * construct
-     *
-     *
-     * @return void
      */
     public function __construct(Config $config)
     {
@@ -155,6 +152,6 @@ class Validation implements ValidationInterface
      */
     protected function _empty($val)
     {
-        return ($val === false || $val === null || $val === '' || $val === []);
+        return (in_array($val, [false, null, '', []], true));
     }
 }

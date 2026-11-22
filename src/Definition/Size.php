@@ -72,7 +72,7 @@ class Size extends CodeDefinition
 
         $size = intval($param);
 
-        if ($size == 0) {
+        if ($size === 0) {
             $size = 100;
         }
 

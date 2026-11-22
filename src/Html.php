@@ -188,9 +188,7 @@ class Html
         }
 
         // Create and display a URL hyperlink
-        if (is_null($text)) {
-            $text = $href;
-        }
+        $text ??= $href;
 
         $attr['href'] = static::escapeSpecialChars($href);
 

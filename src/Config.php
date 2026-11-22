@@ -152,9 +152,7 @@ class Config
                 $_key = (int) $_key;
             }
 
-            if (! isset($array[$_key])) {
-                $array[$_key] = [];
-            }
+            $array[$_key] ??= [];
 
             $array = &$array[$_key];
         }
