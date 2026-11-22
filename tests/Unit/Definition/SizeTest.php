@@ -48,8 +48,8 @@ class SizeTest extends \PHPUnit\Framework\TestCase
                     [
                         ['callbacks.size_param.max_size', null, '150'],
                         ['callbacks.size_param.min_size', null, '75'],
-                    ]
-                )
+                    ],
+                ),
             );
 
         $definition = new Size($config);

@@ -48,8 +48,8 @@ class ImageTest extends \PHPUnit\Framework\TestCase
                 $this->returnValueMap(
                     [
                         ['callbacks.image.force_check', null, false],
-                    ]
-                )
+                    ],
+                ),
             );
 
         $definition = new Image($config);
@@ -86,8 +86,8 @@ class ImageTest extends \PHPUnit\Framework\TestCase
                     [
                         ['callbacks.image.force_check', null, false],
                         ['filter.image', null, $filter],
-                    ]
-                )
+                    ],
+                ),
             );
 
         $definition = new Image($config);
@@ -124,8 +124,8 @@ class ImageTest extends \PHPUnit\Framework\TestCase
                     [
                         ['callbacks.image.force_check', null, false],
                         ['filter.image', null, $filter],
-                    ]
-                )
+                    ],
+                ),
             );
 
         $definition = new Image($config);
@@ -157,8 +157,8 @@ class ImageTest extends \PHPUnit\Framework\TestCase
                 $this->returnValueMap(
                     [
                         ['callbacks.image.force_check', null, false],
-                    ]
-                )
+                    ],
+                ),
             );
 
         $definition = new Image($config);
@@ -205,8 +205,8 @@ class ImageTest extends \PHPUnit\Framework\TestCase
                 $this->returnValueMap(
                     [
                         ['callbacks.image.force_check', null, true],
-                    ]
-                )
+                    ],
+                ),
             );
 
         $definition = new Image($config);
@@ -253,8 +253,8 @@ class ImageTest extends \PHPUnit\Framework\TestCase
                 $this->returnValueMap(
                     [
                         ['callbacks.image.force_check', null, true],
-                    ]
-                )
+                    ],
+                ),
             );
 
         $definition = new Image($config);

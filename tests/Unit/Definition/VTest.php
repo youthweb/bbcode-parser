@@ -49,8 +49,8 @@ class VTest extends \PHPUnit\Framework\TestCase
                     [
                         ['callbacks.url_content.target', null, '_blank'],
                         ['filter.video', null, false],
-                    ]
-                )
+                    ],
+                ),
             );
 
         $definition = new V($config);
@@ -116,8 +116,8 @@ class VTest extends \PHPUnit\Framework\TestCase
                     [
                         ['callbacks.url_content.target', null, '_blank'],
                         ['filter.video', null, $filter],
-                    ]
-                )
+                    ],
+                ),
             );
 
         $definition = new V($config);
@@ -154,8 +154,8 @@ class VTest extends \PHPUnit\Framework\TestCase
                     [
                         ['callbacks.url_content.target', null, '_blank'],
                         ['filter.video', null, $filter],
-                    ]
-                )
+                    ],
+                ),
             );
 
         $definition = new V($config);
