@@ -31,11 +31,9 @@ class ItalicTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider dataProvider
      *
-     * @param mixed $text
      * @param mixed $attribute
-     * @param mixed $expected
      */
-    public function testAsHtml($text, $attribute, $expected): void
+    public function testAsHtml(string $text, $attribute, string $expected): void
     {
         $elementNode = $this->buildElementNodeMock($text, $attribute);
 
@@ -47,11 +45,9 @@ class ItalicTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider dataProvider
      *
-     * @param mixed $text
      * @param mixed $attribute
-     * @param mixed $expected
      */
-    public function testAsText($text, $attribute, $expected): void
+    public function testAsText(string $text, $attribute, string $expected): void
     {
         $elementNode = $this->buildElementNodeMock($text, null);
 

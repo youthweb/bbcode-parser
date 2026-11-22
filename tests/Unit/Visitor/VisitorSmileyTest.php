@@ -115,11 +115,8 @@ class VisitorSmileyTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider SmileyDataProvider
-     *
-     * @param mixed $src
-     * @param mixed $expected
      */
-    public function testvisitTextNode($src, $expected): void
+    public function testvisitTextNode(string $src, string $expected): void
     {
         $textnode = $this->getMockBuilder(\JBBCode\TextNode::class)
             ->disableOriginalConstructor()

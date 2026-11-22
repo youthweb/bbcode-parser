@@ -43,7 +43,7 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
         ValidationMock::resetImageCounter();
     }
 
-    public function getConfigMock()
+    public function getConfigMock(): \PHPUnit\Framework\MockObject\MockObject
     {
         $config = $this->getMockBuilder(\Youthweb\BBCodeParser\Config::class)
             ->setMethods(['get'])
@@ -139,11 +139,8 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
      * test valid url
      *
      * @dataProvider providerValidUrl
-     *
-     * @param mixed $url
-     * @param mixed $expected
      */
-    public function testValidUrl($url, $expected): void
+    public function testValidUrl(string $url, bool $expected): void
     {
         $validation = new Validation($this->getConfigMock());
 
