@@ -53,6 +53,6 @@ final class SpikeHtmlRenderer
 
     public function render(Document $document): string
     {
-        return rtrim((string) $this->renderer->renderDocument($document));
+        return rtrim($this->renderer->renderDocument($document)->getContent());
     }
 }
