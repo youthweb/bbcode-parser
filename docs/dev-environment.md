@@ -31,9 +31,14 @@ make test
 | `make codestyle` | **Fix** the code style with PHP CS Fixer (`composer php-cs-fixer`); it rewrites files, check `git diff` afterwards |
 | `make rector` | Run Rector (`composer rector`) with the PHP 7.4, dead code and code quality rule sets and the backward-compatible type declaration rules (`art4/rector-bc-library`); it **rewrites files**, so check `git diff` afterwards. `make rector ARGS="--dry-run"` only shows the changes |
 | `make coverage` | Run PHPUnit with an HTML coverage report in `build/code-coverage/` |
+| `make coverage-floor` | Run PHPUnit with coverage and fail when the line coverage is below the value in `.coverage-floor`. Needs Xdebug, which does not exist for PHP 7.4: `make coverage-floor PHP_VERSION=8.3` |
 | `make shell` | Open an interactive shell inside the container |
 | `make composer ARGS="..."` | Run any Composer command, e.g. `make composer ARGS="update"` |
 | `make clean` | Remove `build/`, `vendor/`, `composer.lock` and the tool caches |
+
+## Coverage floor
+
+`.coverage-floor` holds the lowest line coverage (in percent) a run may reach. CI fails when a fresh run is below it. The value only climbs: when coverage has grown, raise it in a reviewed commit to the figure PHPUnit reports; never lower it to make a run pass.
 
 ## PHP version
 
