@@ -1,18 +1,6 @@
 #!/bin/sh
 set -eu
 
-# Debian releases that are out of support (the PHP 7.4 and 8.0 images are based
-# on bullseye) are no longer served from the main mirrors, only from the archive.
-. /etc/os-release
-case "${VERSION_CODENAME:-}" in
-	buster|bullseye)
-		printf 'deb http://archive.debian.org/debian %s main\ndeb http://archive.debian.org/debian-security %s-security main\n' \
-			"$VERSION_CODENAME" "$VERSION_CODENAME" >/etc/apt/sources.list
-		rm -f /etc/apt/sources.list.d/*
-		printf 'Acquire::Check-Valid-Until "false";\n' >/etc/apt/apt.conf.d/99archive
-		;;
-esac
-
 apt-get update
 apt-get install -y --no-install-recommends git libonig-dev unzip
 

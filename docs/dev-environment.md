@@ -29,9 +29,9 @@ make test
 | `make phpunit` | Run PHPUnit |
 | `make phpstan` | Run PHPStan (`composer phpstan`) |
 | `make codestyle` | **Fix** the code style with PHP CS Fixer (`composer php-cs-fixer`); it rewrites files, check `git diff` afterwards |
-| `make rector` | Run Rector (`composer rector`) with the PHP 7.4, dead code and code quality rule sets and the backward-compatible type declaration rules (`art4/rector-bc-library`); it **rewrites files**, so check `git diff` afterwards. `make rector ARGS="--dry-run"` only shows the changes |
+| `make rector` | Run Rector (`composer rector`) with the PHP 8.2, dead code and code quality rule sets and the backward-compatible type declaration rules (`art4/rector-bc-library`); it **rewrites files**, so check `git diff` afterwards. `make rector ARGS="--dry-run"` only shows the changes |
 | `make coverage` | Run PHPUnit with an HTML coverage report in `build/code-coverage/` |
-| `make coverage-floor` | Run PHPUnit with coverage and fail when the line coverage is below the value in `.coverage-floor`. Needs Xdebug, which does not exist for PHP 7.4: `make coverage-floor PHP_VERSION=8.3` |
+| `make coverage-floor` | Run PHPUnit with coverage and fail when the line coverage is below the value in `.coverage-floor`. Run it on PHP 8.3: `make coverage-floor PHP_VERSION=8.3` |
 | `make shell` | Open an interactive shell inside the container |
 | `make composer ARGS="..."` | Run any Composer command, e.g. `make composer ARGS="update"` |
 | `make clean` | Remove `build/`, `vendor/`, `composer.lock` and the tool caches |
@@ -42,7 +42,7 @@ make test
 
 ## PHP version
 
-The container runs PHP `7.4`, the lowest supported version. To run another version, pass `PHP_VERSION`, for example:
+The container runs PHP `8.2`, the lowest supported version. To run another version, pass `PHP_VERSION`, for example:
 
 ```bash
 make clean install phpunit PHP_VERSION=8.5
@@ -55,7 +55,6 @@ Each version gets its own image (`bbcode-parser-php:<version>`). `vendor/` is sh
 - The image is built from the official `php:<version>-cli` image and installs `mbstring`, `git`, `unzip` and Composer. Xdebug is installed but disabled; `make coverage` enables it.
 - The repository is bind-mounted at `/app`; no project files are baked into the image (see `.dockerignore`).
 - The container runs as your host user, so `vendor/`, `build/` and the caches stay owned by you.
-- The PHP 7.4 and 8.0 images are based on Debian bullseye, which is out of support. `scripts/docker/php/install-tools.sh` switches apt to `archive.debian.org` for those images.
 
 ## Troubleshooting
 
