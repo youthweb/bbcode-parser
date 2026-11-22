@@ -8,7 +8,7 @@ PHP, Composer and the PHP tools run only inside the Docker dev container (`make`
 
 ## Entry
 
-The developer decides a release is warranted, and `master` is in the state they intend to release. The section `[Unreleased]` of `CHANGELOG.md` lists every change since the last release: if it is empty or incomplete, fill it in a pull request first, in English, under the categories *Added*, *Changed*, *Deprecated*, *Removed*, *Fixed* and *Security*. The CHANGELOG names what concerns users of the library. Changes to the development setup (Docker, CI, tooling) do not belong in it.
+The developer decides a release is warranted, and `master` is in the state they intend to release. The section `[Unreleased]` of `CHANGELOG.md` lists every change since the last release. Pull requests add their own entries (see `AGENTS.md`, *Pull requests*); check the section against the commits since the last tag, and if it is empty or incomplete, complete it in a pull request first, in English, under the categories *Added*, *Changed*, *Deprecated*, *Removed*, *Fixed* and *Security*. The CHANGELOG names what concerns users of the library. Changes to the development setup (Docker, CI, tooling) do not belong in it.
 
 ## Steps
 

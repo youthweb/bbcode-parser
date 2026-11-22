@@ -35,6 +35,18 @@ No Claude attribution in commits (global rule).
 
 Commits, PRs, issues and docs are written in English.
 
+Never commit on `master`: every change goes on a branch and reaches `master` through a pull request.
+
+## Pull requests
+
+- Open a pull request against `master`. It closes its ticket with `Closes #<n>` in the description; a pull request that delivers only a part of a ticket says "Part of #<n>" and what stays open.
+- Merge only with green checks: every job of the PHP matrix and the Roave backward compatibility check.
+- The description has three sections, short, without a preamble:
+  - **Summary**: the smallest view that shows the change, for example a diff sketch, a call tree, a file tree or a few lines of pseudocode, with the ticket and, where the code changes, the one fact that makes it safe and how far it was proved.
+  - **Evidence**: before and after, as test output or the failing and passing test. Name the checks that ran.
+  - **Merge Danger**: whether the change is a one-way or a two-way door (can it be walked back?) and its blast radius in a word or two (for example consumers of the library, produced HTML, CI only, none), with the ramifications where there are some.
+- **CHANGELOG**: a pull request adds its entry to `[Unreleased]` in `CHANGELOG.md` itself when the change concerns users of the library: public or experimental API, behaviour, produced HTML (under *Changed*), dependencies, supported PHP versions, deprecations, fixes. Use one line in English under *Added*, *Changed*, *Deprecated*, *Removed*, *Fixed* or *Security*. Changes to the development setup (Docker, CI, tooling), docs and refactorings without a visible effect get no entry. Each ticket of the new parser engine (#44) gets its own short line under *Added*. The description states it: "CHANGELOG: entry added" or "CHANGELOG: none needed, because ...". A review requests changes where the statement is missing or wrong.
+
 ## Agent skills
 
 ### Issue tracker
