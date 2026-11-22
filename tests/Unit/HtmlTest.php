@@ -139,6 +139,25 @@ class HtmlTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
+    public function testBuildUrlGivesEmptyStringForNullWithoutDeprecation(): void
+    {
+        $deprecations = [];
+        set_error_handler(static function (int $errno, string $errstr) use (&$deprecations): bool {
+            $deprecations[] = $errstr;
+
+            return true;
+        }, E_DEPRECATED);
+
+        try {
+            $result = (new \ReflectionMethod(Html::class, 'buildUrl'))->invoke(null, null);
+        } finally {
+            restore_error_handler();
+        }
+
+        $this->assertSame('', $result);
+        $this->assertSame([], $deprecations);
+    }
+
     private function buildUrl(string $url): string
     {
         return (new \ReflectionMethod(Html::class, 'buildUrl'))->invoke(null, $url);

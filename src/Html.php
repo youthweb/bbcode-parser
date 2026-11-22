@@ -338,13 +338,13 @@ class Html
      * A path without a leading slash gets one, empty parts are left out and a
      * URL that parse_url() cannot parse gives an empty string.
      *
-     * @param string $url the URL
+     * @param string|null $url the URL, a null is read as an empty string
      *
      * @return string the rebuilt URL
      */
     protected static function buildUrl($url)
     {
-        $parts = parse_url($url);
+        $parts = parse_url((string) $url);
 
         if ($parts === false) {
             return '';
