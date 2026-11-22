@@ -2,6 +2,7 @@
 
 use Rector\Config\RectorConfig;
 use Rector\Set\ValueObject\LevelSetList;
+use Rector\Set\ValueObject\SetList;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -9,5 +10,5 @@ return RectorConfig::configure()
         __DIR__ . '/tests',
     ])
     // Stops at PHP 7.4, the lowest version composer.json allows.
-    ->withSets([LevelSetList::UP_TO_PHP_74])
+    ->withSets([LevelSetList::UP_TO_PHP_74, SetList::DEAD_CODE])
 ;
