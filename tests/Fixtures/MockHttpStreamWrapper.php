@@ -66,34 +66,34 @@ class MockHttpStreamWrapper implements \IteratorAggregate, \ArrayAccess, \Counta
     protected $metaData = [];
 
     /* IteratorAggregate */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->metaData);
     }
 
     /* ArrayAccess */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return array_key_exists($offset, $this->metaData);
     }
 
-    public function offsetGet($offset)
+    public function offsetGet(mixed $offset): mixed
     {
         return $this->metaData[$offset];
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         $this->metaData[$offset] = $value;
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->metaData[$offset]);
     }
 
     /* Countable */
-    public function count()
+    public function count(): int
     {
         return count($this->metaData);
     }
