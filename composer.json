@@ -17,6 +17,7 @@
         "cache/void-adapter": "^1.1",
         "jakeasmith/http_build_url": "^1",
         "jbbcode/jbbcode": "^1.4",
+        "league/commonmark": "^2.0",
         "youthweb/urllinker": "^1.4"
     },
     "require-dev": {
