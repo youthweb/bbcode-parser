@@ -49,6 +49,7 @@ final class BBCodeBlockTagsTest extends TestCase
         yield 'list with an unknown option' => ['[list=x][*]a[/list]'];
         yield 'list with a quoted option' => ['[list="1"][*]a[/list]'];
         yield 'text before the first item is the first item' => ['[list]a[*]b[/list]'];
+        yield 'list with an empty item' => ['[list][*][/list]'];
         yield 'empty list' => ['[list][/list]'];
         yield 'list with blanks only' => ["[list]  \n [/list]"];
         yield 'unclosed list' => ['[list][*]a'];
@@ -211,15 +212,15 @@ final class BBCodeBlockTagsTest extends TestCase
     public static function newEngineProvider(): iterable
     {
         yield 'the option of a quote is escaped' => [
-            '[quote=<svg/onload=alert(1)>]x[/quote]',
-            "<blockquote title=\"Zitat\">\n<cite>&lt;svg/onload=alert(1)&gt;</cite>\n<p>x</p>\n</blockquote>",
+            '[quote=<b>x</b>]y[/quote]',
+            "<blockquote title=\"Zitat\">\n<cite>&lt;b&gt;x&lt;/b&gt;</cite>\n<p>y</p>\n</blockquote>",
         ];
         yield 'the option of a quote is no markup' => [
             '[quote=a&b "c" d]x[/quote]',
             "<blockquote title=\"Zitat\">\n<cite>a&amp;b &quot;c&quot; d</cite>\n<p>x</p>\n</blockquote>",
         ];
         yield 'the option of a list is no markup' => [
-            '[list=<svg/onload=alert(1)>][*]a[/list]',
+            '[list=<b>x</b>][*]a[/list]',
             "<ul type=\"disc\">\n\t<li>a</li>\n</ul>",
         ];
         yield 'a list item with a list and a paragraph has the paragraph tight' => [
@@ -265,6 +266,10 @@ final class BBCodeBlockTagsTest extends TestCase
         yield 'the sixth level stays text, its closing tag too' => [
             '[quote][list][quote][list][quote][quote]x[/quote][/quote][/list][/quote][/list][/quote]',
             "<blockquote title=\"Zitat\">\n<ul type=\"disc\">\n\t<li><blockquote title=\"Zitat\">\n<ul type=\"disc\">\n\t<li><blockquote title=\"Zitat\">\n<p>[quote]x[/quote]</p>\n</blockquote></li>\n</ul>\n</blockquote></li>\n</ul>\n</blockquote>",
+        ];
+        yield 'an item marker in the text of a tag over the depth limit stays text' => [
+            '[quote][list][quote][list][quote][list][*]x[/list][/quote][/list][/quote][/list][/quote]',
+            "<blockquote title=\"Zitat\">\n<ul type=\"disc\">\n\t<li><blockquote title=\"Zitat\">\n<ul type=\"disc\">\n\t<li><blockquote title=\"Zitat\">\n<p>[list][*]x[/list]</p>\n</blockquote></li>\n</ul>\n</blockquote></li>\n</ul>\n</blockquote>",
         ];
         yield 'a control character of the input is dropped' => [
             "[noparse]a\u{1B}0\u{1B}b[/noparse]",

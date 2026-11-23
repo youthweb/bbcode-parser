@@ -56,7 +56,7 @@ final class BBCodeTreeParser
     public function parse(string $input): Document
     {
         // The control character marks raw text while parsing, so it cannot come from the input.
-        $input = str_replace(["\r\n", "\r", "\x1B"], ["\n", "\n", ''], $input);
+        $input = str_replace(["\r\n", "\r", BlockTreeBuilder::PLACEHOLDER], ["\n", "\n", ''], $input);
         $document = new Document();
         $builder = new BlockTreeBuilder($document, $this->parseInline(...));
         $offset = 0;
@@ -259,7 +259,7 @@ final class BBCodeTreeParser
     private function appendText(Node $parent, string $text, array $raws): void
     {
         // Odd parts are the numbers of the placeholders of raw texts
-        $parts = preg_split('~\x1B(\d+)\x1B~', $text, -1, PREG_SPLIT_DELIM_CAPTURE) ?: [];
+        $parts = preg_split(BlockTreeBuilder::PLACEHOLDER_PATTERN, $text, -1, PREG_SPLIT_DELIM_CAPTURE) ?: [];
 
         foreach ($parts as $i => $part) {
             $this->appendLines($parent, $i % 2 === 1 ? ($raws[(int) $part] ?? '') : $part, $i % 2 === 1);

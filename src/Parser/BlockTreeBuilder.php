@@ -29,7 +29,10 @@ final class BlockTreeBuilder
     public const MAX_DEPTH = 5;
 
     /** Marks a raw text in the collected text, the number is the index of the raw text. */
-    private const PLACEHOLDER = "\x1B";
+    public const PLACEHOLDER = "\x1B";
+
+    /** Finds the placeholders of raw texts, the group is the index of the raw text. */
+    public const PLACEHOLDER_PATTERN = '~\x1B(\d+)\x1B~';
 
     /**
      * Open tags, the innermost last. A tag over the depth limit is on the stack without a node,
@@ -124,7 +127,8 @@ final class BlockTreeBuilder
     {
         $index = $this->innermostIndex();
 
-        if ($index === null || ! in_array($this->stack[$index]['name'], ['list', '*'], true)) {
+        if ($index === null || $index !== count($this->stack) - 1 || ! in_array($this->stack[$index]['name'], ['list', '*'], true)) {
+            // Not in a list, or in the text of a tag over the depth limit
             $this->buffer .= $literal;
 
             return;
@@ -138,7 +142,7 @@ final class BlockTreeBuilder
         }
 
         if ($this->stack[$index]['name'] === '*') {
-            $this->closeTo($index);
+            $this->closeFrom($index);
         }
 
         $this->push('*', new BBListItem());
@@ -153,14 +157,14 @@ final class BlockTreeBuilder
             if ($this->stack[$index]['name'] === $name) {
                 if ($this->stack[$index]['node'] === null) {
                     // The closing tag of a tag over the depth limit: both stay text in the same paragraph.
-                    $this->closeTo($index + 1);
+                    $this->closeFrom($index + 1);
                     array_pop($this->stack);
                     $this->buffer .= $literal;
 
                     return;
                 }
 
-                $this->closeTo($index);
+                $this->closeFrom($index);
 
                 return;
             }
@@ -174,7 +178,7 @@ final class BlockTreeBuilder
      */
     public function finish(): void
     {
-        $this->closeTo(0);
+        $this->closeFrom(0);
         $this->flush();
     }
 
@@ -207,7 +211,7 @@ final class BlockTreeBuilder
     /**
      * Closes the tag at the index and all tags inside of it.
      */
-    private function closeTo(int $index): void
+    private function closeFrom(int $index): void
     {
         while (count($this->stack) > $index) {
             $this->flush();
