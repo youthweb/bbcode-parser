@@ -1,6 +1,6 @@
 # Extension points of the league engine (experimental)
 
-The engine built on `league/commonmark` has no visitor and filter interfaces like `Manager`. A project adds league extensions to the `Engine`. They work in both modes, BBCode and Markdown. The API is `@experimental`, see [bc-promise.md](bc-promise.md).
+The engine built on `league/commonmark` has no visitor and filter interfaces like `Manager`. A project adds league extensions to the `Engine`. Their renderers and their listeners on the `DocumentParsedEvent` work in both modes, BBCode and Markdown. Inline and block parsers work in the Markdown mode only, the BBCode mode has its own parser. The API is `@experimental`, see [bc-promise.md](bc-promise.md).
 
 ```php
 use Youthweb\BBCodeParser\Config;
@@ -12,7 +12,7 @@ $engine = new Engine(new Config(), [
 ]);
 ```
 
-An extension implements `League\CommonMark\Extension\ExtensionInterface`. Inside of `register()` it adds renderers, parsers or listeners to the environment. The extensions are added after the ones of the engine.
+An extension implements `League\CommonMark\Extension\ExtensionInterface`. Inside of `register()` it adds renderers and listeners to the environment. The extensions are added after the ones of the engine.
 
 ## The nodes
 
@@ -50,6 +50,10 @@ final class ImageFilterExtension implements ExtensionInterface, NodeRendererInte
 
     public function render(Node $node, ChildNodeRendererInterface $childRenderer): ?string
     {
+        if (! $node instanceof Image) {
+            return null;
+        }
+
         $id = trim($node->getLiteral());
 
         if (! ctype_digit($id)) {

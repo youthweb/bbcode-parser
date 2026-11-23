@@ -19,9 +19,11 @@ use Youthweb\BBCodeParser\Parser\SpikeHtmlRenderer;
  * Both inputs end in the same node tree and are rendered by the same renderers.
  * The mode is chosen per call, a text is either BBCode or Markdown.
  *
- * A project adds its own league extensions (parsers, listeners, renderers) with the second argument. They work
- * in both modes and are added after the extensions of the engine, so a renderer with a higher priority than 0
- * replaces a default renderer and a listener with the default priority runs after the listeners of the engine.
+ * A project adds its own league extensions with the second argument. Their renderers and their listeners on
+ * the `DocumentParsedEvent` work in both modes. The inline and block parsers of an extension work in the Markdown
+ * mode only, the BBCode mode has its own parser. The extensions are added after the ones of the engine, so a renderer
+ * with a higher priority than 0 replaces a default renderer and a listener with the default priority runs after the
+ * listeners of the engine.
  *
  * @experimental
  */

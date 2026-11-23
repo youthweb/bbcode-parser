@@ -4,11 +4,20 @@ declare(strict_types=1);
 
 namespace Youthweb\BBCodeParser\Tests\Integration\Engine;
 
+use League\CommonMark\Environment\EnvironmentBuilderInterface;
+use League\CommonMark\Event\DocumentParsedEvent;
+use League\CommonMark\Extension\CommonMark\Node\Block\FencedCode;
+use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Image as MarkdownImage;
+use League\CommonMark\Extension\ExtensionInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Youthweb\BBCodeParser\Config;
 use Youthweb\BBCodeParser\Engine;
+use Youthweb\BBCodeParser\Extension\Node\BBList;
+use Youthweb\BBCodeParser\Extension\Node\Email;
+use Youthweb\BBCodeParser\Extension\Node\Image;
 use Youthweb\BBCodeParser\InputMode;
 use Youthweb\BBCodeParser\Tests\Fixtures\Extension\ImageFilterExtension;
 use Youthweb\BBCodeParser\Tests\Fixtures\Extension\SmileyExtension;
@@ -93,6 +102,8 @@ final class EngineExtensionTest extends TestCase
         yield 'not in inline code' => ['`@alice :-)`', '<p><code>@alice :-)</code></p>'];
         yield 'not in a code block' => ["```\n@alice :-)\n```", '<pre><code>@alice :-)</code></pre>'];
         yield 'not in a link' => ['[@alice :-)](https://example.org)', '<p><a target="_blank" href="https://example.org">@alice :-)</a></p>'];
+        yield 'not in an email link' => ['[@alice :-)](mailto:a@example.org)', '<p><a href="mailto:a@example.org">@alice :-)</a></p>'];
+        yield 'not in an email autolink' => ['<a@alice.de>', '<p><a href="mailto:a@alice.de">a@alice.de</a></p>'];
         yield 'not in an autolinked url' => ['<https://example.org/@alice>', '<p><a target="_blank" href="https://example.org/@alice">https://example.org/@alice</a></p>'];
     }
 
@@ -122,10 +133,33 @@ final class EngineExtensionTest extends TestCase
 
     public function testTheMarkdownTreeIsBuiltBeforeTheListenersOfAnExtension(): void
     {
-        $engine = new Engine($this->config(), [new UsernameExtension()]);
+        $seen = [];
 
-        // A mailto link becomes an email node and a fenced code becomes a code block, both are skipped.
-        $this->assertSame('<pre><code>@alice</code></pre>', $engine->toHtml("```\n@alice\n```", InputMode::Markdown));
+        $extension = new class ($seen) implements ExtensionInterface {
+            /** @param list<string> $seen */
+            public function __construct(private array &$seen) {}
+
+            public function register(EnvironmentBuilderInterface $environment): void
+            {
+                $environment->addEventListener(DocumentParsedEvent::class, function (DocumentParsedEvent $event): void {
+                    foreach ($event->getDocument()->iterator() as $node) {
+                        $this->seen[] = $node::class;
+                    }
+                });
+            }
+        };
+
+        $markdown = "- a\n\n```\nb\n```\n\n![](https://example.org/a.png)\n\n[m](mailto:a@example.org)";
+
+        (new Engine($this->config(), [$extension]))->toHtml($markdown, InputMode::Markdown);
+
+        // The listener of the extension sees the nodes of the engine, not the ones of the Markdown parser.
+        $this->assertContains(BBList::class, $seen);
+        $this->assertContains(Image::class, $seen);
+        $this->assertContains(Email::class, $seen);
+        $this->assertNotContains(ListBlock::class, $seen);
+        $this->assertNotContains(FencedCode::class, $seen);
+        $this->assertNotContains(MarkdownImage::class, $seen);
     }
 
     public function testWithoutAnExtensionTheDefaultRendererIsUsed(): void
