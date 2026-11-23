@@ -60,6 +60,11 @@ final class BBCodeLinkTagsTest extends TestCase
         yield 'url, uppercase' => ['[URL=http://a.de]x[/URL]'];
         yield 'ywlink' => ['[YWLINK=http://a.de]y[/YWLINK]'];
         yield 'ywlink without option stays text' => ['[YWLINK]http://a.de[/YWLINK]'];
+        yield 'ywlink, protocol relative' => ['[YWLINK=//a.de]y[/YWLINK]'];
+        yield 'ywlink with nested tag' => ['[YWLINK=http://a.de][b]y[/b][/YWLINK]'];
+        yield 'ywlink unclosed' => ['[YWLINK=http://a.de]y'];
+        yield 'email unclosed' => ['[email=a@b.de]text'];
+        yield 'email with empty option' => ['[email=]a@b.de[/email]'];
         yield 'email' => ['[email]a@b.de[/email]'];
         yield 'email with option' => ['[email=a@b.de]mail[/email]'];
         yield 'email with option and nested tag' => ['[email=a@b.de][b]m[/b][/email]'];
@@ -134,6 +139,8 @@ final class BBCodeLinkTagsTest extends TestCase
     public static function imageCheckProvider(): iterable
     {
         yield 'url of an image' => ['[img]http://example.org/a.jpg[/img]', ['Content-Type: image/jpeg']];
+        yield 'pic, url of an image' => ['[PIC]http://example.org/a.jpg[/PIC]', ['Content-Type: image/jpeg']];
+        yield 'pic, url of no image is only linked' => ['[PIC]http://example.org/a.html[/PIC]', ['Content-Type: text/html']];
         yield 'url of no image is only linked' => ['[img]http://example.org/a.html[/img]', ['Content-Type: text/html']];
         yield 'url of no image in a url tag is text' => ['[url=http://b.de][img]http://example.org/a.html[/img][/url]', ['Content-Type: text/html']];
         yield 'url of an image in a url tag' => ['[url=http://b.de][img]http://example.org/a.jpg[/img][/url]', ['Content-Type: image/jpeg']];
@@ -174,6 +181,16 @@ final class BBCodeLinkTagsTest extends TestCase
      */
     public static function differenceProvider(): iterable
     {
+        yield 'ywlink with javascript: is plain text, 1.x leaves the tag as text' => [
+            '[YWLINK=javascript:alert(1)]x[/YWLINK]',
+            '<p>[YWLINK=javascript:alert(1)]x[/YWLINK]</p>',
+            '<p>x</p>',
+        ];
+        yield 'an option with a space is not a url, 1.x reads only up to the space' => [
+            '[YWLINK=not a url]y[/YWLINK]',
+            '<p><a target="_blank" href="http://not">y</a></p>',
+            '<p>y</p>',
+        ];
         yield 'javascript: is plain text, 1.x rewrites it to http://x' => [
             '[url=javascript:alert(1)]x[/url]',
             '<p><a target="_blank" href="http://x">x</a></p>',

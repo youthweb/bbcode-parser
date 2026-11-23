@@ -20,6 +20,7 @@
 
 namespace Youthweb\BBCodeParser\Tests\Unit;
 
+use Youthweb\BBCodeParser\Config;
 use Youthweb\BBCodeParser\Html;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -181,6 +182,45 @@ final class HtmlTest extends \PHPUnit\Framework\TestCase
             . "\t" . '</li>' . PHP_EOL
             . "\t" . '<li>item 2</li>' . PHP_EOL
             . '</ul>' . PHP_EOL,
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $config
+     */
+    #[DataProvider('shortenUrlTextProvider')]
+    public function testShortenUrlText(string $url, array $config, string $expected): void
+    {
+        $object = new Config();
+        $object->mergeRecursive($config);
+
+        $this->assertSame($expected, Html::shortenUrlText($url, $object));
+    }
+
+    public static function shortenUrlTextProvider(): \Iterator
+    {
+        $long = 'http://www.example.com/irgend/eine/lange/url.html';
+
+        yield 'off by default' => [$long, [], $long];
+        yield 'short enough, only the scheme goes' => [
+            'http://a.de/x',
+            ['callbacks' => ['url_content' => ['short_url' => true]]],
+            'a.de/x',
+        ];
+        yield 'cut at the end below 30' => [
+            $long,
+            ['callbacks' => ['url_content' => ['short_url' => true, 'short_url_length' => 25]]],
+            "www.example.com/irgend/\u{2026}",
+        ];
+        yield 'cut in the middle from 30' => [
+            $long,
+            ['callbacks' => ['url_content' => ['short_url' => true, 'short_url_length' => 40]]],
+            "www.example.com/irgend/eine/\u{2026}e/url.html",
+        ];
+        yield 'the minimum length is 20' => [
+            $long,
+            ['callbacks' => ['url_content' => ['short_url' => true, 'short_url_length' => 5]]],
+            "www.example.com/ir\u{2026}",
         ];
     }
 }
