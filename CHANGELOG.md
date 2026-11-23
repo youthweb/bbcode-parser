@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 
 - Experimental parser engine based on `league/commonmark` that builds a node tree from BBCode (`[b]`, `[i]`, `[url]`, `[code]`), marked `@experimental`, see [#44](https://github.com/youthweb/bbcode-parser/issues/44)
+- Experimental parser engine: the inline tags `[b]`, `[i]`, `[u]` and the deprecated `[F]` and `[K]`, rendered as `<strong>`, `<em>` and `<u>`, see [#48](https://github.com/youthweb/bbcode-parser/issues/48)
 
 ### Changed
 

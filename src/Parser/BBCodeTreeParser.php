@@ -13,6 +13,7 @@ use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Node\Inline\Newline;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Node\Node;
+use Youthweb\BBCodeParser\Extension\Node\Underline;
 
 /**
  * Spike: parses BBCode into a league/commonmark node tree.
@@ -21,7 +22,20 @@ use League\CommonMark\Node\Node;
  */
 final class BBCodeTreeParser
 {
-    private const TAG = '~\[(/)?(b|i|url|code)(?:=([^\]]*))?\]~i';
+    /**
+     * Tags with a node. `f` and `k` are the deprecated aliases of `b` and `i`.
+     * Like in 1.x a closing tag pairs only with an opening tag of the same name.
+     *
+     * @var array<string, class-string<Node>>
+     */
+    private const TAGS = [
+        'b' => Strong::class,
+        'f' => Strong::class,
+        'i' => Emphasis::class,
+        'k' => Emphasis::class,
+        'u' => Underline::class,
+        'url' => Link::class,
+    ];
 
     public function parse(string $input): Document
     {
@@ -87,7 +101,9 @@ final class BBCodeTreeParser
         $current = $paragraph;
         $offset = 0;
 
-        preg_match_all(self::TAG, $text, $matches, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
+        $pattern = '~\[(/)?(' . implode('|', array_keys(self::TAGS)) . ')(?:=([^\]]*))?\]~i';
+
+        preg_match_all($pattern, $text, $matches, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
 
         foreach ($matches as $match) {
             [$full, $pos] = $match[0];
@@ -97,6 +113,13 @@ final class BBCodeTreeParser
 
             $this->appendText($current, substr($text, $offset, $pos - $offset));
             $offset = $pos + strlen($full);
+
+            if (! $closing && $arg !== null && $name !== 'url') {
+                // Only [url] takes an option; on other tags 1.x keeps the text.
+                $this->appendText($current, $full);
+
+                continue;
+            }
 
             if (! $closing) {
                 $node = $this->createNode($name, $arg);
@@ -154,11 +177,9 @@ final class BBCodeTreeParser
 
     private function createNode(string $name, ?string $arg): Node
     {
-        return match ($name) {
-            'b' => new Strong(),
-            'i' => new Emphasis(),
-            default => new Link($arg ?? ''),
-        };
+        $class = self::TAGS[$name];
+
+        return $class === Link::class ? new Link($arg ?? '') : new $class();
     }
 
     private function appendText(Node $parent, string $text): void
