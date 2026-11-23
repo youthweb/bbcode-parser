@@ -23,6 +23,9 @@ use Youthweb\BBCodeParser\Extension\Renderer\LinkRenderer;
  */
 final readonly class AutolinkListener
 {
+    /** Key in the data of a text that is left alone, like the content of `[noparse]` */
+    public const RAW = 'raw';
+
     private const MARKER = "\x1A";
 
     public function __construct(private Config $config) {}
@@ -36,7 +39,7 @@ final readonly class AutolinkListener
         $texts = [];
 
         foreach ($event->getDocument()->iterator() as $node) {
-            if ($node instanceof Text && ! $this->isInsideLink($node)) {
+            if ($node instanceof Text && ! $node->data->has(self::RAW) && ! $this->isInsideLink($node)) {
                 $texts[] = $node;
             }
         }

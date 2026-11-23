@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Youthweb\BBCodeParser\Parser;
 
-use League\CommonMark\Extension\CommonMark\Node\Block\IndentedCode;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Emphasis;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
@@ -13,6 +12,7 @@ use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Node\Inline\Newline;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Node\Node;
+use Youthweb\BBCodeParser\Extension\AutolinkListener;
 use Youthweb\BBCodeParser\Extension\Node\Email;
 use Youthweb\BBCodeParser\Extension\Node\Image;
 use Youthweb\BBCodeParser\Extension\Node\Underline;
@@ -55,62 +55,84 @@ final class BBCodeTreeParser
 
     public function parse(string $input): Document
     {
-        $input = str_replace(["\r\n", "\r"], "\n", $input);
+        // The control character marks raw text while parsing, so it cannot come from the input.
+        $input = str_replace(["\r\n", "\r", BlockTreeBuilder::PLACEHOLDER], ["\n", "\n", ''], $input);
         $document = new Document();
+        $builder = new BlockTreeBuilder($document, $this->parseInline(...));
+        $offset = 0;
 
-        foreach ($this->splitCode($input) as [$isCode, $chunk]) {
-            if ($isCode) {
-                $code = new IndentedCode();
-                $code->setLiteral($chunk);
-                $document->appendChild($code);
+        preg_match_all(
+            '~\[(/)?(quote|q|z|list|code|noparse|\*)(?:=([^\]]*))?\]~i',
+            $input,
+            $matches,
+            PREG_SET_ORDER | PREG_OFFSET_CAPTURE,
+        );
+
+        foreach ($matches as $match) {
+            [$full, $pos] = $match[0];
+
+            if ($pos < $offset) {
+                // Inside of the raw content of a tag
+                continue;
+            }
+
+            $builder->addText(substr($input, $offset, $pos - $offset));
+            $offset = $pos + strlen($full);
+
+            $closing = $match[1][0] === '/';
+            $name = strtolower($match[2][0]);
+            $arg = isset($match[3]) ? trim($match[3][0], " \t\"'") : null;
+
+            if ($name === 'code' || $name === 'noparse') {
+                if ($closing || $arg !== null) {
+                    // A closing tag without an opening one, or an option the tag does not take, stays text.
+                    $builder->addText($full);
+
+                    continue;
+                }
+
+                $end = strlen($input);
+                $next = $end;
+
+                if (preg_match('~\[/' . $name . '\]~i', $input, $close, PREG_OFFSET_CAPTURE, $offset) === 1) {
+                    $end = $close[0][1];
+                    $next = $end + strlen($close[0][0]);
+                }
+
+                // Unclosed: the rest is raw, like 1.x.
+                $raw = substr($input, $offset, $end - $offset);
+                $offset = $next;
+
+                if ($name === 'code') {
+                    $builder->addCode($raw);
+                } else {
+                    $builder->addRaw($raw);
+                }
 
                 continue;
             }
 
-            foreach (preg_split('~\n[ \t]*\n~', $chunk) ?: [] as $paragraphText) {
-                if (trim($paragraphText) === '') {
-                    continue;
-                }
-
-                $paragraph = new Paragraph();
-                $this->parseInline(trim($paragraphText), $paragraph);
-                $document->appendChild($paragraph);
+            if ($closing) {
+                $builder->close($name, $full);
+            } elseif ($name === '*') {
+                $arg === null ? $builder->nextItem($full) : $builder->addText($full);
+            } elseif ($name === 'list') {
+                $builder->openList($arg, $full);
+            } else {
+                $builder->openQuote($name, $arg, $full);
             }
         }
+
+        $builder->addText(substr($input, $offset));
+        $builder->finish();
 
         return $document;
     }
 
     /**
-     * Splits the input into text chunks and raw [code] chunks.
-     *
-     * @return list<array{bool, string}>
+     * @param list<string> $raws the raw texts, the placeholders in the text point to them
      */
-    private function splitCode(string $input): array
-    {
-        $chunks = [];
-
-        while (preg_match('~\[code\]~i', $input, $open, PREG_OFFSET_CAPTURE) === 1) {
-            $start = $open[0][1];
-            $chunks[] = [false, substr($input, 0, $start)];
-            $rest = substr($input, $start + 6);
-
-            if (preg_match('~\[/code\]~i', $rest, $close, PREG_OFFSET_CAPTURE) === 1) {
-                $chunks[] = [true, substr($rest, 0, $close[0][1])];
-                $input = substr($rest, $close[0][1] + 7);
-            } else {
-                // Unclosed: the rest is code, like 1.x.
-                $chunks[] = [true, $rest];
-                $input = '';
-            }
-        }
-
-        $chunks[] = [false, $input];
-
-        return $chunks;
-    }
-
-    private function parseInline(string $text, Paragraph $paragraph): void
+    private function parseInline(string $text, Paragraph $paragraph, array $raws): void
     {
         /** @var list<array{string, Node}> $stack */
         $stack = [];
@@ -132,12 +154,12 @@ final class BBCodeTreeParser
                 continue;
             }
 
-            $this->appendText($current, substr($text, $offset, $pos - $offset));
+            $this->appendText($current, substr($text, $offset, $pos - $offset), $raws);
             $offset = $pos + strlen($full);
 
             if (! $closing && ! $this->acceptsOption($name, $arg)) {
                 // 1.x keeps the text of a tag with an option it does not take, or without one it needs.
-                $this->appendText($current, $full);
+                $this->appendText($current, $full, $raws);
 
                 continue;
             }
@@ -161,7 +183,7 @@ final class BBCodeTreeParser
 
             if ($index === null) {
                 // A closing tag without an opening one stays literal.
-                $this->appendText($current, $full);
+                $this->appendText($current, $full, $raws);
 
                 continue;
             }
@@ -172,7 +194,7 @@ final class BBCodeTreeParser
             $current = $stack === [] ? $paragraph : $stack[count($stack) - 1][1];
         }
 
-        $this->appendText($current, substr($text, $offset));
+        $this->appendText($current, substr($text, $offset), $raws);
     }
 
     /**
@@ -231,7 +253,20 @@ final class BBCodeTreeParser
         return $next;
     }
 
-    private function appendText(Node $parent, string $text): void
+    /**
+     * @param list<string> $raws
+     */
+    private function appendText(Node $parent, string $text, array $raws): void
+    {
+        // Odd parts are the numbers of the placeholders of raw texts
+        $parts = preg_split(BlockTreeBuilder::PLACEHOLDER_PATTERN, $text, -1, PREG_SPLIT_DELIM_CAPTURE) ?: [];
+
+        foreach ($parts as $i => $part) {
+            $this->appendLines($parent, $i % 2 === 1 ? ($raws[(int) $part] ?? '') : $part, $i % 2 === 1);
+        }
+    }
+
+    private function appendLines(Node $parent, string $text, bool $raw): void
     {
         if ($text === '') {
             return;
@@ -245,7 +280,13 @@ final class BBCodeTreeParser
             }
 
             if ($line !== '') {
-                $parent->appendChild(new Text($line));
+                $node = new Text($line);
+
+                if ($raw) {
+                    $node->data->set(AutolinkListener::RAW, true);
+                }
+
+                $parent->appendChild($node);
             }
         }
     }
