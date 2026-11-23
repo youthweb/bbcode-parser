@@ -35,14 +35,14 @@ final readonly class ColorRenderer implements NodeRendererInterface
             return '';
         }
 
-        $param = trim($node->getOption() ?? '');
+        $option = trim($node->getOption() ?? '');
 
         $allowedColors = (array) $this->config->get('callbacks.color_param.allowed_colors');
-        $color = mb_convert_case($param, MB_CASE_TITLE);
+        $color = mb_convert_case($option, MB_CASE_TITLE);
 
         if (! in_array($color, $allowedColors, true)) {
-            if (preg_match('~^#[a-f0-9]{6}$~i', $param) === 1) {
-                $color = $param;
+            if (preg_match('~^#[a-f0-9]{6}$~i', $option) === 1) {
+                $color = $option;
             } else {
                 $color = $this->config->get('callbacks.color_param.default_color');
             }

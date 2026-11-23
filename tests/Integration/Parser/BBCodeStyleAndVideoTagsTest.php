@@ -110,7 +110,6 @@ final class BBCodeStyleAndVideoTagsTest extends TestCase
         yield 'color, own allowed colors' => ['[color=pink]x[/color]', ['callbacks' => ['color_param' => ['allowed_colors' => ['Pink']]]]];
         yield 'color, own default color' => ['[color=nope]x[/color]', ['callbacks' => ['color_param' => ['default_color' => 'Blue']]]];
         yield 'size, own bounds' => ['[size=10]a[/size][size=999]b[/size]', ['callbacks' => ['size_param' => ['min_size' => 50, 'max_size' => 200]]]];
-        yield 'video, embed_videos off' => ['[v]http://a.de/v[/v]', ['embed_videos' => false]];
     }
 
     /**
@@ -128,6 +127,10 @@ final class BBCodeStyleAndVideoTagsTest extends TestCase
     public static function differenceProvider(): iterable
     {
         yield 'color without content, with option' => ['[color=red][/color]', '<p><span style="color:Red;"></span></p>', '<p></p>'];
+        yield 'color without content, without option' => ['[color][/color]', '', '<p></p>'];
+        yield 'size without content' => ['[size=120][/size]', '', '<p></p>'];
+        yield 'video without content' => ['[v][/v]', '', '<p></p>'];
+        yield 'youtube without content' => ['[youtube][/youtube]', '', '<p></p>'];
         yield 'color, option with spaces' => ['[color= blue ]x[/color]', '<p><span style="color:Red;">x</span></p>', '<p><span style="color:Blue;">x</span></p>'];
         yield 'color with an ampersand entity' => ['[color=red]&amp;[/color]', '<p><span style="color:Red;">&amp;</span></p>', '<p><span style="color:Red;">&amp;amp;</span></p>'];
         yield 'color with a bare url' => [
@@ -164,7 +167,6 @@ final class BBCodeStyleAndVideoTagsTest extends TestCase
         yield 'color in a list item' => ['[list][*][color=red]x[/color][/list]', "<ul>\n\t<li><span style=\"color:Red;\">x</span></li>\n</ul>"];
         yield 'size in a quote' => ['[quote][size=120]x[/size][/quote]', "<blockquote title=\"Zitat\">\n<p><span style=\"font-size:120%;\">x</span></p>\n</blockquote>"];
         yield 'color is closed at a quote' => ['[color=red]a[quote]b[/quote]c[/color]', "<p><span style=\"color:Red;\">a</span></p>\n<blockquote title=\"Zitat\">\n<p>b</p>\n</blockquote>\n<p>c[/color]</p>"];
-        yield 'video without content' => ['[v][/v]', '<p></p>'];
     }
 
     #[DataProvider('newEngineProvider')]

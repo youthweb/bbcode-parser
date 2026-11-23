@@ -28,6 +28,11 @@ final readonly class VideoRenderer implements NodeRendererInterface
 
         $content = $node->getLiteral();
 
-        return $this->linkRenderer->renderLink('', Html::escapeSpecialChars($content), $content, true);
+        return $this->linkRenderer->renderLink(
+            option: '',
+            contentHtml: Html::escapeSpecialChars($content),
+            plain: $content,
+            textOnly: true,
+        );
     }
 }
