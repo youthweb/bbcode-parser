@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 - Experimental parser engine based on `league/commonmark` that builds a node tree from BBCode (`[b]`, `[i]`, `[url]`, `[code]`), marked `@experimental`, see [#44](https://github.com/youthweb/bbcode-parser/issues/44)
 - Experimental parser engine: the inline tags `[b]`, `[i]`, `[u]` and the deprecated `[F]` and `[K]`, rendered as `<strong>`, `<em>` and `<u>`, see [#48](https://github.com/youthweb/bbcode-parser/issues/48)
+- Experimental parser engine: the tags `[url]`, `[YWLINK]`, `[email]`, `[img]`, `[PIC]` and the linking of bare urls with the same config keys as 1.x; an invalid or unsafe url renders as text, and the text of an `[email]` can no longer break out of the script of `protect_email`, see [#49](https://github.com/youthweb/bbcode-parser/issues/49)
 
 ### Changed
 

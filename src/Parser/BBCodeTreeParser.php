@@ -13,6 +13,8 @@ use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Node\Inline\Newline;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Node\Node;
+use Youthweb\BBCodeParser\Extension\Node\Email;
+use Youthweb\BBCodeParser\Extension\Node\Image;
 use Youthweb\BBCodeParser\Extension\Node\Underline;
 
 /**
@@ -22,19 +24,33 @@ use Youthweb\BBCodeParser\Extension\Node\Underline;
  */
 final class BBCodeTreeParser
 {
+    /** The tag takes no option: with an option it stays text, like in 1.x. */
+    private const NO_OPTION = 'none';
+
+    /** The tag works with and without an option. */
+    private const OPTIONAL = 'optional';
+
+    /** The tag works only with an option: without one it stays text. */
+    private const REQUIRED = 'required';
+
     /**
-     * Tags with a node. `f` and `k` are the deprecated aliases of `b` and `i`.
+     * Tags with their node, their option and whether the content is raw text.
+     * `f` and `k` are the deprecated aliases of `b` and `i`, `pic` is an alias of `img`.
      * Like in 1.x a closing tag pairs only with an opening tag of the same name.
      *
-     * @var array<string, class-string<Node>>
+     * @var array<string, array{node: class-string<Node>, option: string, raw: bool}>
      */
     private const TAGS = [
-        'b' => Strong::class,
-        'f' => Strong::class,
-        'i' => Emphasis::class,
-        'k' => Emphasis::class,
-        'u' => Underline::class,
-        'url' => Link::class,
+        'b' => ['node' => Strong::class, 'option' => self::NO_OPTION, 'raw' => false],
+        'f' => ['node' => Strong::class, 'option' => self::NO_OPTION, 'raw' => false],
+        'i' => ['node' => Emphasis::class, 'option' => self::NO_OPTION, 'raw' => false],
+        'k' => ['node' => Emphasis::class, 'option' => self::NO_OPTION, 'raw' => false],
+        'u' => ['node' => Underline::class, 'option' => self::NO_OPTION, 'raw' => false],
+        'url' => ['node' => Link::class, 'option' => self::OPTIONAL, 'raw' => false],
+        'ywlink' => ['node' => Link::class, 'option' => self::REQUIRED, 'raw' => false],
+        'email' => ['node' => Email::class, 'option' => self::OPTIONAL, 'raw' => false],
+        'img' => ['node' => Image::class, 'option' => self::NO_OPTION, 'raw' => true],
+        'pic' => ['node' => Image::class, 'option' => self::NO_OPTION, 'raw' => true],
     ];
 
     public function parse(string $input): Document
@@ -96,7 +112,7 @@ final class BBCodeTreeParser
 
     private function parseInline(string $text, Paragraph $paragraph): void
     {
-        /** @var list<array{string, Node, ?string}> $stack */
+        /** @var list<array{string, Node}> $stack */
         $stack = [];
         $current = $paragraph;
         $offset = 0;
@@ -111,12 +127,23 @@ final class BBCodeTreeParser
             $name = strtolower($match[2][0]);
             $arg = isset($match[3]) ? trim($match[3][0], " \t\"'") : null;
 
+            if ($pos < $offset) {
+                // Inside of the raw content of a tag
+                continue;
+            }
+
             $this->appendText($current, substr($text, $offset, $pos - $offset));
             $offset = $pos + strlen($full);
 
-            if (! $closing && $arg !== null && $name !== 'url') {
-                // Only [url] takes an option; on other tags 1.x keeps the text.
+            if (! $closing && ! $this->acceptsOption($name, $arg)) {
+                // 1.x keeps the text of a tag with an option it does not take, or without one it needs.
                 $this->appendText($current, $full);
+
+                continue;
+            }
+
+            if (! $closing && self::TAGS[$name]['raw']) {
+                $offset = $this->appendRaw($current, $name, $text, $offset);
 
                 continue;
             }
@@ -124,7 +151,7 @@ final class BBCodeTreeParser
             if (! $closing) {
                 $node = $this->createNode($name, $arg);
                 $current->appendChild($node);
-                $stack[] = [$name, $node, $arg];
+                $stack[] = [$name, $node];
                 $current = $node;
 
                 continue;
@@ -140,29 +167,16 @@ final class BBCodeTreeParser
             }
 
             // Close the inner tags implicitly, then the tag itself.
-            while (count($stack) > $index) {
-                [$closedName, $closedNode, $closedArg] = array_pop($stack);
-
-                if ($closedName === 'url' && $closedArg === null && $closedNode instanceof Link) {
-                    $closedNode->setUrl($this->plainText($closedNode));
-                }
-            }
+            array_splice($stack, $index);
 
             $current = $stack === [] ? $paragraph : $stack[count($stack) - 1][1];
         }
 
         $this->appendText($current, substr($text, $offset));
-
-        // Tags that stay open are closed at the end.
-        foreach (array_reverse($stack) as [$closedName, $closedNode, $closedArg]) {
-            if ($closedName === 'url' && $closedArg === null && $closedNode instanceof Link) {
-                $closedNode->setUrl($this->plainText($closedNode));
-            }
-        }
     }
 
     /**
-     * @param list<array{string, Node, ?string}> $stack
+     * @param list<array{string, Node}> $stack
      */
     private function findOpen(array $stack, string $name): ?int
     {
@@ -177,9 +191,44 @@ final class BBCodeTreeParser
 
     private function createNode(string $name, ?string $arg): Node
     {
-        $class = self::TAGS[$name];
+        $class = self::TAGS[$name]['node'];
 
-        return $class === Link::class ? new Link($arg ?? '') : new $class();
+        return match ($class) {
+            Link::class => new Link($arg ?? ''),
+            Email::class => new Email($arg ?? ''),
+            default => new $class(),
+        };
+    }
+
+    private function acceptsOption(string $name, ?string $arg): bool
+    {
+        return match (self::TAGS[$name]['option']) {
+            self::NO_OPTION => $arg === null,
+            self::REQUIRED => $arg !== null,
+            default => true,
+        };
+    }
+
+    /**
+     * Appends a tag with raw content: everything up to the closing tag, or to the end if it is missing, like 1.x.
+     *
+     * @return int the offset after the closing tag
+     */
+    private function appendRaw(Node $parent, string $name, string $text, int $offset): int
+    {
+        $end = strlen($text);
+        $next = $end;
+
+        if (preg_match('~\[/' . $name . '\]~i', $text, $close, PREG_OFFSET_CAPTURE, $offset) === 1) {
+            $end = $close[0][1];
+            $next = $end + strlen($close[0][0]);
+        }
+
+        $node = new Image();
+        $node->setLiteral(substr($text, $offset, $end - $offset));
+        $parent->appendChild($node);
+
+        return $next;
     }
 
     private function appendText(Node $parent, string $text): void
@@ -199,18 +248,5 @@ final class BBCodeTreeParser
                 $parent->appendChild(new Text($line));
             }
         }
-    }
-
-    private function plainText(Node $node): string
-    {
-        $text = '';
-
-        foreach ($node->children() as $child) {
-            if ($child instanceof Text) {
-                $text .= $child->getLiteral();
-            }
-        }
-
-        return $text;
     }
 }

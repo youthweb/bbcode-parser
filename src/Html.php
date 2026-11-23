@@ -111,6 +111,41 @@ class Html
     }
 
     /**
+     * Shortens the displayed text of a url, if the config asks for it
+     *
+     * @param string $content the url as text
+     * @param Config $config  the config
+     *
+     * @return string the text, shortened or unchanged
+     */
+    public static function shortenUrlText($content, Config $config)
+    {
+        if ($config->get('callbacks.url_content.short_url') !== true) {
+            return $content;
+        }
+
+        // Mindestlänge: 20
+        $max_length = max(20, $config->get('callbacks.url_content.short_url_length'));
+
+        // http:// oder anderes am Anfang wegkürzen
+        $content = preg_replace('~^[a-z]+://~i', '', $content);
+
+        // Muss die URL gekürzt werden?
+        if (strlen($content) > $max_length) {
+            // Bsp.: Aus http://www.example.com/irgend/eine/lange/url.html wird
+            if ($max_length < 30) {
+                // www.example.com/ir…
+                $content = substr($content, 0, $max_length - 2) . '…';
+            } else {
+                // www.example.com/ir…e/url.html
+                $content = substr($content, 0, $max_length - 12) . '…' . substr($content, -10);
+            }
+        }
+
+        return $content;
+    }
+
+    /**
      * Creates a html link with Config
      *
      * @param string $url     the url
@@ -121,27 +156,9 @@ class Html
      */
     public static function anchorFromConfig($url, $content, Config $config)
     {
-        $short_url = $config->get('callbacks.url_content.short_url');
-
         // Lange URLs ggf. kürzen
-        if ($short_url === true && $url === $content) {
-            // Mindestlänge: 20
-            $max_length = max(20, $config->get('callbacks.url_content.short_url_length'));
-
-            // http:// oder anderes am Anfang wegkürzen
-            $content = preg_replace('~^[a-z]+://~i', '', $content);
-
-            // Muss die URL gekürzt werden?
-            if (strlen($content) > $max_length) {
-                // Bsp.: Aus http://www.example.com/irgend/eine/lange/url.html wird
-                if ($max_length < 30) {
-                    // www.example.com/ir…
-                    $content = substr($content, 0, $max_length - 2) . '…';
-                } else {
-                    // www.example.com/ir…e/url.html
-                    $content = substr($content, 0, $max_length - 12) . '…' . substr($content, -10);
-                }
-            }
+        if ($url === $content) {
+            $content = static::shortenUrlText($content, $config);
         }
 
         // Attribute für den Link

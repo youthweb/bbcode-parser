@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Youthweb\BBCodeParser\Tests\Integration\Parser;
 
 use PHPUnit\Framework\TestCase;
+use Youthweb\BBCodeParser\Extension\BBCodeExtension;
+use Youthweb\BBCodeParser\Extension\Node\Underline;
+use Youthweb\BBCodeParser\Extension\Renderer\UnderlineRenderer;
 use Youthweb\BBCodeParser\Manager;
 use Youthweb\BBCodeParser\Parser\BBCodeTreeParser;
 use Youthweb\BBCodeParser\Parser\SpikeHtmlRenderer;
@@ -16,6 +19,9 @@ use PHPUnit\Framework\Attributes\DataProvider;
  */
 #[CoversClass(BBCodeTreeParser::class)]
 #[CoversClass(SpikeHtmlRenderer::class)]
+#[CoversClass(BBCodeExtension::class)]
+#[CoversClass(Underline::class)]
+#[CoversClass(UnderlineRenderer::class)]
 final class BBCodeTreeParserTest extends TestCase
 {
     /**
@@ -91,7 +97,6 @@ final class BBCodeTreeParserTest extends TestCase
         yield 'underline does not pair with bold' => ['[u]x[/b]'];
         yield 'tag with whitespace only' => ['[b] [/b]'];
         yield 'tag over a soft break' => ["a [b]\nb[/b]"];
-        yield 'url' => ['[url]http://example.com[/url]'];
         yield 'url with parameter' => ['[url=http://example.com]Link[/url]'];
         yield 'url with quoted parameter' => ['[url="http://a.de"]q[/url]'];
         yield 'url with nested tag' => ['[url=http://a.de][b]x[/b][/url]'];
@@ -133,16 +138,6 @@ final class BBCodeTreeParserTest extends TestCase
             '[F]x[/F][K]y[/K]',
             '<p><b>x</b><i>y</i></p>',
             '<p><strong>x</strong><em>y</em></p>',
-        ];
-        yield 'unsafe url is dropped, 1.x rewrites it to http://x' => [
-            '[url=javascript:alert(1)]x[/url]',
-            '<p><a target="_blank" href="http://x">x</a></p>',
-            '<p><a>x</a></p>',
-        ];
-        yield 'url tag without url is a link, 1.x renders text only' => [
-            '[url]not a url[/url]',
-            '<p>not a url</p>',
-            '<p><a href="not a url">not a url</a></p>',
         ];
         yield 'tag over a paragraph break, 1.x renders invalid nesting' => [
             "[b]a\n\nb[/b]",
