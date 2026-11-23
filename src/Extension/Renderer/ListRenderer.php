@@ -15,6 +15,8 @@ use Youthweb\BBCodeParser\Html;
 /**
  * Renders a list with the options of 1.x: `a`, `A`, `i`, `I` and a number give an ordered list, anything else a bullet list.
  *
+ * A bullet list has no `type` attribute, it is obsolete in HTML and `disc` is the default.
+ *
  * An item with a single paragraph is tight: the paragraph is rendered without `<p>`.
  *
  * @experimental
@@ -46,7 +48,7 @@ final class ListRenderer implements NodeRendererInterface
             return rtrim(Html::ol($items, ['start' => (int) $option]));
         }
 
-        return rtrim(Html::ul($items, ['type' => 'disc']));
+        return rtrim(Html::ul($items));
     }
 
     private function renderItem(BBListItem $item, ChildNodeRendererInterface $childRenderer): string

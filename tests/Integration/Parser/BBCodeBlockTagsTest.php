@@ -69,7 +69,8 @@ final class BBCodeBlockTagsTest extends TestCase
     #[DataProvider('identicalProvider')]
     public function testIdenticalToOldEngine(string $input): void
     {
-        $this->assertSame($this->old($input), $this->new($input));
+        // 1.x adds the obsolete attribute type="disc" to a bullet list, see the documented differences
+        $this->assertSame($this->old($input), strtr($this->new($input), ['<ul>' => '<ul type="disc">']));
     }
 
     /**
@@ -145,42 +146,42 @@ final class BBCodeBlockTagsTest extends TestCase
         yield 'quote closes the lists inside' => [
             '[quote]a[list][*]x[/quote][/list]',
             "<p><blockquote title=\"Zitat\"><cite></cite>a</p>\n<ul type=\"disc\">\n\t<li>x</li>\n</ul>\n\n<p></blockquote>[/list]</p>",
-            "<blockquote title=\"Zitat\">\n<p>a</p>\n<ul type=\"disc\">\n\t<li>x</li>\n</ul>\n</blockquote>\n<p>[/list]</p>",
+            "<blockquote title=\"Zitat\">\n<p>a</p>\n<ul>\n\t<li>x</li>\n</ul>\n</blockquote>\n<p>[/list]</p>",
         ];
         yield 'list in a quote' => [
             '[quote][list][*]a[/list][/quote]',
             "<p><blockquote title=\"Zitat\"><cite></cite></p>\n<ul type=\"disc\">\n\t<li>a</li>\n</ul>\n\n<p></blockquote></p>",
-            "<blockquote title=\"Zitat\">\n<ul type=\"disc\">\n\t<li>a</li>\n</ul>\n</blockquote>",
+            "<blockquote title=\"Zitat\">\n<ul>\n\t<li>a</li>\n</ul>\n</blockquote>",
         ];
         yield 'quote in a list item' => [
             '[list][*][quote]q[/quote][/list]',
             "<ul type=\"disc\">\n\t<li><blockquote title=\"Zitat\"><cite></cite>q</blockquote></li>\n</ul>",
-            "<ul type=\"disc\">\n\t<li><blockquote title=\"Zitat\">\n<p>q</p>\n</blockquote></li>\n</ul>",
+            "<ul>\n\t<li><blockquote title=\"Zitat\">\n<p>q</p>\n</blockquote></li>\n</ul>",
         ];
         yield 'list splits the paragraph' => [
             "vor\n[list][*]a[/list]\nnach",
             "<p>vor</p>\n<ul type=\"disc\">\n\t<li>a</li>\n</ul>\n\n<p>nach</p>",
-            "<p>vor</p>\n<ul type=\"disc\">\n\t<li>a</li>\n</ul>\n<p>nach</p>",
+            "<p>vor</p>\n<ul>\n\t<li>a</li>\n</ul>\n<p>nach</p>",
         ];
         yield 'new line in a list item is a line break' => [
             "[list][*]a\nb[*]c[/list]",
             "<ul type=\"disc\">\n\t<li>a\nb</li>\n\t<li>c</li>\n</ul>",
-            "<ul type=\"disc\">\n\t<li>a<br />\nb</li>\n\t<li>c</li>\n</ul>",
+            "<ul>\n\t<li>a<br />\nb</li>\n\t<li>c</li>\n</ul>",
         ];
         yield 'blank line in a list item gives paragraphs' => [
             "[list][*]a\n\nb[*]c[/list]",
             "<ul type=\"disc\">\n\t<li>a\n\nb</li>\n\t<li>c</li>\n</ul>",
-            "<ul type=\"disc\">\n\t<li><p>a</p>\n<p>b</p></li>\n\t<li>c</li>\n</ul>",
+            "<ul>\n\t<li><p>a</p>\n<p>b</p></li>\n\t<li>c</li>\n</ul>",
         ];
         yield 'nested list, 1.x renders a list in a paragraph' => [
             '[list][*]a[list][*]x[*]y[/list][*]b[/list]',
             "<ul type=\"disc\">\n\t<li>a\n<p><ul type=\"disc\"><br />\n\t<li>x</li><br />\n\t<li>y</li><br />\n</ul></p>\n</li>\n\t<li>b</li>\n</ul>",
-            "<ul type=\"disc\">\n\t<li>a\n<ul type=\"disc\">\n\t<li>x</li>\n\t<li>y</li>\n</ul></li>\n\t<li>b</li>\n</ul>",
+            "<ul>\n\t<li>a\n<ul>\n\t<li>x</li>\n\t<li>y</li>\n</ul></li>\n\t<li>b</li>\n</ul>",
         ];
         yield 'item marker outside of a list stays text' => [
             '[list][*]a[/list][*]b',
             "<ul type=\"disc\">\n\t<li>a</li>\n</ul>\n\n<p>[*]b</p>",
-            "<ul type=\"disc\">\n\t<li>a</li>\n</ul>\n<p>[*]b</p>",
+            "<ul>\n\t<li>a</li>\n</ul>\n<p>[*]b</p>",
         ];
         yield 'noparse keeps a break in one paragraph, 1.x splits the paragraph' => [
             "a [noparse]\n[b]\n\n[b][/noparse] b",
@@ -221,23 +222,23 @@ final class BBCodeBlockTagsTest extends TestCase
         ];
         yield 'the option of a list is no markup' => [
             '[list=<b>x</b>][*]a[/list]',
-            "<ul type=\"disc\">\n\t<li>a</li>\n</ul>",
+            "<ul>\n\t<li>a</li>\n</ul>",
         ];
         yield 'a list item with a list and a paragraph has the paragraph tight' => [
             '[list][*]a[list=1][*]x[/list][/list]',
-            "<ul type=\"disc\">\n\t<li>a\n<ol start=\"1\">\n\t<li>x</li>\n</ol></li>\n</ul>",
+            "<ul>\n\t<li>a\n<ol start=\"1\">\n\t<li>x</li>\n</ol></li>\n</ul>",
         ];
         yield 'a quote in the middle of a list item' => [
             "[list][*]a\n\n[quote]q[/quote]\n\nb[/list]",
-            "<ul type=\"disc\">\n\t<li><p>a</p>\n<blockquote title=\"Zitat\">\n<p>q</p>\n</blockquote>\n<p>b</p></li>\n</ul>",
+            "<ul>\n\t<li><p>a</p>\n<blockquote title=\"Zitat\">\n<p>q</p>\n</blockquote>\n<p>b</p></li>\n</ul>",
         ];
         yield 'the first item marker does not leave an empty item' => [
             '[list]  [*]a[*][*]b[/list]',
-            "<ul type=\"disc\">\n\t<li>a</li>\n\t<li></li>\n\t<li>b</li>\n</ul>",
+            "<ul>\n\t<li>a</li>\n\t<li></li>\n\t<li>b</li>\n</ul>",
         ];
         yield 'item marker in a quote in a list item stays text' => [
             '[list][*][quote]a[*]b[/quote][/list]',
-            "<ul type=\"disc\">\n\t<li><blockquote title=\"Zitat\">\n<p>a[*]b</p>\n</blockquote></li>\n</ul>",
+            "<ul>\n\t<li><blockquote title=\"Zitat\">\n<p>a[*]b</p>\n</blockquote></li>\n</ul>",
         ];
         yield 'code in a quote' => [
             '[quote][code]x[/code][/quote]',
@@ -245,7 +246,7 @@ final class BBCodeBlockTagsTest extends TestCase
         ];
         yield 'code in a list item' => [
             '[list][*][code]x[/code][/list]',
-            "<ul type=\"disc\">\n\t<li><pre><code>x</code></pre></li>\n</ul>",
+            "<ul>\n\t<li><pre><code>x</code></pre></li>\n</ul>",
         ];
         yield 'noparse in an inline tag' => [
             '[b]a [noparse][i][/noparse] b[/b]',
@@ -265,11 +266,11 @@ final class BBCodeBlockTagsTest extends TestCase
         ];
         yield 'the sixth level stays text, its closing tag too' => [
             '[quote][list][quote][list][quote][quote]x[/quote][/quote][/list][/quote][/list][/quote]',
-            "<blockquote title=\"Zitat\">\n<ul type=\"disc\">\n\t<li><blockquote title=\"Zitat\">\n<ul type=\"disc\">\n\t<li><blockquote title=\"Zitat\">\n<p>[quote]x[/quote]</p>\n</blockquote></li>\n</ul>\n</blockquote></li>\n</ul>\n</blockquote>",
+            "<blockquote title=\"Zitat\">\n<ul>\n\t<li><blockquote title=\"Zitat\">\n<ul>\n\t<li><blockquote title=\"Zitat\">\n<p>[quote]x[/quote]</p>\n</blockquote></li>\n</ul>\n</blockquote></li>\n</ul>\n</blockquote>",
         ];
         yield 'an item marker in the text of a tag over the depth limit stays text' => [
             '[quote][list][quote][list][quote][list][*]x[/list][/quote][/list][/quote][/list][/quote]',
-            "<blockquote title=\"Zitat\">\n<ul type=\"disc\">\n\t<li><blockquote title=\"Zitat\">\n<ul type=\"disc\">\n\t<li><blockquote title=\"Zitat\">\n<p>[list][*]x[/list]</p>\n</blockquote></li>\n</ul>\n</blockquote></li>\n</ul>\n</blockquote>",
+            "<blockquote title=\"Zitat\">\n<ul>\n\t<li><blockquote title=\"Zitat\">\n<ul>\n\t<li><blockquote title=\"Zitat\">\n<p>[list][*]x[/list]</p>\n</blockquote></li>\n</ul>\n</blockquote></li>\n</ul>\n</blockquote>",
         ];
         yield 'a control character of the input is dropped' => [
             "[noparse]a\u{1B}0\u{1B}b[/noparse]",
