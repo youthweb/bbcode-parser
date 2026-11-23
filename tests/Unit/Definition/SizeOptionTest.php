@@ -28,7 +28,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 #[CoversClass(SizeOption::class)]
-class SizeOptionTest extends \PHPUnit\Framework\TestCase
+final class SizeOptionTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
@@ -55,49 +55,47 @@ class SizeOptionTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public static function dataProvider()
+    public static function dataProvider(): \Iterator
     {
-        return [
-            [
-                'some text',
-                '100',
-                '<span style="font-size:100%;">some text</span>',
-            ],
-            [
-                'some text',
-                ['100'],
-                '<span style="font-size:100%;">some text</span>',
-            ],
-            [
-                'some text',
-                'NaN',
-                '<span style="font-size:100%;">some text</span>',
-            ],
-            [
-                'some text',
-                '150',
-                '<span style="font-size:150%;">some text</span>',
-            ],
-            [
-                'some text',
-                '500',
-                '<span style="font-size:150%;">some text</span>',
-            ],
-            [
-                'some text',
-                '75',
-                '<span style="font-size:75%;">some text</span>',
-            ],
-            [
-                'some text',
-                '5',
-                '<span style="font-size:75%;">some text</span>',
-            ],
-            [
-                '',
-                '100',
-                '',
-            ],
+        yield [
+            'some text',
+            '100',
+            '<span style="font-size:100%;">some text</span>',
+        ];
+        yield [
+            'some text',
+            ['100'],
+            '<span style="font-size:100%;">some text</span>',
+        ];
+        yield [
+            'some text',
+            'NaN',
+            '<span style="font-size:100%;">some text</span>',
+        ];
+        yield [
+            'some text',
+            '150',
+            '<span style="font-size:150%;">some text</span>',
+        ];
+        yield [
+            'some text',
+            '500',
+            '<span style="font-size:150%;">some text</span>',
+        ];
+        yield [
+            'some text',
+            '75',
+            '<span style="font-size:75%;">some text</span>',
+        ];
+        yield [
+            'some text',
+            '5',
+            '<span style="font-size:75%;">some text</span>',
+        ];
+        yield [
+            '',
+            '100',
+            '',
         ];
     }
 }

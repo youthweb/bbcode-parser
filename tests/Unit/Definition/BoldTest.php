@@ -28,7 +28,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 #[CoversClass(Bold::class)]
-class BoldTest extends \PHPUnit\Framework\TestCase
+final class BoldTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
@@ -56,14 +56,12 @@ class BoldTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public static function dataProvider()
+    public static function dataProvider(): \Iterator
     {
-        return [
-            [
-                'This text should be bold.',
-                null,
-                '<b>This text should be bold.</b>',
-            ],
+        yield [
+            'This text should be bold.',
+            null,
+            '<b>This text should be bold.</b>',
         ];
     }
 }

@@ -29,7 +29,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(Url::class)]
-class UrlTest extends \PHPUnit\Framework\TestCase
+final class UrlTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
@@ -164,29 +164,27 @@ class UrlTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public static function dataProvider()
+    public static function dataProvider(): \Iterator
     {
-        return [
-            [
-                'http://example.org/foo?query=string&foo=bar',
-                null,
-                '<a target="_blank" href="http://example.org/foo?query=string&amp;foo=bar">http://example.org/foo?query=string&foo=bar</a>',
-            ],
-            [
-                'http://example.org',
-                null,
-                '<a target="_blank" href="http://example.org">http://example.org</a>',
-            ],
-            [
-                'invalid url',
-                null,
-                'invalid url',
-            ],
-            [
-                '',
-                null,
-                '',
-            ],
+        yield [
+            'http://example.org/foo?query=string&foo=bar',
+            null,
+            '<a target="_blank" href="http://example.org/foo?query=string&amp;foo=bar">http://example.org/foo?query=string&foo=bar</a>',
+        ];
+        yield [
+            'http://example.org',
+            null,
+            '<a target="_blank" href="http://example.org">http://example.org</a>',
+        ];
+        yield [
+            'invalid url',
+            null,
+            'invalid url',
+        ];
+        yield [
+            '',
+            null,
+            '',
         ];
     }
 }

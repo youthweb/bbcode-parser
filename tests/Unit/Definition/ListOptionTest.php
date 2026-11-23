@@ -28,7 +28,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 #[CoversClass(ListOption::class)]
-class ListOptionTest extends \PHPUnit\Framework\TestCase
+final class ListOptionTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
@@ -45,79 +45,77 @@ class ListOptionTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public static function dataProvider()
+    public static function dataProvider(): \Iterator
     {
-        return [
-            [
-                '[*]Hello World!
+        yield [
+            '[*]Hello World!
 [*]foobar',
-                null,
-                '<!-- no_p --><ul type="disc">' . PHP_EOL
-                . "\t" . '<li>Hello World!</li>' . PHP_EOL
-                . "\t" . '<li>foobar</li>' . PHP_EOL
-                . '</ul>' . PHP_EOL
-                . '<!-- no_p -->',
-            ],
-            [
-                '[*]Hello World!
+            null,
+            '<!-- no_p --><ul type="disc">' . PHP_EOL
+            . "\t" . '<li>Hello World!</li>' . PHP_EOL
+            . "\t" . '<li>foobar</li>' . PHP_EOL
+            . '</ul>' . PHP_EOL
+            . '<!-- no_p -->',
+        ];
+        yield [
+            '[*]Hello World!
 [*]foobar',
-                'a',
-                '<!-- no_p --><ol type="a">' . PHP_EOL
-                . "\t" . '<li>Hello World!</li>' . PHP_EOL
-                . "\t" . '<li>foobar</li>' . PHP_EOL
-                . '</ol>' . PHP_EOL
-                . '<!-- no_p -->',
-            ],
-            [
-                '[*]Hello World!
+            'a',
+            '<!-- no_p --><ol type="a">' . PHP_EOL
+            . "\t" . '<li>Hello World!</li>' . PHP_EOL
+            . "\t" . '<li>foobar</li>' . PHP_EOL
+            . '</ol>' . PHP_EOL
+            . '<!-- no_p -->',
+        ];
+        yield [
+            '[*]Hello World!
 [*]foobar',
-                ['a'],
-                '<!-- no_p --><ol type="a">' . PHP_EOL
-                . "\t" . '<li>Hello World!</li>' . PHP_EOL
-                . "\t" . '<li>foobar</li>' . PHP_EOL
-                . '</ol>' . PHP_EOL
-                . '<!-- no_p -->',
-            ],
-            [
-                '[*]Hello World!
+            ['a'],
+            '<!-- no_p --><ol type="a">' . PHP_EOL
+            . "\t" . '<li>Hello World!</li>' . PHP_EOL
+            . "\t" . '<li>foobar</li>' . PHP_EOL
+            . '</ol>' . PHP_EOL
+            . '<!-- no_p -->',
+        ];
+        yield [
+            '[*]Hello World!
 [*]foobar',
-                'A',
-                '<!-- no_p --><ol type="A">' . PHP_EOL
-                . "\t" . '<li>Hello World!</li>' . PHP_EOL
-                . "\t" . '<li>foobar</li>' . PHP_EOL
-                . '</ol>' . PHP_EOL
-                . '<!-- no_p -->',
-            ],
-            [
-                '[*]Hello World!
+            'A',
+            '<!-- no_p --><ol type="A">' . PHP_EOL
+            . "\t" . '<li>Hello World!</li>' . PHP_EOL
+            . "\t" . '<li>foobar</li>' . PHP_EOL
+            . '</ol>' . PHP_EOL
+            . '<!-- no_p -->',
+        ];
+        yield [
+            '[*]Hello World!
 [*]foobar',
-                'i',
-                '<!-- no_p --><ol type="i">' . PHP_EOL
-                . "\t" . '<li>Hello World!</li>' . PHP_EOL
-                . "\t" . '<li>foobar</li>' . PHP_EOL
-                . '</ol>' . PHP_EOL
-                . '<!-- no_p -->',
-            ],
-            [
-                '[*]Hello World!
+            'i',
+            '<!-- no_p --><ol type="i">' . PHP_EOL
+            . "\t" . '<li>Hello World!</li>' . PHP_EOL
+            . "\t" . '<li>foobar</li>' . PHP_EOL
+            . '</ol>' . PHP_EOL
+            . '<!-- no_p -->',
+        ];
+        yield [
+            '[*]Hello World!
 [*]foobar',
-                'I',
-                '<!-- no_p --><ol type="I">' . PHP_EOL
-                . "\t" . '<li>Hello World!</li>' . PHP_EOL
-                . "\t" . '<li>foobar</li>' . PHP_EOL
-                . '</ol>' . PHP_EOL
-                . '<!-- no_p -->',
-            ],
-            [
-                '[*]Hello World!
+            'I',
+            '<!-- no_p --><ol type="I">' . PHP_EOL
+            . "\t" . '<li>Hello World!</li>' . PHP_EOL
+            . "\t" . '<li>foobar</li>' . PHP_EOL
+            . '</ol>' . PHP_EOL
+            . '<!-- no_p -->',
+        ];
+        yield [
+            '[*]Hello World!
 [*]foobar',
-                '5',
-                '<!-- no_p --><ol start="5">' . PHP_EOL
-                . "\t" . '<li>Hello World!</li>' . PHP_EOL
-                . "\t" . '<li>foobar</li>' . PHP_EOL
-                . '</ol>' . PHP_EOL
-                . '<!-- no_p -->',
-            ],
+            '5',
+            '<!-- no_p --><ol start="5">' . PHP_EOL
+            . "\t" . '<li>Hello World!</li>' . PHP_EOL
+            . "\t" . '<li>foobar</li>' . PHP_EOL
+            . '</ol>' . PHP_EOL
+            . '<!-- no_p -->',
         ];
     }
 }

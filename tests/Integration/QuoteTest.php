@@ -25,7 +25,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(Manager::class)]
-class QuoteTest extends \PHPUnit\Framework\TestCase
+final class QuoteTest extends \PHPUnit\Framework\TestCase
 {
     #[Test]
     public function testParseQutoeCode(): void

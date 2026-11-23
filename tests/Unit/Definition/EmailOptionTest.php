@@ -28,7 +28,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 #[CoversClass(EmailOption::class)]
-class EmailOptionTest extends \PHPUnit\Framework\TestCase
+final class EmailOptionTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
@@ -69,58 +69,54 @@ class EmailOptionTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public static function dataProvider()
+    public static function dataProvider(): \Iterator
     {
-        return [
-            [
-                'email',
-                'mail@example.org',
-                '<a href="mailto:mail@example.org">email</a>',
-            ],
-            [
-                'email',
-                ['mail@example.org'],
-                '<a href="mailto:mail@example.org">email</a>',
-            ],
-            [
-                'text',
-                'invalid email',
-                'text',
-            ],
-            [
-                '',
-                'mail@example.org',
-                '<a href="mailto:mail@example.org">mail@example.org</a>',
-            ],
+        yield [
+            'email',
+            'mail@example.org',
+            '<a href="mailto:mail@example.org">email</a>',
+        ];
+        yield [
+            'email',
+            ['mail@example.org'],
+            '<a href="mailto:mail@example.org">email</a>',
+        ];
+        yield [
+            'text',
+            'invalid email',
+            'text',
+        ];
+        yield [
+            '',
+            'mail@example.org',
+            '<a href="mailto:mail@example.org">mail@example.org</a>',
         ];
     }
 
     /**
      * data provider for protected emails
      */
-    public static function dataProviderProtectedEmail()
+    public static function dataProviderProtectedEmail(): \Iterator
     {
-        return [
-            [
-                'email',
-                'mail@example.org',
-                '<script type="text/javascript">(function() {var user = "mail";var at = "@";var server = "example.org";document.write(\'<a href="\' + \'mail\' + \'to:\' + user + at + server + \'">email</a>\');})();</script>',
-            ],
-            [
-                'email',
-                ['mail@example.org'],
-                '<script type="text/javascript">(function() {var user = "mail";var at = "@";var server = "example.org";document.write(\'<a href="\' + \'mail\' + \'to:\' + user + at + server + \'">email</a>\');})();</script>',
-            ],
-            [
-                'text',
-                'invalid email',
-                'text',
-            ],
-            [
-                '',
-                'mail@example.org',
-                '<script type="text/javascript">(function() {var user = "mail";var at = "@";var server = "example.org";document.write(\'<a href="\' + \'mail\' + \'to:\' + user + at + server + \'">mail[at]example.org</a>\');})();</script>',
-            ],
+        yield [
+            'email',
+            'mail@example.org',
+            '<script type="text/javascript">(function() {var user = "mail";var at = "@";var server = "example.org";document.write(\'<a href="\' + \'mail\' + \'to:\' + user + at + server + \'">email</a>\');})();</script>',
+        ];
+        yield [
+            'email',
+            ['mail@example.org'],
+            '<script type="text/javascript">(function() {var user = "mail";var at = "@";var server = "example.org";document.write(\'<a href="\' + \'mail\' + \'to:\' + user + at + server + \'">email</a>\');})();</script>',
+        ];
+        yield [
+            'text',
+            'invalid email',
+            'text',
+        ];
+        yield [
+            '',
+            'mail@example.org',
+            '<script type="text/javascript">(function() {var user = "mail";var at = "@";var server = "example.org";document.write(\'<a href="\' + \'mail\' + \'to:\' + user + at + server + \'">mail[at]example.org</a>\');})();</script>',
         ];
     }
 }

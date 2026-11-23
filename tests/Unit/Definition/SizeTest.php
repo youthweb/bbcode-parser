@@ -28,7 +28,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 #[CoversClass(Size::class)]
-class SizeTest extends \PHPUnit\Framework\TestCase
+final class SizeTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
@@ -55,19 +55,17 @@ class SizeTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public static function dataProvider()
+    public static function dataProvider(): \Iterator
     {
-        return [
-            [
-                'some text',
-                null,
-                '<span style="font-size:100%;">some text</span>',
-            ],
-            [
-                '',
-                null,
-                '',
-            ],
+        yield [
+            'some text',
+            null,
+            '<span style="font-size:100%;">some text</span>',
+        ];
+        yield [
+            '',
+            null,
+            '',
         ];
     }
 }

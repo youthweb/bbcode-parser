@@ -28,7 +28,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 #[CoversClass(ColorOption::class)]
-class ColorOptionTest extends \PHPUnit\Framework\TestCase
+final class ColorOptionTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
@@ -55,39 +55,37 @@ class ColorOptionTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public static function dataProvider()
+    public static function dataProvider(): \Iterator
     {
-        return [
-            [
-                'some text',
-                'red',
-                '<span style="color:Red;">some text</span>',
-            ],
-            [
-                'some text',
-                'yellow',
-                '<span style="color:Yellow;">some text</span>',
-            ],
-            [
-                'some text',
-                ['yellow'],
-                '<span style="color:Yellow;">some text</span>',
-            ],
-            [
-                'some text',
-                'unknown',
-                '<span style="color:Red;">some text</span>',
-            ],
-            [
-                'some text',
-                '#112233',
-                '<span style="color:#112233;">some text</span>',
-            ],
-            [
-                '',
-                null,
-                '',
-            ],
+        yield [
+            'some text',
+            'red',
+            '<span style="color:Red;">some text</span>',
+        ];
+        yield [
+            'some text',
+            'yellow',
+            '<span style="color:Yellow;">some text</span>',
+        ];
+        yield [
+            'some text',
+            ['yellow'],
+            '<span style="color:Yellow;">some text</span>',
+        ];
+        yield [
+            'some text',
+            'unknown',
+            '<span style="color:Red;">some text</span>',
+        ];
+        yield [
+            'some text',
+            '#112233',
+            '<span style="color:#112233;">some text</span>',
+        ];
+        yield [
+            '',
+            null,
+            '',
         ];
     }
 }

@@ -28,7 +28,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 #[CoversClass(Code::class)]
-class CodeTest extends \PHPUnit\Framework\TestCase
+final class CodeTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
@@ -45,25 +45,23 @@ class CodeTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public static function dataProvider()
+    public static function dataProvider(): \Iterator
     {
-        return [
-            [
-                '<span style="color:Red;">some text mit Umlauten äöü</span>',
-                null,
-                '<!-- no_p --><pre><code>&lt;span style=&quot;color:Red;&quot;&gt;some text mit Umlauten äöü&lt;/span&gt;</code></pre><!-- no_p -->',
-            ],
-            // Do not double encode
-            [
-                '&lt;span style=&quot;color:Red;&quot;&gt;some text mit Umlauten äöü&lt;/span&gt;',
-                null,
-                '<!-- no_p --><pre><code>&lt;span style=&quot;color:Red;&quot;&gt;some text mit Umlauten äöü&lt;/span&gt;</code></pre><!-- no_p -->',
-            ],
-            [
-                '',
-                null,
-                '<!-- no_p --><pre><code></code></pre><!-- no_p -->',
-            ],
+        yield [
+            '<span style="color:Red;">some text mit Umlauten äöü</span>',
+            null,
+            '<!-- no_p --><pre><code>&lt;span style=&quot;color:Red;&quot;&gt;some text mit Umlauten äöü&lt;/span&gt;</code></pre><!-- no_p -->',
+        ];
+        // Do not double encode
+        yield [
+            '&lt;span style=&quot;color:Red;&quot;&gt;some text mit Umlauten äöü&lt;/span&gt;',
+            null,
+            '<!-- no_p --><pre><code>&lt;span style=&quot;color:Red;&quot;&gt;some text mit Umlauten äöü&lt;/span&gt;</code></pre><!-- no_p -->',
+        ];
+        yield [
+            '',
+            null,
+            '<!-- no_p --><pre><code></code></pre><!-- no_p -->',
         ];
     }
 }

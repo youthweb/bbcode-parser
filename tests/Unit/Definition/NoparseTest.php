@@ -28,7 +28,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 #[CoversClass(Noparse::class)]
-class NoparseTest extends \PHPUnit\Framework\TestCase
+final class NoparseTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
@@ -45,25 +45,23 @@ class NoparseTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public static function dataProvider()
+    public static function dataProvider(): \Iterator
     {
-        return [
-            [
-                '<span style="color:Red;">some text</span>',
-                null,
-                '&lt;span style=&quot;color:Red;&quot;&gt;some text&lt;/span&gt;',
-            ],
-            [
-                '',
-                null,
-                '',
-            ],
-            // Do not double encode
-            [
-                '&lt;h7&gt;Header 7&lt;/h7&gt;',
-                [],
-                '&lt;h7&gt;Header 7&lt;/h7&gt;',
-            ],
+        yield [
+            '<span style="color:Red;">some text</span>',
+            null,
+            '&lt;span style=&quot;color:Red;&quot;&gt;some text&lt;/span&gt;',
+        ];
+        yield [
+            '',
+            null,
+            '',
+        ];
+        // Do not double encode
+        yield [
+            '&lt;h7&gt;Header 7&lt;/h7&gt;',
+            [],
+            '&lt;h7&gt;Header 7&lt;/h7&gt;',
         ];
     }
 }

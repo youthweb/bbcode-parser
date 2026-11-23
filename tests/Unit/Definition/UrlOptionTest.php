@@ -29,7 +29,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(UrlOption::class)]
-class UrlOptionTest extends \PHPUnit\Framework\TestCase
+final class UrlOptionTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
@@ -164,29 +164,27 @@ class UrlOptionTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public static function dataProvider()
+    public static function dataProvider(): \Iterator
     {
-        return [
-            [
-                'example.org',
-                'http://example.org',
-                '<a target="_blank" href="http://example.org">example.org</a>',
-            ],
-            [
-                'example.org',
-                ['http://example.org'],
-                '<a target="_blank" href="http://example.org">example.org</a>',
-            ],
-            [
-                'text',
-                'invalid url',
-                'text',
-            ],
-            [
-                '',
-                '',
-                '',
-            ],
+        yield [
+            'example.org',
+            'http://example.org',
+            '<a target="_blank" href="http://example.org">example.org</a>',
+        ];
+        yield [
+            'example.org',
+            ['http://example.org'],
+            '<a target="_blank" href="http://example.org">example.org</a>',
+        ];
+        yield [
+            'text',
+            'invalid url',
+            'text',
+        ];
+        yield [
+            '',
+            '',
+            '',
         ];
     }
 }

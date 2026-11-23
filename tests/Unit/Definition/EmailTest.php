@@ -28,7 +28,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 #[CoversClass(Email::class)]
-class EmailTest extends \PHPUnit\Framework\TestCase
+final class EmailTest extends \PHPUnit\Framework\TestCase
 {
     use MockerTrait;
 
@@ -69,43 +69,39 @@ class EmailTest extends \PHPUnit\Framework\TestCase
     /**
      * data provider
      */
-    public static function dataProvider()
+    public static function dataProvider(): \Iterator
     {
-        return [
-            [
-                'mail@example.org',
-                null,
-                '<a href="mailto:mail@example.org">mail@example.org</a>',
-            ],
-            [
-                'invalid email',
-                null,
-                'invalid email',
-            ],
-            [
-                '',
-                null,
-                '',
-            ],
+        yield [
+            'mail@example.org',
+            null,
+            '<a href="mailto:mail@example.org">mail@example.org</a>',
+        ];
+        yield [
+            'invalid email',
+            null,
+            'invalid email',
+        ];
+        yield [
+            '',
+            null,
+            '',
         ];
     }
 
     /**
      * data provider for protected emails
      */
-    public static function dataProviderProtectedEmail()
+    public static function dataProviderProtectedEmail(): \Iterator
     {
-        return [
-            [
-                'mail@example.org',
-                null,
-                '<script type="text/javascript">(function() {var user = "mail";var at = "@";var server = "example.org";document.write(\'<a href="\' + \'mail\' + \'to:\' + user + at + server + \'">mail@example.org</a>\');})();</script>',
-            ],
-            [
-                'invalid email',
-                null,
-                'invalid email',
-            ],
+        yield [
+            'mail@example.org',
+            null,
+            '<script type="text/javascript">(function() {var user = "mail";var at = "@";var server = "example.org";document.write(\'<a href="\' + \'mail\' + \'to:\' + user + at + server + \'">mail@example.org</a>\');})();</script>',
+        ];
+        yield [
+            'invalid email',
+            null,
+            'invalid email',
         ];
     }
 }
