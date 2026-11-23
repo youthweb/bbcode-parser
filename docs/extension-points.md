@@ -65,7 +65,7 @@ final class ImageFilterExtension implements ExtensionInterface, NodeRendererInte
 
 ### Smileys and usernames
 
-`TextReplacementListener` hands the text of every text node to `replace()`. The method returns the parts that take its place: a string stays text, a node is put in as it is. Return `[$text]` to change nothing.
+`TextReplacementListener` hands the text of every text node to `replace()`. The method returns the parts that take its place: a string stays text, a node is put in as it is. Return `[$text]` to change nothing, and `[]` to remove the text.
 
 ```php
 final class UsernameExtension extends TextReplacementListener implements ExtensionInterface
@@ -82,7 +82,7 @@ final class UsernameExtension extends TextReplacementListener implements Extensi
 }
 ```
 
-Text in `[noparse]` and inside of a link or an `[email]` is left alone, so a replacement is never inside of an anchor (1.x did put a link into the text of a link). Code blocks and inline code have no text nodes. Use `TrustedHtml` for what no node fits, for example the HTML of an emoji library.
+Text in `[noparse]` and inside of a link or an `[email]` is left alone, so a replacement is never inside of an anchor (1.x did put a link into the text of a link). `replace()` sees one text node at a time: a code that the parser has split into two text nodes, for example at a `*` or `_`, is not found. Code blocks and inline code have no text nodes. Use `TrustedHtml` for what no node fits, for example the HTML of an emoji library.
 
 ### Order
 

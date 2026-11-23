@@ -13,7 +13,6 @@ use Youthweb\BBCodeParser\Extension\Renderer\SmileyRenderer;
 use Youthweb\BBCodeParser\Tests\Fixtures\Extension\NoChildrenRenderer;
 
 #[CoversClass(SmileyRenderer::class)]
-#[CoversClass(Smiley::class)]
 final class SmileyRendererTest extends TestCase
 {
     /**

@@ -12,7 +12,7 @@ use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Node\Inline\Newline;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Node\Node;
-use Youthweb\BBCodeParser\Extension\AutolinkListener;
+use Youthweb\BBCodeParser\Extension\TextReplacementListener;
 use Youthweb\BBCodeParser\Extension\Node\Color;
 use Youthweb\BBCodeParser\Extension\Node\Email;
 use Youthweb\BBCodeParser\Extension\Node\Image;
@@ -293,7 +293,7 @@ final class BBCodeTreeParser
                 $node = new Text($line);
 
                 if ($raw) {
-                    $node->data->set(AutolinkListener::RAW, true);
+                    $node->data->set(TextReplacementListener::RAW, true);
                 }
 
                 $parent->appendChild($node);

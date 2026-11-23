@@ -12,7 +12,6 @@ use Youthweb\BBCodeParser\Extension\Renderer\TrustedHtmlRenderer;
 use Youthweb\BBCodeParser\Tests\Fixtures\Extension\NoChildrenRenderer;
 
 #[CoversClass(TrustedHtmlRenderer::class)]
-#[CoversClass(TrustedHtml::class)]
 final class TrustedHtmlRendererTest extends TestCase
 {
     public function testTheHtmlIsRenderedAsItIs(): void

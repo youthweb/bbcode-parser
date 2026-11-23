@@ -13,7 +13,6 @@ use Youthweb\BBCodeParser\Extension\Renderer\UsernameRenderer;
 use Youthweb\BBCodeParser\Tests\Fixtures\Extension\NoChildrenRenderer;
 
 #[CoversClass(UsernameRenderer::class)]
-#[CoversClass(Username::class)]
 final class UsernameRendererTest extends TestCase
 {
     /**

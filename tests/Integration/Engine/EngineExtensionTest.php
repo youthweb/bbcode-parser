@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 use Youthweb\BBCodeParser\Config;
 use Youthweb\BBCodeParser\Engine;
 use Youthweb\BBCodeParser\InputMode;
-use Youthweb\BBCodeParser\Parser\SpikeHtmlRenderer;
 use Youthweb\BBCodeParser\Tests\Fixtures\Extension\ImageFilterExtension;
 use Youthweb\BBCodeParser\Tests\Fixtures\Extension\SmileyExtension;
 use Youthweb\BBCodeParser\Tests\Fixtures\Extension\UsernameExtension;
@@ -19,7 +18,6 @@ use Youthweb\BBCodeParser\Tests\Fixtures\Extension\UsernameExtension;
  * Extension points of the league engine (#53): a project adds league extensions to the engine.
  */
 #[CoversClass(Engine::class)]
-#[CoversClass(SpikeHtmlRenderer::class)]
 final class EngineExtensionTest extends TestCase
 {
     /**

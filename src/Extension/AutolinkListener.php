@@ -38,10 +38,8 @@ final class AutolinkListener extends TextReplacementListener
 
     protected function replace(string $text): array
     {
-        $literal = $text;
-
-        if (str_contains($literal, self::MARKER)) {
-            return [$literal];
+        if (str_contains($text, self::MARKER)) {
+            return [$text];
         }
 
         /** @var list<array{bool, string}> $tokens */
@@ -58,10 +56,10 @@ final class AutolinkListener extends TextReplacementListener
             'emailLinkCreator' => static fn(string $email): string => $marker(false, $email),
         ]);
 
-        $html = $linker->linkUrlsAndEscapeHtml($literal);
+        $html = $linker->linkUrlsAndEscapeHtml($text);
 
         if ($tokens === []) {
-            return [$literal];
+            return [$text];
         }
 
         $result = [];
