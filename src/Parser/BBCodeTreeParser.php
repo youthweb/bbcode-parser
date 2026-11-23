@@ -13,9 +13,12 @@ use League\CommonMark\Node\Inline\Newline;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Node\Node;
 use Youthweb\BBCodeParser\Extension\AutolinkListener;
+use Youthweb\BBCodeParser\Extension\Node\Color;
 use Youthweb\BBCodeParser\Extension\Node\Email;
 use Youthweb\BBCodeParser\Extension\Node\Image;
+use Youthweb\BBCodeParser\Extension\Node\Size;
 use Youthweb\BBCodeParser\Extension\Node\Underline;
+use Youthweb\BBCodeParser\Extension\Node\Video;
 
 /**
  * Spike: parses BBCode into a league/commonmark node tree.
@@ -51,6 +54,11 @@ final class BBCodeTreeParser
         'email' => ['node' => Email::class, 'option' => self::OPTIONAL, 'raw' => false],
         'img' => ['node' => Image::class, 'option' => self::NO_OPTION, 'raw' => true],
         'pic' => ['node' => Image::class, 'option' => self::NO_OPTION, 'raw' => true],
+        'color' => ['node' => Color::class, 'option' => self::OPTIONAL, 'raw' => false],
+        'size' => ['node' => Size::class, 'option' => self::OPTIONAL, 'raw' => false],
+        'video' => ['node' => Video::class, 'option' => self::NO_OPTION, 'raw' => true],
+        'v' => ['node' => Video::class, 'option' => self::NO_OPTION, 'raw' => true],
+        'youtube' => ['node' => Video::class, 'option' => self::NO_OPTION, 'raw' => true],
     ];
 
     public function parse(string $input): Document
@@ -218,6 +226,8 @@ final class BBCodeTreeParser
         return match ($class) {
             Link::class => new Link($arg ?? ''),
             Email::class => new Email($arg ?? ''),
+            Color::class => new Color($arg),
+            Size::class => new Size($arg),
             default => new $class(),
         };
     }
@@ -246,7 +256,7 @@ final class BBCodeTreeParser
             $next = $end + strlen($close[0][0]);
         }
 
-        $node = new Image();
+        $node = self::TAGS[$name]['node'] === Video::class ? new Video() : new Image();
         $node->setLiteral(substr($text, $offset, $end - $offset));
         $parent->appendChild($node);
 
