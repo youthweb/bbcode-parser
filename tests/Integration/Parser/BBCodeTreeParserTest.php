@@ -60,6 +60,28 @@ final class BBCodeTreeParserTest extends TestCase
         yield 'crossing tags' => ['[b][i]x[/b][/i]'];
         yield 'unclosed' => ['[b]text'];
         yield 'empty tag' => ['[b][/b]'];
+        yield 'italic' => ['Hallo [i]schief[/i] Welt'];
+        yield 'underline' => ['Hallo [u]unterstrichen[/u] Welt'];
+        yield 'underline uppercase' => ['[U]upper[/U]'];
+        yield 'underline nested' => ['[u][b]x[/b][/u]'];
+        yield 'underline crossing' => ['[u][i]x[/u][/i]'];
+        yield 'underline unclosed' => ['[u]text'];
+        yield 'underline empty' => ['[u][/u]'];
+        yield 'deprecated F is bold' => ['Hallo [F]fett[/F] Welt'];
+        yield 'deprecated F uppercase only' => ['[f]x[/f]'];
+        yield 'deprecated K is italic' => ['Hallo [K]schief[/K] Welt'];
+        yield 'deprecated K nested' => ['[F][K]x[/K][/F]'];
+        yield 'deprecated F unclosed' => ['[F]text'];
+        yield 'tags in code stay raw' => ['[code][u]x[/u][F]y[/F][/code]'];
+        yield 'escaped text in underline' => ['[u]<i>&</i>[/u]'];
+        yield 'closing tag without opening' => ['x[/u] y[/F]'];
+        yield 'option on bold stays literal' => ['[b=x]a[/b]'];
+        yield 'option on underline stays literal' => ['[u=x]a[/u]'];
+        yield 'option on deprecated F stays literal' => ['[F=x]a[/F]'];
+        yield 'bold does not pair with F' => ['[b]x[/F]'];
+        yield 'F does not pair with bold' => ['[F]x[/b]'];
+        yield 'tag with whitespace only' => ['[b] [/b]'];
+        yield 'tag over a soft break' => ["a [b]\nb[/b]"];
         yield 'url' => ['[url]http://example.com[/url]'];
         yield 'url with parameter' => ['[url=http://example.com]Link[/url]'];
         yield 'url with quoted parameter' => ['[url="http://a.de"]q[/url]'];
@@ -102,6 +124,11 @@ final class BBCodeTreeParserTest extends TestCase
             "[b]a\n\nb[/b]",
             "<p><b>a</p>\n<p>b</b></p>",
             "<p><strong>a</strong></p>\n<p>b[/b]</p>",
+        ];
+        yield 'underline over a paragraph break, 1.x renders invalid nesting' => [
+            "[u]a\n\nb[/u]",
+            "<p><u>a</p>\n<p>b</u></p>",
+            "<p><u>a</u></p>\n<p>b[/u]</p>",
         ];
     }
 
