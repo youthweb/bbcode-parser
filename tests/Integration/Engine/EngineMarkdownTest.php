@@ -234,6 +234,14 @@ final class EngineMarkdownTest extends TestCase
             "- a\n  - b\n    - c\n      - d\n        - e\n          - f",
             "<ul>\n\t<li>a\n<ul>\n\t<li>b\n<ul>\n\t<li>c\n<ul>\n\t<li>d\n<ul>\n\t<li>e<br />- f</li>\n</ul></li>\n</ul></li>\n</ul></li>\n</ul></li>\n</ul>",
         ];
+        yield 'a second item on the fifth list level' => [
+            "- a\n  - b\n    - c\n      - d\n        - e\n        - f",
+            "<ul>\n\t<li>a\n<ul>\n\t<li>b\n<ul>\n\t<li>c\n<ul>\n\t<li>d\n<ul>\n\t<li>e</li>\n\t<li>f</li>\n</ul></li>\n</ul></li>\n</ul></li>\n</ul></li>\n</ul>",
+        ];
+        yield 'a list after the fifth quote level' => [
+            "> > > > > a\n\n- b",
+            str_repeat($open . "\n", 5) . "<p>a</p>\n" . str_repeat($close . "\n", 4) . $close . "\n<ul>\n\t<li>b</li>\n</ul>",
+        ];
         yield 'quotes and lists add up: five levels' => [
             '> - > - > a',
             "<blockquote title=\"Zitat\">\n<ul>\n\t<li><blockquote title=\"Zitat\">\n<ul>\n\t<li><blockquote title=\"Zitat\">\n<p>a</p>\n</blockquote></li>\n</ul>\n</blockquote></li>\n</ul>\n</blockquote>",

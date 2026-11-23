@@ -55,4 +55,4 @@ There is no raw HTML. `<b>` is text and is escaped, in every place.
 | `heading_offset` | `2` | levels to move headings down |
 | `soft_break` | `<br />` | HTML of a soft break, Markdown mode only |
 
-The other keys (`parse_urls`, `callbacks.url_content.*`, `callbacks.image.*`) work as in the BBCode mode.
+The keys of this table are as experimental as the engine. The other keys (`parse_urls`, `callbacks.url_content.*`, `callbacks.image.*`) work as in the BBCode mode.

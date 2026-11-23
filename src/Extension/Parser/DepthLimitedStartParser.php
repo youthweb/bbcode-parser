@@ -6,6 +6,7 @@ namespace Youthweb\BBCodeParser\Extension\Parser;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\BlockQuote;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
+use League\CommonMark\Node\Node;
 use League\CommonMark\Parser\Block\BlockStart;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
 use League\CommonMark\Parser\Cursor;
@@ -37,7 +38,7 @@ final readonly class DepthLimitedStartParser implements BlockStartParserInterfac
 
     public function tryStart(Cursor $cursor, MarkdownParserStateInterface $parserState): ?BlockStart
     {
-        $block = $parserState->getActiveBlockParser()->getBlock();
+        $block = $parserState->getLastMatchedBlockParser()->getBlock();
 
         // The next item of an open list is on the same level as the list
         if ($block instanceof ListBlock) {
@@ -46,7 +47,7 @@ final readonly class DepthLimitedStartParser implements BlockStartParserInterfac
 
         $depth = 0;
 
-        while ($block instanceof \League\CommonMark\Node\Node) {
+        while ($block instanceof Node) {
             if ($block instanceof BlockQuote || $block instanceof ListBlock) {
                 $depth++;
             }
