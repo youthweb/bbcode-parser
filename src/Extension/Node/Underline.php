@@ -10,6 +10,5 @@ use League\CommonMark\Node\Inline\AbstractInline;
  * Underlined text, created by `[u]`.
  *
  * @experimental
- * @internal
  */
 final class Underline extends AbstractInline {}

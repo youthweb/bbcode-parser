@@ -10,7 +10,6 @@ use League\CommonMark\Node\Inline\AbstractInline;
  * Text with a font size, created by `[size]` or `[size=…]`.
  *
  * @experimental
- * @internal
  */
 final class Size extends AbstractInline
 {

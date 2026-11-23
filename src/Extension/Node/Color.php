@@ -10,7 +10,6 @@ use League\CommonMark\Node\Inline\AbstractInline;
  * Coloured text, created by `[color]` or `[color=…]`.
  *
  * @experimental
- * @internal
  */
 final class Color extends AbstractInline
 {

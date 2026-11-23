@@ -6,6 +6,7 @@ namespace Youthweb\BBCodeParser\Parser;
 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Event\DocumentParsedEvent;
+use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Renderer\HtmlRenderer;
 use Youthweb\BBCodeParser\Config;
@@ -22,7 +23,10 @@ final readonly class SpikeHtmlRenderer
 
     private HtmlRenderer $renderer;
 
-    public function __construct(?Config $config = null)
+    /**
+     * @param iterable<ExtensionInterface> $extensions extensions of the project, added after the extension of the engine
+     */
+    public function __construct(?Config $config = null, iterable $extensions = [])
     {
         $environment = new Environment([
             'allow_unsafe_links' => false,
@@ -30,6 +34,10 @@ final readonly class SpikeHtmlRenderer
         ]);
 
         $environment->addExtension(new BBCodeExtension($config ?? new Config()));
+
+        foreach ($extensions as $extension) {
+            $environment->addExtension($extension);
+        }
 
         $this->environment = $environment;
         $this->renderer = new HtmlRenderer($environment);
