@@ -64,6 +64,22 @@ class Config
          */
         'parse_headlines' => false,
         /*
+         * Markdown-Eingabe der Engine auf Basis von league/commonmark: Überschriften (`#`) und Trennlinien (`---`)
+         * gibt es in BBCode nicht. Sind sie aus, bleiben die Zeichen als Text stehen.
+         */
+        'markdown' => [
+            'headings' => true,
+            'thematic_breaks' => true,
+        ],
+        /*
+         * Markdown-Eingabe: Um wie viele Ebenen werden Überschriften nach unten verschoben (`#` wird `<h3>`)?
+         */
+        'heading_offset' => 2,
+        /*
+         * Markdown-Eingabe: HTML eines weichen Zeilenumbruchs
+         */
+        'soft_break' => '<br />',
+        /*
          * Sollen Videos eingebunden werden?
          */
         'embed_videos' => true,
