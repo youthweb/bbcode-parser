@@ -9,13 +9,16 @@ use League\CommonMark\Extension\CommonMark\Node\Block\FencedCode;
 use League\CommonMark\Extension\CommonMark\Node\Block\IndentedCode;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Image as MarkdownImage;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use Youthweb\BBCodeParser\Extension\Node\BBList;
 use Youthweb\BBCodeParser\Extension\Node\BBListItem;
+use Youthweb\BBCodeParser\Extension\Node\Email;
 use Youthweb\BBCodeParser\Extension\Node\Image;
 
 /**
  * Turns the nodes of the Markdown parser into the nodes of the BBCode engine, so that one renderer serves both inputs:
- * lists become `BBList`, fenced code becomes code and an image becomes the image of `[img]`.
+ * lists become `BBList`, fenced code becomes code, an image becomes the image of `[img]` and a `mailto:` link
+ * becomes the email of `[email]`.
  *
  * The alt text and the title of an image are dropped, like `[img]` has none. The code of Markdown ends with a
  * line break, the code of `[code]` does not: the last line break is cut, so that both give the same HTML.
@@ -31,6 +34,7 @@ final readonly class MarkdownTreeListener
         $codes = [];
         $images = [];
         $indented = [];
+        $mails = [];
 
         foreach ($event->getDocument()->iterator() as $node) {
             if ($node instanceof ListBlock) {
@@ -41,6 +45,8 @@ final readonly class MarkdownTreeListener
                 $indented[] = $node;
             } elseif ($node instanceof MarkdownImage) {
                 $images[] = $node;
+            } elseif ($node instanceof Link && stripos($node->getUrl(), 'mailto:') === 0) {
+                $mails[] = $node;
             }
         }
 
@@ -60,6 +66,16 @@ final readonly class MarkdownTreeListener
 
         foreach ($images as $image) {
             $image->replaceWith(new Image($image->getUrl()));
+        }
+
+        foreach ($mails as $link) {
+            $mail = new Email(substr($link->getUrl(), strlen('mailto:')));
+
+            foreach ($link->children() as $child) {
+                $mail->appendChild($child);
+            }
+
+            $link->replaceWith($mail);
         }
     }
 

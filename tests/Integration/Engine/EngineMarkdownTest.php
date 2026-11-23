@@ -36,6 +36,7 @@ final class EngineMarkdownTest extends TestCase
         yield 'strong, underscores' => ['__x__', '<p><strong>x</strong></p>'];
         yield 'emphasis' => ['*x*', '<p><em>x</em></p>'];
         yield 'emphasis, underscore' => ['_x_', '<p><em>x</em></p>'];
+        yield 'strikethrough, one tilde' => ['~x~', '<p><del>x</del></p>'];
         yield 'strikethrough' => ['~~x~~', '<p><del>x</del></p>'];
         yield 'inline code' => ['`a < b`', '<p><code>a &lt; b</code></p>'];
         yield 'escaped character' => ['\*x\*', '<p>*x*</p>'];
@@ -95,6 +96,9 @@ final class EngineMarkdownTest extends TestCase
      */
     public static function linkProvider(): iterable
     {
+        yield 'email autolink' => ['<foo@example.org>', '<p><a href="mailto:foo@example.org">foo@example.org</a></p>'];
+        yield 'email link' => ['[mail](mailto:foo@example.org)', '<p><a href="mailto:foo@example.org">mail</a></p>'];
+        yield 'email link with an invalid address shows the text' => ['[mail](mailto:foo)', '<p>mail</p>'];
         yield 'link' => ['[a](https://example.org)', '<p><a target="_blank" href="https://example.org">a</a></p>'];
         yield 'link with title, the title is dropped' => ['[a](https://example.org "t")', '<p><a target="_blank" href="https://example.org">a</a></p>'];
         yield 'link with inline' => ['[**a**](https://example.org)', '<p><a target="_blank" href="https://example.org"><strong>a</strong></a></p>'];
@@ -145,6 +149,8 @@ final class EngineMarkdownTest extends TestCase
         yield 'link' => ['[a](https://example.org)', '[url=https://example.org]a[/url]'];
         yield 'link with formatted text' => ['[**a**](https://example.org)', '[url=https://example.org][b]a[/b][/url]'];
         yield 'bare url' => ['https://example.org', 'https://example.org'];
+        yield 'email autolink' => ['<foo@example.org>', '[email]foo@example.org[/email]'];
+        yield 'email link' => ['[mail](mailto:foo@example.org)', '[email=foo@example.org]mail[/email]'];
         yield 'image' => ['![a](https://example.org/a.png)', '[img]https://example.org/a.png[/img]'];
         yield 'image in link' => ['[![a](https://example.org/a.png)](https://example.org)', '[url=https://example.org][img]https://example.org/a.png[/img][/url]'];
         yield 'quote' => ['> a', '[quote]a[/quote]'];

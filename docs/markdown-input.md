@@ -21,9 +21,10 @@ In Markdown mode `[b]` is text, in BBCode mode `**` is text.
 | --- | --- |
 | `**a**`, `__a__` | `<strong>` |
 | `*a*`, `_a_` | `<em>` |
-| `~~a~~` | `<del>` |
+| `~~a~~`, `~a~` | `<del>` |
 | `` `a` `` | `<code>` |
 | `[a](url)`, `[a][ref]`, `<url>`, a bare url | link, rendered like `[url]` |
+| `<a@b.org>`, `[a](mailto:a@b.org)` | email link, rendered like `[email]` |
 | `![a](url)` | image, rendered like `[img]` |
 | `> a` | quote, rendered like `[quote]` |
 | `- a`, `1. a` | list, rendered like `[list]` and `[list=1]` |
@@ -45,6 +46,8 @@ There is no raw HTML. `<b>` is text and is escaped, in every place.
 - Headings are moved down by `heading_offset` (default 2): `#` renders `<h3>`, and the level stops at `<h6>`. With `0` the levels are as written.
 - Quotes and lists are nested up to five levels, a quote and a list count one level each. A deeper marker stays text.
 - A list item with a single paragraph is rendered without `<p>`, loose lists as well.
+
+The config is read when the `Engine` is built for the Markdown mode, so build a new `Engine` after changing it.
 
 ## Config keys
 
