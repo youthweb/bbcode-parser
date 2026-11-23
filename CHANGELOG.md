@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - Experimental parser engine: the inline tags `[b]`, `[i]`, `[u]` and the deprecated `[F]` and `[K]`, rendered as `<strong>`, `<em>` and `<u>`, see [#48](https://github.com/youthweb/bbcode-parser/issues/48)
 - Experimental parser engine: the tags `[url]`, `[YWLINK]`, `[email]`, `[img]`, `[PIC]` and the linking of bare urls with the same config keys as 1.x; an invalid or unsafe url renders as text, and the text of an `[email]` can no longer break out of the script of `protect_email`, see [#49](https://github.com/youthweb/bbcode-parser/issues/49)
 - Experimental parser engine: the tags `[list]`, `[quote]`, `[q]`, the deprecated `[Z]` and `[noparse]`, rendered as valid HTML (a quote is no longer inside a `<p>`, lists and quotes nest up to five levels, the option of a quote is read up to the bracket and escaped), see [#50](https://github.com/youthweb/bbcode-parser/issues/50)
+- Experimental parser engine: the tags `[color]`, `[size]`, `[video]`, `[v]` and `[youtube]` with the validation and config keys of 1.x; a tag without content renders nothing, and the url of a video is linked with its text escaped, see [#51](https://github.com/youthweb/bbcode-parser/issues/51)
 
 ### Changed
 

@@ -25,15 +25,21 @@ use League\CommonMark\Renderer\Inline\NewlineRenderer;
 use League\CommonMark\Renderer\Inline\TextRenderer;
 use Youthweb\BBCodeParser\Config;
 use Youthweb\BBCodeParser\Extension\Node\BBList;
+use Youthweb\BBCodeParser\Extension\Node\Color;
 use Youthweb\BBCodeParser\Extension\Node\Email;
 use Youthweb\BBCodeParser\Extension\Node\Image;
+use Youthweb\BBCodeParser\Extension\Node\Size;
 use Youthweb\BBCodeParser\Extension\Node\Underline;
+use Youthweb\BBCodeParser\Extension\Node\Video;
+use Youthweb\BBCodeParser\Extension\Renderer\ColorRenderer;
 use Youthweb\BBCodeParser\Extension\Renderer\EmailRenderer;
 use Youthweb\BBCodeParser\Extension\Renderer\ImageRenderer;
 use Youthweb\BBCodeParser\Extension\Renderer\LinkRenderer;
 use Youthweb\BBCodeParser\Extension\Renderer\ListRenderer;
 use Youthweb\BBCodeParser\Extension\Renderer\QuoteRenderer;
+use Youthweb\BBCodeParser\Extension\Renderer\SizeRenderer;
 use Youthweb\BBCodeParser\Extension\Renderer\UnderlineRenderer;
+use Youthweb\BBCodeParser\Extension\Renderer\VideoRenderer;
 
 /**
  * Renderers for the node tree of the BBCode engine, without the Markdown extensions.
@@ -60,6 +66,9 @@ final readonly class BBCodeExtension implements ExtensionInterface
             ->addRenderer(Link::class, $linkRenderer)
             ->addRenderer(Email::class, new EmailRenderer($this->config))
             ->addRenderer(Image::class, new ImageRenderer($this->config, $linkRenderer))
+            ->addRenderer(Color::class, new ColorRenderer($this->config))
+            ->addRenderer(Size::class, new SizeRenderer($this->config))
+            ->addRenderer(Video::class, new VideoRenderer($linkRenderer))
             ->addRenderer(IndentedCode::class, new IndentedCodeRenderer())
             ->addRenderer(BlockQuote::class, new QuoteRenderer())
             ->addRenderer(BBList::class, new ListRenderer())
