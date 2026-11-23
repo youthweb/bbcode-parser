@@ -68,7 +68,7 @@ final class BBCodeTreeParserTest extends TestCase
         yield 'underline unclosed' => ['[u]text'];
         yield 'underline empty' => ['[u][/u]'];
         yield 'deprecated F is bold' => ['Hallo [F]fett[/F] Welt'];
-        yield 'deprecated F uppercase only' => ['[f]x[/f]'];
+        yield 'deprecated F in lower case' => ['[f]x[/f]'];
         yield 'deprecated K is italic' => ['Hallo [K]schief[/K] Welt'];
         yield 'deprecated K nested' => ['[F][K]x[/K][/F]'];
         yield 'deprecated F unclosed' => ['[F]text'];
@@ -80,6 +80,15 @@ final class BBCodeTreeParserTest extends TestCase
         yield 'option on deprecated F stays literal' => ['[F=x]a[/F]'];
         yield 'bold does not pair with F' => ['[b]x[/F]'];
         yield 'F does not pair with bold' => ['[F]x[/b]'];
+        yield 'option on italic stays literal' => ['[i=x]a[/i]'];
+        yield 'option on deprecated K stays literal' => ['[K=x]a[/K]'];
+        yield 'deprecated K uppercase and lower case' => ['[K]a[/K] [k]b[/k]'];
+        yield 'deprecated K empty' => ['[K][/K]'];
+        yield 'deprecated K unclosed' => ['[K]text'];
+        yield 'deprecated K crossing' => ['[K][F]x[/K][/F]'];
+        yield 'F does not pair with K' => ['[F]x[/K]'];
+        yield 'K does not pair with F' => ['[K]x[/F]'];
+        yield 'underline does not pair with bold' => ['[u]x[/b]'];
         yield 'tag with whitespace only' => ['[b] [/b]'];
         yield 'tag over a soft break' => ["a [b]\nb[/b]"];
         yield 'url' => ['[url]http://example.com[/url]'];
@@ -110,6 +119,21 @@ final class BBCodeTreeParserTest extends TestCase
      */
     public static function differenceProvider(): iterable
     {
+        yield 'bold renders strong, 1.x renders b' => [
+            '[b]x[/b]',
+            '<p><b>x</b></p>',
+            '<p><strong>x</strong></p>',
+        ];
+        yield 'italic renders em, 1.x renders i' => [
+            '[i]x[/i]',
+            '<p><i>x</i></p>',
+            '<p><em>x</em></p>',
+        ];
+        yield 'deprecated F and K render strong and em like their tags' => [
+            '[F]x[/F][K]y[/K]',
+            '<p><b>x</b><i>y</i></p>',
+            '<p><strong>x</strong><em>y</em></p>',
+        ];
         yield 'unsafe url is dropped, 1.x rewrites it to http://x' => [
             '[url=javascript:alert(1)]x[/url]',
             '<p><a target="_blank" href="http://x">x</a></p>',
