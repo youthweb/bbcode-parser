@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Youthweb\BBCodeParser\Extension;
 
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
+use League\CommonMark\Extension\CommonMark\Node\Block\BlockQuote;
 use League\CommonMark\Extension\CommonMark\Node\Block\IndentedCode;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Emphasis;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
@@ -23,12 +24,15 @@ use League\CommonMark\Renderer\Block\ParagraphRenderer;
 use League\CommonMark\Renderer\Inline\NewlineRenderer;
 use League\CommonMark\Renderer\Inline\TextRenderer;
 use Youthweb\BBCodeParser\Config;
+use Youthweb\BBCodeParser\Extension\Node\BBList;
 use Youthweb\BBCodeParser\Extension\Node\Email;
 use Youthweb\BBCodeParser\Extension\Node\Image;
 use Youthweb\BBCodeParser\Extension\Node\Underline;
 use Youthweb\BBCodeParser\Extension\Renderer\EmailRenderer;
 use Youthweb\BBCodeParser\Extension\Renderer\ImageRenderer;
 use Youthweb\BBCodeParser\Extension\Renderer\LinkRenderer;
+use Youthweb\BBCodeParser\Extension\Renderer\ListRenderer;
+use Youthweb\BBCodeParser\Extension\Renderer\QuoteRenderer;
 use Youthweb\BBCodeParser\Extension\Renderer\UnderlineRenderer;
 
 /**
@@ -57,6 +61,8 @@ final readonly class BBCodeExtension implements ExtensionInterface
             ->addRenderer(Email::class, new EmailRenderer($this->config))
             ->addRenderer(Image::class, new ImageRenderer($this->config, $linkRenderer))
             ->addRenderer(IndentedCode::class, new IndentedCodeRenderer())
+            ->addRenderer(BlockQuote::class, new QuoteRenderer())
+            ->addRenderer(BBList::class, new ListRenderer())
             ->addEventListener(DocumentParsedEvent::class, new AutolinkListener($this->config));
     }
 }
