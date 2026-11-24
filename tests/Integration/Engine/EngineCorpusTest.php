@@ -13,10 +13,10 @@ use Youthweb\BBCodeParser\Manager;
 use Youthweb\BBCodeParser\Tests\Fixtures\HtmlNormalizer;
 
 /**
- * Back-to-back test: 1.x and the league engine over the synthetic corpus in `tests/Fixtures/Corpus`.
+ * Back-to-back test: the parser and the engine over the synthetic corpus in `tests/Fixtures/Corpus`.
  *
  * A case without an entry in `differences.php` has the same normalised HTML in both engines, a case with an
- * entry differs, and the entry names the section of `docs/v2-html-differences.md` that explains why.
+ * entry differs, and the entry names the section of `docs/engine-html-differences.md` that explains why.
  *
  * The test enters through `Engine`; `Manager` is only the reference.
  */
@@ -25,7 +25,7 @@ final class EngineCorpusTest extends TestCase
 {
     private const CORPUS = __DIR__ . '/../../Fixtures/Corpus';
 
-    private const DIFFERENCES_DOC = __DIR__ . '/../../../docs/v2-html-differences.md';
+    private const DIFFERENCES_DOC = __DIR__ . '/../../../docs/engine-html-differences.md';
 
     /**
      * @return iterable<string, array{string, string}> name, input
@@ -48,7 +48,7 @@ final class EngineCorpusTest extends TestCase
             return;
         }
 
-        $this->assertSame($old, $new, sprintf('%s differs from 1.x, fix it or list it in differences.php', $name));
+        $this->assertSame($old, $new, sprintf('%s differs from the parser, fix it or list it in differences.php', $name));
     }
 
     public function testEveryListedCaseExists(): void

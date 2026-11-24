@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Youthweb\BBCodeParser\Tests\Fixtures;
 
 /**
- * Evens out the markup differences between 1.x and the league engine that are already decided,
+ * Evens out the markup differences between the parser and the engine that are already decided,
  * so that the back-to-back test shows only the differences that are not.
  *
  * What it does not touch: text, the order of elements and the whitespace inside a paragraph.
- * Every rule is explained in `docs/v2-html-differences.md`.
+ * Every rule is explained in `docs/engine-html-differences.md`.
  */
 final class HtmlNormalizer
 {
@@ -20,7 +20,7 @@ final class HtmlNormalizer
     {
         $html = str_replace("\r\n", "\n", $html);
 
-        // 1.x writes the old presentational tags, the league engine the semantic ones.
+        // The parser writes the old presentational tags, the engine the semantic ones.
         $html = (string) preg_replace(['~<b(?=[\s>/])~', '~</b>~', '~<i(?=[\s>/])~', '~</i>~'], ['<strong', '</strong>', '<em', '</em>'], $html);
 
         $html = (string) preg_replace('~\s*(</?(?:' . self::BLOCKS . ')(?:\s[^<>]*)?>)\s*~', '$1', $html);

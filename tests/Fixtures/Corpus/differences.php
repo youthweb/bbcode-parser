@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 /**
- * The cases of the corpus where the league engine differs from 1.x after the normalisation,
- * each with the IDs of the sections in `docs/v2-html-differences.md` that explain why.
+ * The cases of the corpus where the engine differs from the parser after the normalisation,
+ * each with the IDs of the sections in `docs/engine-html-differences.md` that explain why.
  *
  * @return array<string, list<string>> case name (path without extension) => difference IDs
  */
