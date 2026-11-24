@@ -27,7 +27,7 @@ use Youthweb\BBCodeParser\Extension\Node\Video;
  */
 final class BBCodeTreeParser
 {
-    /** The tag takes no option: with an option it stays text, like in 1.x. */
+    /** The tag takes no option: with an option it stays text, like in `Manager`. */
     private const NO_OPTION = 'none';
 
     /** The tag works with and without an option. */
@@ -39,7 +39,7 @@ final class BBCodeTreeParser
     /**
      * Tags with their node, their option and whether the content is raw text.
      * `f` and `k` are the deprecated aliases of `b` and `i`, `pic` is an alias of `img`.
-     * Like in 1.x a closing tag pairs only with an opening tag of the same name.
+     * Like in `Manager` a closing tag pairs only with an opening tag of the same name.
      *
      * @var array<string, array{node: class-string<Node>, option: string, raw: bool}>
      */
@@ -107,7 +107,7 @@ final class BBCodeTreeParser
                     $next = $end + strlen($close[0][0]);
                 }
 
-                // Unclosed: the rest is raw, like 1.x.
+                // Unclosed: the rest is raw, like `Manager`.
                 $raw = substr($input, $offset, $end - $offset);
                 $offset = $next;
 
@@ -166,7 +166,7 @@ final class BBCodeTreeParser
             $offset = $pos + strlen($full);
 
             if (! $closing && ! $this->acceptsOption($name, $arg)) {
-                // 1.x keeps the text of a tag with an option it does not take, or without one it needs.
+                // `Manager` keeps the text of a tag with an option it does not take, or without one it needs.
                 $this->appendText($current, $full, $raws);
 
                 continue;
@@ -242,7 +242,7 @@ final class BBCodeTreeParser
     }
 
     /**
-     * Appends a tag with raw content: everything up to the closing tag, or to the end if it is missing, like 1.x.
+     * Appends a tag with raw content: everything up to the closing tag, or to the end if it is missing, like `Manager`.
      *
      * @return int the offset after the closing tag
      */

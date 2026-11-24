@@ -10,7 +10,7 @@ use Youthweb\BBCodeParser\Filter\FilterException;
 use Youthweb\BBCodeParser\Filter\FilterInterface;
 
 /**
- * Models an image filter of a project for 1.x, the counterpart of `ImageFilterExtension`.
+ * Models an image filter of a project for `Manager`, the counterpart of `ImageFilterExtension`.
  */
 final class ImageFilter implements FilterInterface
 {

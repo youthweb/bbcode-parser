@@ -13,7 +13,7 @@ use Youthweb\BBCodeParser\Config;
 use Youthweb\BBCodeParser\Extension\Renderer\LinkRenderer;
 
 /**
- * Turns the bare urls in the text nodes into links, like the url visitor of 1.x.
+ * Turns the bare urls in the text nodes into links, like the url visitor of the parser.
  *
  * Only the public API of urllinker is used: its creators return markers, and the markers are split into nodes.
  * Email addresses stay text. Text inside a link or an email tag is left alone.

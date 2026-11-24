@@ -18,9 +18,9 @@ use Youthweb\BBCodeParser\Parser\BlockTreeBuilder;
 use Youthweb\BBCodeParser\Parser\SpikeHtmlRenderer;
 
 /**
- * Back-to-back test of the list, quote and noparse tags (#50): 1.x engine against the league node tree.
+ * Back-to-back test of the list, quote and noparse tags (#50): the parser against the engine.
  *
- * The new engine renders valid HTML, so where 1.x does not, the difference is documented here.
+ * The engine renders valid HTML, so where the parser does not, the difference is documented here.
  */
 #[CoversClass(BBCodeTreeParser::class)]
 #[CoversClass(BlockTreeBuilder::class)]
@@ -69,7 +69,7 @@ final class BBCodeBlockTagsTest extends TestCase
     #[DataProvider('identicalProvider')]
     public function testIdenticalToOldEngine(string $input): void
     {
-        // 1.x adds the obsolete attribute type="disc" to a bullet list, see the documented differences
+        // The parser adds the obsolete attribute type="disc" to a bullet list, see the documented differences
         $this->assertSame($this->old($input), strtr($this->new($input), ['<ul>' => '<ul type="disc">']));
     }
 
@@ -118,7 +118,7 @@ final class BBCodeBlockTagsTest extends TestCase
             '<p>text<blockquote title="Zitat"><cite></cite>a</blockquote>text</p>',
             "<p>text</p>\n<blockquote title=\"Zitat\">\n<p>a</p>\n</blockquote>\n<p>text</p>",
         ];
-        yield 'blank line in a quote gives paragraphs, 1.x renders invalid nesting' => [
+        yield 'blank line in a quote gives paragraphs, the parser renders invalid nesting' => [
             "[quote=Max]a\n\nb[/quote]",
             "<p><blockquote title=\"Zitat\"><cite>Max</cite>a</p>\n<p>b</blockquote></p>",
             "<blockquote title=\"Zitat\">\n<cite>Max</cite>\n<p>a</p>\n<p>b</p>\n</blockquote>",
@@ -128,7 +128,7 @@ final class BBCodeBlockTagsTest extends TestCase
             '<p><blockquote title="Zitat"><cite>A</cite>x<blockquote title="Zitat"><cite>B</cite>y</blockquote>z</blockquote></p>',
             "<blockquote title=\"Zitat\">\n<cite>A</cite>\n<p>x</p>\n<blockquote title=\"Zitat\">\n<cite>B</cite>\n<p>y</p>\n</blockquote>\n<p>z</p>\n</blockquote>",
         ];
-        yield 'quote starting with a quote, 1.x puts the cite behind the inner quote' => [
+        yield 'quote starting with a quote, the parser puts the cite behind the inner quote' => [
             '[quote=A][quote=B]y[/quote][/quote]',
             '<p><blockquote title="Zitat"><blockquote title="Zitat"><cite>B</cite>y</blockquote><cite>A</cite></blockquote></p>',
             "<blockquote title=\"Zitat\">\n<cite>A</cite>\n<blockquote title=\"Zitat\">\n<cite>B</cite>\n<p>y</p>\n</blockquote>\n</blockquote>",
@@ -173,7 +173,7 @@ final class BBCodeBlockTagsTest extends TestCase
             "<ul type=\"disc\">\n\t<li>a\n\nb</li>\n\t<li>c</li>\n</ul>",
             "<ul>\n\t<li><p>a</p>\n<p>b</p></li>\n\t<li>c</li>\n</ul>",
         ];
-        yield 'nested list, 1.x renders a list in a paragraph' => [
+        yield 'nested list, the parser renders a list in a paragraph' => [
             '[list][*]a[list][*]x[*]y[/list][*]b[/list]',
             "<ul type=\"disc\">\n\t<li>a\n<p><ul type=\"disc\"><br />\n\t<li>x</li><br />\n\t<li>y</li><br />\n</ul></p>\n</li>\n\t<li>b</li>\n</ul>",
             "<ul>\n\t<li>a\n<ul>\n\t<li>x</li>\n\t<li>y</li>\n</ul></li>\n\t<li>b</li>\n</ul>",
@@ -183,7 +183,7 @@ final class BBCodeBlockTagsTest extends TestCase
             "<ul type=\"disc\">\n\t<li>a</li>\n</ul>\n\n<p>[*]b</p>",
             "<ul>\n\t<li>a</li>\n</ul>\n<p>[*]b</p>",
         ];
-        yield 'noparse keeps a break in one paragraph, 1.x splits the paragraph' => [
+        yield 'noparse keeps a break in one paragraph, the parser splits the paragraph' => [
             "a [noparse]\n[b]\n\n[b][/noparse] b",
             "<p>a <br />\n[b]</p>\n<p>[b] b</p>",
             "<p>a <br />\n[b]<br />\n<br />\n[b] b</p>",

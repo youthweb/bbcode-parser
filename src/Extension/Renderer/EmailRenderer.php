@@ -13,7 +13,7 @@ use Youthweb\BBCodeParser\Extension\Node\Email;
 use Youthweb\BBCodeParser\Html;
 
 /**
- * Renders `[email]` like 1.x: an invalid address leaves the plain content.
+ * Renders `[email]` like the parser: an invalid address leaves the plain content.
  *
  * @experimental
  * @internal

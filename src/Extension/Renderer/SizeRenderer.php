@@ -12,7 +12,7 @@ use Youthweb\BBCodeParser\Extension\Node\Size;
 use Youthweb\BBCodeParser\Html;
 
 /**
- * Renders `[size]` like 1.x: the option as integer percent, 0 and non-numbers give 100, limited by the config.
+ * Renders `[size]` like the parser: the option as integer percent, 0 and non-numbers give 100, limited by the config.
  *
  * Without content nothing is rendered.
  *

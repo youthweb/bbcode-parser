@@ -16,7 +16,7 @@ use Youthweb\BBCodeParser\Extension\Renderer\HeadingRenderer;
 use Youthweb\BBCodeParser\InputMode;
 
 /**
- * Markdown input of the league engine (#52), tested at its entry point with fixed HTML.
+ * Markdown input of the engine (#52), tested at its entry point with fixed HTML.
  */
 #[CoversClass(Engine::class)]
 #[CoversClass(InputMode::class)]

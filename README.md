@@ -16,6 +16,40 @@ $ composer require youthweb/bbcode-parser
 
 ## Usage
 
+The library has two parts that run side by side:
+
+- **The engine** (`Engine`) is the default for new code. It is built on [league/commonmark](https://commonmark.thephpleague.com), renders BBCode and Markdown and writes valid HTML.
+- **The parser** (`Manager`) is the original implementation. It stays for compatibility with existing code.
+
+The API of the engine is `@experimental` until the marks are removed, see the [backward compatibility promise](docs/bc-promise.md). The API of the parser is covered by the promise.
+
+### Engine (default)
+
+The input mode is chosen per call: a text is either BBCode or Markdown.
+
+```php
+use Youthweb\BBCodeParser\Engine;
+use Youthweb\BBCodeParser\InputMode;
+
+$engine = new Engine();
+
+echo $engine->toHtml('This is a [i]simple[/i] test to demonstrate the [b]BBCodeParser[/b].');
+
+// "<p>This is a <em>simple</em> test to demonstrate the <strong>BBCodeParser</strong>.</p>"
+
+echo $engine->toHtml('This is a *simple* test to demonstrate the **BBCodeParser**.', InputMode::Markdown);
+
+// "<p>This is a <em>simple</em> test to demonstrate the <strong>BBCodeParser</strong>.</p>"
+```
+
+- [HTML differences between the parser and the engine](docs/engine-html-differences.md)
+- [Extension points of the engine](docs/extension-points.md)
+- [Markdown input](docs/markdown-input.md)
+
+### Parser (compatibility)
+
+`Manager` renders BBCode only and takes the config keys, filters and visitors of the original implementation.
+
 ```php
 use Youthweb\BBCodeParser\Manager;
 

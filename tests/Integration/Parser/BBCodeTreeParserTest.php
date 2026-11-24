@@ -15,7 +15,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
- * Back-to-back test of the spike (#45): 1.x engine against the league node tree.
+ * Back-to-back test of the spike (#45): the parser against the engine.
  */
 #[CoversClass(BBCodeTreeParser::class)]
 #[CoversClass(SpikeHtmlRenderer::class)]
@@ -25,7 +25,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 final class BBCodeTreeParserTest extends TestCase
 {
     /**
-     * Inputs where the structure and the markup are identical to 1.x.
+     * Inputs where the structure and the markup are identical to the parser.
      *
      * @return iterable<string, array{string}>
      */
@@ -51,7 +51,7 @@ final class BBCodeTreeParserTest extends TestCase
     }
 
     /**
-     * Inputs where the tree is the same as in 1.x and only the markup of the
+     * Inputs where the tree is the same as in the parser and only the markup of the
      * renderers differs: <strong>/<em> instead of <b>/<i>, no target="_blank".
      *
      * @return iterable<string, array{string}>
@@ -118,18 +118,18 @@ final class BBCodeTreeParserTest extends TestCase
     }
 
     /**
-     * Documented differences to 1.x.
+     * Documented differences to the parser.
      *
      * @return iterable<string, array{string, string, string}>
      */
     public static function differenceProvider(): iterable
     {
-        yield 'bold renders strong, 1.x renders b' => [
+        yield 'bold renders strong, the parser renders b' => [
             '[b]x[/b]',
             '<p><b>x</b></p>',
             '<p><strong>x</strong></p>',
         ];
-        yield 'italic renders em, 1.x renders i' => [
+        yield 'italic renders em, the parser renders i' => [
             '[i]x[/i]',
             '<p><i>x</i></p>',
             '<p><em>x</em></p>',
@@ -139,12 +139,12 @@ final class BBCodeTreeParserTest extends TestCase
             '<p><b>x</b><i>y</i></p>',
             '<p><strong>x</strong><em>y</em></p>',
         ];
-        yield 'tag over a paragraph break, 1.x renders invalid nesting' => [
+        yield 'tag over a paragraph break, the parser renders invalid nesting' => [
             "[b]a\n\nb[/b]",
             "<p><b>a</p>\n<p>b</b></p>",
             "<p><strong>a</strong></p>\n<p>b[/b]</p>",
         ];
-        yield 'underline over a paragraph break, 1.x renders invalid nesting' => [
+        yield 'underline over a paragraph break, the parser renders invalid nesting' => [
             "[u]a\n\nb[/u]",
             "<p><u>a</p>\n<p>b</u></p>",
             "<p><u>a</u></p>\n<p>b[/u]</p>",

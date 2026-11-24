@@ -10,7 +10,7 @@ use Youthweb\BBCodeParser\Filter\FilterException;
 use Youthweb\BBCodeParser\Filter\FilterInterface;
 
 /**
- * Models a video filter of a project for 1.x, the counterpart of `VideoFilterExtension`: it embeds a youtube video and
+ * Models a video filter of a project for `Manager`, the counterpart of `VideoFilterExtension`: it embeds a youtube video and
  * reads the config keys `embed_videos`, `embed_maxwidth` and `embed_maxheight`.
  */
 final class VideoFilter implements FilterInterface

@@ -23,7 +23,7 @@ use Youthweb\BBCodeParser\Parser\SpikeHtmlRenderer;
 
 /**
  * Back-to-back test of the link, email and image tags and of the autolinking (#49):
- * 1.x engine against the league node tree.
+ * the parser against the engine.
  */
 #[CoversClass(BBCodeTreeParser::class)]
 #[CoversClass(SpikeHtmlRenderer::class)]
@@ -175,53 +175,53 @@ final class BBCodeLinkTagsTest extends TestCase
     }
 
     /**
-     * Documented differences to 1.x.
+     * Documented differences to the parser.
      *
      * @return iterable<string, array{string, string, string}>
      */
     public static function differenceProvider(): iterable
     {
-        yield 'ywlink with javascript: is plain text, 1.x leaves the tag as text' => [
+        yield 'ywlink with javascript: is plain text, the parser leaves the tag as text' => [
             '[YWLINK=javascript:alert(1)]x[/YWLINK]',
             '<p>[YWLINK=javascript:alert(1)]x[/YWLINK]</p>',
             '<p>x</p>',
         ];
-        yield 'an option with a space is not a url, 1.x reads only up to the space' => [
+        yield 'an option with a space is not a url, the parser reads only up to the space' => [
             '[YWLINK=not a url]y[/YWLINK]',
             '<p><a target="_blank" href="http://not">y</a></p>',
             '<p>y</p>',
         ];
-        yield 'javascript: is plain text, 1.x rewrites it to http://x' => [
+        yield 'javascript: is plain text, the parser rewrites it to http://x' => [
             '[url=javascript:alert(1)]x[/url]',
             '<p><a target="_blank" href="http://x">x</a></p>',
             '<p>x</p>',
         ];
-        yield 'javascript:// with a line break is plain text, 1.x rewrites it to http://x' => [
+        yield 'javascript:// with a line break is plain text, the parser rewrites it to http://x' => [
             '[url=javascript://%0aalert(1)]x[/url]',
             '<p><a target="_blank" href="http://x">x</a></p>',
             '<p>x</p>',
         ];
-        yield 'ampersand in the text of a url is escaped, 1.x prints it raw' => [
+        yield 'ampersand in the text of a url is escaped, the parser prints it raw' => [
             '[url]http://a.de/?a=1&b=2[/url]',
             '<p><a target="_blank" href="http://a.de/?a=1&amp;b=2">http://a.de/?a=1&b=2</a></p>',
             '<p><a target="_blank" href="http://a.de/?a=1&amp;b=2">http://a.de/?a=1&amp;b=2</a></p>',
         ];
-        yield 'bare url with an ampersand, 1.x prints it raw' => [
+        yield 'bare url with an ampersand, the parser prints it raw' => [
             'bare http://a.de/x?a=1&b=2',
             '<p>bare <a target="_blank" href="http://a.de/x?a=1&amp;b=2">http://a.de/x?a=1&b=2</a></p>',
             '<p>bare <a target="_blank" href="http://a.de/x?a=1&amp;b=2">http://a.de/x?a=1&amp;b=2</a></p>',
         ];
-        yield 'bare url in a tag is a link, 1.x renders escaped html' => [
+        yield 'bare url in a tag is a link, the parser renders escaped html' => [
             '[b]http://a.de[/b]',
             '<p><b>&lt;a target=&quot;_blank&quot; href=&quot;http://a.de&quot;&gt;http://a.de&lt;/a&gt;</b></p>',
             '<p><b><a target="_blank" href="http://a.de">http://a.de</a></b></p>',
         ];
-        yield 'empty url renders an empty paragraph, 1.x renders nothing' => [
+        yield 'empty url renders an empty paragraph, the parser renders nothing' => [
             '[url][/url]',
             '',
             '<p></p>',
         ];
-        yield 'bare url in an email tag stays text, 1.x links it' => [
+        yield 'bare url in an email tag stays text, the parser links it' => [
             '[email]http://a.de[/email]',
             '<p><a target="_blank" href="http://a.de">http://a.de</a></p>',
             '<p>http://a.de</p>',
