@@ -53,7 +53,12 @@ class Url extends CodeDefinition
         $content = '';
 
         foreach ($el->getChildren() as $child) {
-            $content .= $child->getAsHTML();
+            if ($child->isTextNode()) {
+                // The content of a tag that does not parse its content, like [v], is not escaped yet.
+                $content .= Html::escapeSpecialChars($child->getAsHTML());
+            } else {
+                $content .= $child->getAsHTML();
+            }
         }
 
         $param = $el->getAttribute();
