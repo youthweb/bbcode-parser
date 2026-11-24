@@ -14,7 +14,7 @@ use Youthweb\BBCodeParser\Config;
 use Youthweb\BBCodeParser\Html;
 
 /**
- * Renders `[url]`, `[YWLINK]` and autolinked urls like 1.x: an invalid or unsafe url leaves the plain content.
+ * Renders `[url]`, `[YWLINK]` and autolinked urls like the parser: an invalid or unsafe url leaves the plain content.
  *
  * @experimental
  * @internal

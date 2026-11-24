@@ -12,7 +12,7 @@ use Youthweb\BBCodeParser\Extension\Node\Color;
 use Youthweb\BBCodeParser\Html;
 
 /**
- * Renders `[color]` like 1.x: a name of the allowed colors or `#rrggbb`, anything else gives the default color.
+ * Renders `[color]` like the parser: a name of the allowed colors or `#rrggbb`, anything else gives the default color.
  *
  * Without content nothing is rendered.
  *

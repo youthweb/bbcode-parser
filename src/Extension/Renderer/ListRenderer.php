@@ -13,7 +13,7 @@ use Youthweb\BBCodeParser\Extension\Node\BBListItem;
 use Youthweb\BBCodeParser\Html;
 
 /**
- * Renders a list with the options of 1.x: `a`, `A`, `i`, `I` and a number give an ordered list, anything else a bullet list.
+ * Renders a list with the options of the parser: `a`, `A`, `i`, `I` and a number give an ordered list, anything else a bullet list.
  *
  * A bullet list has no `type` attribute, it is obsolete in HTML and `disc` is the default.
  *

@@ -31,7 +31,7 @@ final class ImageFilterExtension implements ExtensionInterface, NodeRendererInte
         $id = trim($node->getLiteral());
 
         if (! ctype_digit($id)) {
-            // Like the FilterException of 1.x
+            // Like the FilterException of the parser
             return null;
         }
 

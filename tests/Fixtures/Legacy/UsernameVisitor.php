@@ -11,7 +11,7 @@ use Youthweb\BBCodeParser\Config;
 use Youthweb\BBCodeParser\Visitor\VisitorInterface;
 
 /**
- * Models a username visitor of a project for 1.x, the counterpart of `UsernameExtension`: it writes the link into the text.
+ * Models a username visitor of a project for `Manager`, the counterpart of `UsernameExtension`: it writes the link into the text.
  */
 final class UsernameVisitor implements VisitorInterface
 {

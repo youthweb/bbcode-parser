@@ -24,7 +24,7 @@ use Youthweb\BBCodeParser\Tests\Fixtures\Extension\SmileyExtension;
 use Youthweb\BBCodeParser\Tests\Fixtures\Extension\UsernameExtension;
 
 /**
- * Extension points of the league engine (#53): a project adds league extensions to the engine.
+ * Extension points of the engine (#53): a project adds league extensions to the engine.
  */
 #[CoversClass(Engine::class)]
 final class EngineExtensionTest extends TestCase

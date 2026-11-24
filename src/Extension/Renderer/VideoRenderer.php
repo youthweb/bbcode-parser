@@ -11,7 +11,7 @@ use Youthweb\BBCodeParser\Extension\Node\Video;
 use Youthweb\BBCodeParser\Html;
 
 /**
- * Renders `[video]`, `[v]` and `[youtube]` like 1.x without a video filter: as a link of the url.
+ * Renders `[video]`, `[v]` and `[youtube]` like the parser without a video filter: as a link of the url.
  *
  * @experimental
  * @internal

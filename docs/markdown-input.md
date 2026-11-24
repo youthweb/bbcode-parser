@@ -42,7 +42,7 @@ There is no raw HTML. `<b>` is text and is escaped, in every place.
 
 ## Differences to BBCode
 
-- Line breaks: a soft break (a line break in a paragraph) renders the config `soft_break`, default `<br />`. In BBCode mode it stays `<br />` followed by a line break, like in 1.x. A hard break (two spaces or a backslash before the line break) renders `<br />` in both modes.
+- Line breaks: a soft break (a line break in a paragraph) renders the config `soft_break`, default `<br />`. In BBCode mode it stays `<br />` followed by a line break, like in the parser. A hard break (two spaces or a backslash before the line break) renders `<br />` in both modes.
 - Headings are moved down by `heading_offset` (default 2): `#` renders `<h3>`, and the level stops at `<h6>`. With `0` the levels are as written.
 - Quotes and lists are nested up to five levels, a quote and a list count one level each. A deeper marker stays text.
 - A list item with a single paragraph is rendered without `<p>`, loose lists as well.

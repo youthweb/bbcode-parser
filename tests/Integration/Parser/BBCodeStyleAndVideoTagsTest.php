@@ -20,7 +20,7 @@ use Youthweb\BBCodeParser\Parser\BBCodeTreeParser;
 use Youthweb\BBCodeParser\Parser\SpikeHtmlRenderer;
 
 /**
- * Back-to-back test of the color, size and video tags (#51): 1.x engine against the league node tree.
+ * Back-to-back test of the color, size and video tags (#51): the parser against the engine.
  */
 #[CoversClass(BBCodeTreeParser::class)]
 #[CoversClass(SpikeHtmlRenderer::class)]
@@ -122,7 +122,7 @@ final class BBCodeStyleAndVideoTagsTest extends TestCase
     }
 
     /**
-     * @return iterable<string, array{string, string, string}> input, 1.x output, new output
+     * @return iterable<string, array{string, string, string}> input, the parser output, engine output
      */
     public static function differenceProvider(): iterable
     {

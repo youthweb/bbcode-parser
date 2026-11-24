@@ -19,7 +19,7 @@ BBCode-Parser follows [Semantic Versioning 2](https://semver.org). This document
 
 - **The produced HTML.** The markup of the tags may change in any release, for example through an escaping fix. Every such change is listed in the CHANGELOG under *Changed*.
 - **Internal classes**: everything in `Definition\` and `DefinitionSet\`, and the classes `Html`, `Validation` and `ValidationInterface`. They may change or disappear in any release. They are not meant to be extended, even where a class is not `final`.
-- **Experimental API**: classes, interfaces and methods marked `@experimental` in their docblock (the parser engine based on `league/commonmark`, see #44). They may change or disappear in any release until the mark is removed. Removing the mark is announced in the CHANGELOG under *Changed*.
+- **Experimental API**: classes, interfaces and methods marked `@experimental` in their docblock (the engine: `Engine`, `InputMode` and everything in `Extension\` and `Parser\`, see #44). They may change or disappear in any release until the mark is removed. Removing the mark is announced in the CHANGELOG under *Changed*.
 - **Private and protected members** of any class.
 - **Exception messages**: their wording may change.
 - **The development setup**: tests, CI, tooling configuration, `docs/` and the Docker dev container.

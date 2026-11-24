@@ -21,10 +21,10 @@ use Youthweb\BBCodeParser\Visitor\VisitorCollection;
 use Youthweb\BBCodeParser\Visitor\VisitorSmiley;
 
 /**
- * Back-to-back test of the extension points (#53): the filters and visitors of 1.x against the extensions of the league engine.
+ * Back-to-back test of the extension points (#53): the filters and visitors of the parser against the extensions of the engine.
  *
  * The doubles model the four cases of youthweb (image filter, video filter, username visitor, smiley visitor). The markup of
- * quotes and of `[b]` differs from 1.x as decided in #48 and #50 and is not repeated here.
+ * quotes and of `[b]` differs from the parser as decided in #48 and #50 and is not repeated here.
  */
 #[CoversClass(Engine::class)]
 final class EngineExtensionBackToBackTest extends TestCase

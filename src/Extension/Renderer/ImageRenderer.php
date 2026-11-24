@@ -14,7 +14,7 @@ use Youthweb\BBCodeParser\Extension\Node\Image;
 use Youthweb\BBCodeParser\Html;
 
 /**
- * Renders `[img]` and `[PIC]` like 1.x, without the image filter.
+ * Renders `[img]` and `[PIC]` like the parser, without the image filter.
  *
  * @experimental
  * @internal

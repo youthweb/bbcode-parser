@@ -1,4 +1,4 @@
-# Extension points of the league engine (experimental)
+# Extension points of the engine (experimental)
 
 The engine built on `league/commonmark` has no visitor and filter interfaces like `Manager`. A project adds league extensions to the `Engine`. Their renderers and their listeners on the `DocumentParsedEvent` work in both modes, BBCode and Markdown. Inline and block parsers work in the Markdown mode only, the BBCode mode has its own parser. The API is `@experimental`, see [bc-promise.md](bc-promise.md).
 
@@ -31,14 +31,14 @@ The parser never creates `Smiley`, `Username` and `TrustedHtml`. The values are 
 
 ## Porting the four cases
 
-| 1.x | league engine |
+| parser | engine |
 | --- | --- |
 | `filter.image`, `filter.video` (`FilterInterface`) | a renderer for `Image` or `Video` with a priority above 0 |
 | `visitor.smiley`, a `VisitorInterface` for usernames | a listener on `DocumentParsedEvent` that extends `TextReplacementListener` |
 
 ### A filter
 
-The renderer returns the HTML, or `null` if the node is not for it. Then the default renderer takes over, like a `FilterException` in 1.x.
+The renderer returns the HTML, or `null` if the node is not for it. Then the default renderer takes over, like a `FilterException` in the parser.
 
 ```php
 final class ImageFilterExtension implements ExtensionInterface, NodeRendererInterface
@@ -65,7 +65,7 @@ final class ImageFilterExtension implements ExtensionInterface, NodeRendererInte
 }
 ```
 
-`closestParentOfType('url')` of 1.x becomes a walk up the parents: `for ($p = $node->parent(); $p !== null; $p = $p->parent())` and a check for `League\CommonMark\Extension\CommonMark\Node\Inline\Link`. A Markdown image (`![](42)`) is the same `Image` node, so the filter applies to it too.
+`closestParentOfType('url')` of the parser becomes a walk up the parents: `for ($p = $node->parent(); $p !== null; $p = $p->parent())` and a check for `League\CommonMark\Extension\CommonMark\Node\Inline\Link`. A Markdown image (`![](42)`) is the same `Image` node, so the filter applies to it too.
 
 ### Smileys and usernames
 
@@ -86,7 +86,7 @@ final class UsernameExtension extends TextReplacementListener implements Extensi
 }
 ```
 
-Text in `[noparse]` and inside of a link or an `[email]` is left alone, so a replacement is never inside of an anchor (1.x did put a link into the text of a link). `replace()` sees one text node at a time: a code that the parser has split into two text nodes, for example at a `*` or `_`, is not found. Code blocks and inline code have no text nodes. Use `TrustedHtml` for what no node fits, for example the HTML of an emoji library.
+Text in `[noparse]` and inside of a link or an `[email]` is left alone, so a replacement is never inside of an anchor (the parser did put a link into the text of a link). `replace()` sees one text node at a time: a code that the parser has split into two text nodes, for example at a `*` or `_`, is not found. Code blocks and inline code have no text nodes. Use `TrustedHtml` for what no node fits, for example the HTML of an emoji library.
 
 ### Order
 
@@ -96,5 +96,5 @@ The engine runs its own listeners first: the Markdown tree (priority 110) and th
 
 - `filter.image`, `filter.video`, `visitor.smiley`, `visitor.url` and `parse_smilies` have no effect on the engine. A project gives the extensions it wants.
 - `parse_urls` still switches the autolinker.
-- `embed_videos`, `embed_maxwidth` and `embed_maxheight` stay in `Config`. The engine does not read them, like 1.x, but an extension such as a video filter may read them from the `Config` it was given.
+- `embed_videos`, `embed_maxwidth` and `embed_maxheight` stay in `Config`. The engine does not read them, like the parser, but an extension such as a video filter may read them from the `Config` it was given.
 - The library has no list of smileys. The project brings its own.
