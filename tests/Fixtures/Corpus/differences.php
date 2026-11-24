@@ -38,7 +38,6 @@ return [
     'broken/quote-closed-by-bold' => ['D01', 'D02', 'D06'],
     'broken/tag-over-paragraphs' => ['D06'],
     'broken/tag-over-quote' => ['D01', 'D02', 'D06'],
-    'links/autolink-in-bold' => ['D07'],
     'links/autolink-with-ampersand' => ['D08'],
     'nesting/inline-in-url-in-quote' => ['D01', 'D02'],
     'nesting/list-depth-six' => ['D01', 'D03', 'D09'],

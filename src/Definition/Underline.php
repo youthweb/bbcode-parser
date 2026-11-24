@@ -24,6 +24,7 @@ use JBBCode\CodeDefinition;
 use JBBCode\ElementNode;
 use Youthweb\BBCodeParser\Config;
 use Youthweb\BBCodeParser\Html;
+use Youthweb\BBCodeParser\HtmlTextNode;
 
 /**
  * Implements a [u] code definition that provides the following syntax:
@@ -49,7 +50,7 @@ class Underline extends CodeDefinition
         if ($this->parseContent()) {
             $content = "";
             foreach ($el->getChildren() as $child) {
-                if ($child->isTextNode()) {
+                if ($child->isTextNode() && ! $child instanceof HtmlTextNode) {
                     $content .= Html::escapeSpecialChars($child->getAsHTML());
                 } else {
                     $content .= $child->getAsHTML();
