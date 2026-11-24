@@ -110,6 +110,45 @@ class OutputEscapingTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @dataProvider imageProvider
+     *
+     * @param mixed $text
+     * @param mixed $expected
+     */
+    public function testContentOfAnImageIsEscaped($text, $expected)
+    {
+        $html = (new Manager())->parse($text, ['callbacks' => ['image' => ['force_check' => false]]]);
+
+        $this->assertSame($expected, $html);
+    }
+
+    public function imageProvider()
+    {
+        return [
+            'img, no url' => [
+                '[img]<svg/onload=alert(1)>[/img]',
+                '<p>&lt;svg/onload=alert(1)&gt;</p>',
+            ],
+            'pic, no url' => [
+                '[pic]<svg/onload=alert(1)>[/pic]',
+                '<p>&lt;svg/onload=alert(1)&gt;</p>',
+            ],
+            'img, quote in the url' => [
+                '[img]http://example.org/x.png" onerror="alert(1)[/img]',
+                '<p>http://example.org/x.png&quot; onerror=&quot;alert(1)</p>',
+            ],
+            'img in a url tag, no url' => [
+                '[url=http://example.org][img]<svg/onload=alert(1)>[/img][/url]',
+                '<p><a target="_blank" href="http://example.org">&lt;svg/onload=alert(1)&gt;</a></p>',
+            ],
+            'plain image stays' => [
+                '[img]http://example.org/x.png[/img]',
+                '<p><a target="_blank" href="http://example.org/x.png"><img class="img-responsive" border="0" src="http://example.org/x.png" alt="x" /></a></p>',
+            ],
+        ];
+    }
+
+    /**
      * @dataProvider emailProvider
      *
      * @param mixed $text
