@@ -101,10 +101,10 @@ class Html
 
         $output = '<script type="text/javascript">';
         $output .= '(function() {';
-        $output .= 'var user = "' . $email[0] . '";';
+        $output .= 'var user = "' . static::escapeJsString($email[0]) . '";';
         $output .= 'var at = "@";';
-        $output .= 'var server = "' . $email[1] . '";';
-        $output .= "document.write('<a href=\"' + 'mail' + 'to:' + user + at + server + '$subject\"$attr>$text</a>');";
+        $output .= 'var server = "' . static::escapeJsString($email[1]) . '";';
+        $output .= "document.write('<a href=\"' + 'mail' + 'to:' + user + at + server + '" . static::escapeJsString($subject) . "\"" . static::escapeJsString($attr) . ">" . static::escapeJsString($text) . "</a>');";
         $output .= '})();';
 
         return $output . '</script>';
@@ -143,6 +143,26 @@ class Html
         }
 
         return $content;
+    }
+
+    /**
+     * Escapes a value for the use inside a single or double quoted JavaScript string in a script element.
+     *
+     * Quotes, backslashes, angle brackets and line breaks are written as escape sequences, so the value
+     * can neither end the string nor the script element.
+     *
+     * @param string $value
+     *
+     * @return string the escaped value without surrounding quotes
+     */
+    protected static function escapeJsString($value)
+    {
+        $flags = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_INVALID_UTF8_SUBSTITUTE;
+
+        $json = json_encode((string) $value, $flags);
+
+        // U+2028 and U+2029 end a line in JavaScript before ES2019
+        return str_replace(["\u{2028}", "\u{2029}"], ['\u2028', '\u2029'], substr($json, 1, -1));
     }
 
     /**
