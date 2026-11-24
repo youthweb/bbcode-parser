@@ -1,19 +1,17 @@
 # HTML differences between 1.x and the league engine
 
-The league engine (`Engine`, BBCode mode) writes valid HTML. Where 1.x wrote invalid markup, the engine differs on purpose: compatibility with the 1.x output comes second.
+The league engine (`Engine`, BBCode mode) writes valid HTML, and compatibility with the 1.x output comes second. Where the two differ, it is on purpose: either 1.x wrote invalid markup, or the engine follows a simpler rule.
 
-`tests/Integration/Engine/EngineCorpusTest.php` runs 1.x (`Manager`) and the engine over every file in `tests/Fixtures/Corpus` and compares the normalised HTML. A case is either equal, or listed in `tests/Fixtures/Corpus/differences.php` with the IDs of the sections below. A new difference, or a listed case that became equal, turns the test red. The test also checks that this document has a section for every listed ID.
+`tests/Integration/Engine/EngineCorpusTest.php` runs 1.x (`Manager`) and the engine over every file in `tests/Fixtures/Corpus` and compares the normalised HTML. A case is either equal, or listed in `tests/Fixtures/Corpus/differences.php` with the IDs of the sections below. A new difference, or a listed case that became equal, turns the test red. The test also checks that this document has a section for exactly the IDs that are listed.
 
-This document lists the differences the corpus shows. The tag tests in `tests/Integration/Parser` add more edge cases of single tags (options that are not valid, urls, colors, sizes, videos); each case there says in its name where the engine differs.
+This document lists the differences the corpus shows. The tag tests in `tests/Integration/Parser` pin more edge cases of single tags (options that are not valid, urls, colors, sizes, videos) to both outputs; where they differ, the name of the case says so. The examples below show the normalised HTML, so 1.x appears with `<strong>` where it writes `<b>`.
 
 ## What the comparison evens out
 
 The test normalises only what is decided and changes no text:
 
 - `<b>` and `<i>` of 1.x are `<strong>` and `<em>`.
-- 1.x adds `target="_blank"` to external links, the engine does not.
-- The order of attributes does not matter.
-- Whitespace around block tags (`p`, `blockquote`, `cite`, `ul`, `ol`, `li`, `pre`, headings) is layout only.
+- Whitespace next to block tags (`p`, `blockquote`, `cite`, `ul`, `ol`, `li`, `pre`, `div`, headings) is layout only. This includes a space before a quote that 1.x leaves inside the paragraph.
 
 ## Differences
 
@@ -91,13 +89,13 @@ engine: <p><strong>a</strong></p><p>b[/b]</p>
 
 ```text
 [b]http://example.org[/b]
-1.x:    <p><strong>&lt;a target="_blank" href="http://example.org"&gt;http://example.org&lt;/a&gt;</strong></p>
-engine: <p><strong><a href="http://example.org">http://example.org</a></strong></p>
+1.x:    <p><strong>&lt;a target=&quot;_blank&quot; href=&quot;http://example.org&quot;&gt;http://example.org&lt;/a&gt;</strong></p>
+engine: <p><strong><a target="_blank" href="http://example.org">http://example.org</a></strong></p>
 ```
 
-### D08 Text is escaped completely
+### D08 Text is shown as typed
 
-The engine treats the input as text: an `&` is always written as `&amp;`, also where it starts something that looks like an entity. What someone types is what the reader sees. 1.x left entities such as `&amp;`, `&copy;` or `&#60;` alone, so the browser showed `&`, © and `<`, and it wrote a raw `&` in the text of a link. Code is shown as typed.
+The engine treats the input as text: an `&` is always written as `&amp;`, also where it starts something that looks like an entity. What someone types is what the reader sees. 1.x left entities such as `&amp;`, `&copy;` or `&#60;` alone, so the browser showed `&`, © and `<`, and it wrote a raw `&` in the text of a link. Code is shown as typed too.
 
 ```text
 a & b &amp; c
@@ -105,8 +103,8 @@ a & b &amp; c
 engine: <p>a &amp; b &amp;amp; c</p>
 
 http://example.org/a?b=1&c=2
-1.x:    <a href="http://example.org/a?b=1&amp;c=2">http://example.org/a?b=1&c=2</a>
-engine: <a href="http://example.org/a?b=1&amp;c=2">http://example.org/a?b=1&amp;c=2</a>
+1.x:    <a target="_blank" href="http://example.org/a?b=1&amp;c=2">http://example.org/a?b=1&c=2</a>
+engine: <a target="_blank" href="http://example.org/a?b=1&amp;c=2">http://example.org/a?b=1&amp;c=2</a>
 ```
 
 ### D09 Quotes and lists nest at most five levels

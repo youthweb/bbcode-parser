@@ -13,56 +13,18 @@ namespace Youthweb\BBCodeParser\Tests\Fixtures;
  */
 final class HtmlNormalizer
 {
-    /** 1.x writes the old presentational tags, the league engine the semantic ones. */
-    private const RENAMED = ['b' => 'strong', 'i' => 'em'];
-
-    /** Whitespace around these tags is layout only. */
+    /** Whitespace next to these tags is layout only. */
     private const BLOCKS = 'p|blockquote|cite|ul|ol|li|pre|div|h[1-6]';
 
     public static function normalize(string $html): string
     {
         $html = str_replace("\r\n", "\n", $html);
 
-        $html = (string) preg_replace_callback(
-            '~<(/?)([a-zA-Z][a-zA-Z0-9]*)((?:\s+[^<>]*?)?)\s*(/?)>~',
-            static function (array $match): string {
-                $name = strtolower($match[2]);
-                $name = self::RENAMED[$name] ?? $name;
-                $attributes = self::attributes($match[3]);
-
-                if ($match[1] === '/') {
-                    return '</' . $name . '>';
-                }
-
-                return '<' . $name . $attributes . ($match[4] === '/' ? ' /' : '') . '>';
-            },
-            $html,
-        );
+        // 1.x writes the old presentational tags, the league engine the semantic ones.
+        $html = (string) preg_replace(['~<b(?=[\s>/])~', '~</b>~', '~<i(?=[\s>/])~', '~</i>~'], ['<strong', '</strong>', '<em', '</em>'], $html);
 
         $html = (string) preg_replace('~\s*(</?(?:' . self::BLOCKS . ')(?:\s[^<>]*)?>)\s*~', '$1', $html);
 
         return trim($html);
-    }
-
-    /**
-     * The attributes in alphabetical order, without `target="_blank"`.
-     */
-    private static function attributes(string $attributes): string
-    {
-        preg_match_all('~([a-zA-Z-]+)(?:="([^"]*)")?~', $attributes, $found, PREG_SET_ORDER);
-
-        $list = [];
-
-        foreach ($found as $attribute) {
-            if ($attribute[1] === 'target' && ($attribute[2] ?? '') === '_blank') {
-                continue;
-            }
-
-            $list[$attribute[1]] = isset($attribute[2]) ? $attribute[1] . '="' . $attribute[2] . '"' : $attribute[1];
-        }
-
-        ksort($list);
-
-        return $list === [] ? '' : ' ' . implode(' ', $list);
     }
 }

@@ -17,13 +17,15 @@ use Youthweb\BBCodeParser\Tests\Fixtures\HtmlNormalizer;
  *
  * A case without an entry in `differences.php` has the same normalised HTML in both engines, a case with an
  * entry differs, and the entry names the section of `docs/v2-html-differences.md` that explains why.
+ *
+ * The test enters through `Engine`; `Manager` is only the reference.
  */
 #[CoversClass(Engine::class)]
 final class EngineCorpusTest extends TestCase
 {
     private const CORPUS = __DIR__ . '/../../Fixtures/Corpus';
 
-    private const DOCUMENT = __DIR__ . '/../../../docs/v2-html-differences.md';
+    private const DIFFERENCES_DOC = __DIR__ . '/../../../docs/v2-html-differences.md';
 
     /**
      * @return iterable<string, array{string, string}> name, input
@@ -36,8 +38,8 @@ final class EngineCorpusTest extends TestCase
     #[DataProvider('corpusProvider')]
     public function testEngineMatchesOldEngineOrIsListed(string $name, string $input): void
     {
-        $old = HtmlNormalizer::normalize($this->old($input));
-        $new = HtmlNormalizer::normalize($this->new($input));
+        $old = HtmlNormalizer::normalize($this->renderLegacy($input));
+        $new = HtmlNormalizer::normalize($this->renderEngine($input));
         $differences = $this->differences();
 
         if (isset($differences[$name])) {
@@ -56,7 +58,7 @@ final class EngineCorpusTest extends TestCase
 
     public function testEveryDifferenceIsExplainedInTheDocument(): void
     {
-        $document = (string) file_get_contents(self::DOCUMENT);
+        $document = (string) file_get_contents(self::DIFFERENCES_DOC);
         preg_match_all('~^### (D\d+)\b~m', $document, $found);
 
         $listed = array_values(array_unique(array_merge(...array_values($this->differences()))));
@@ -98,12 +100,13 @@ final class EngineCorpusTest extends TestCase
         return $differences;
     }
 
-    private function old(string $input): string
+    private function renderLegacy(string $input): string
     {
+        // The image check would ask the network.
         return (new Manager())->parse($input, ['callbacks' => ['image' => ['force_check' => false]]]);
     }
 
-    private function new(string $input): string
+    private function renderEngine(string $input): string
     {
         // The image check would ask the network.
         $config = new Config();
