@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [Unreleased](https://github.com/youthweb/bbcode-parser/compare/1.8.0...master)
+## [Unreleased](https://github.com/youthweb/bbcode-parser/compare/1.8.1...master)
+
+## [1.8.1](https://github.com/youthweb/bbcode-parser/compare/1.8.0...1.8.1) - 2026-11-24
+
+### Security
+
+- Escape the option of `[quote]`, `[q]` and `[Z]`, the content of `[video]`, `[v]`, `[youtube]`, `[url]`, `[img]` and `[pic]` and the text of protected email links in the output
 
 ## [1.8.0](https://github.com/youthweb/bbcode-parser/compare/1.7.1...1.8.0) - 2026-11-21
 
