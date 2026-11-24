@@ -144,12 +144,6 @@ final class BBCodeStyleAndVideoTagsTest extends TestCase
             '<p><a target="_blank" href="http://a.de/?a=1&amp;b=2">http://a.de/?a=1&b=2</a></p>',
             '<p><a target="_blank" href="http://a.de/?a=1&amp;b=2">http://a.de/?a=1&amp;b=2</a></p>',
         ];
-        yield 'video, url with a tag' => [
-            '[v]http://a.de/<b>[/v]',
-            '<p><a target="_blank" href="http://a.de/&lt;b&gt;">http://a.de/<b></a></p>',
-            '<p><a target="_blank" href="http://a.de/&lt;b&gt;">http://a.de/&lt;b&gt;</a></p>',
-        ];
-        yield 'video, no url but a tag' => ['[v]<b>x</b>[/v]', '<p><b>x</b></p>', '<p>&lt;b&gt;x&lt;/b&gt;</p>'];
     }
 
     #[DataProvider('differenceProvider')]

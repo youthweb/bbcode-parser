@@ -155,7 +155,7 @@ class Html
      *
      * @return string the escaped value without surrounding quotes
      */
-    private static function escapeJsString($value)
+    protected static function escapeJsString($value)
     {
         $flags = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_INVALID_UTF8_SUBSTITUTE;
 

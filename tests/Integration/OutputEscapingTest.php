@@ -1,44 +1,30 @@
 <?php
 
-/*
- * A BBCode-to-HTML parser for youthweb.net
- * Copyright (C) 2016-2021  Youthweb e.V. <info@youthweb.net>
-
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+declare(strict_types=1);
 
 namespace Youthweb\BBCodeParser\Tests\Integration;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 use Youthweb\BBCodeParser\Manager;
 
 /**
  * The options and the content of tags must not reach the output as markup or script.
  */
-class OutputEscapingTest extends \PHPUnit\Framework\TestCase
+#[CoversClass(Manager::class)]
+final class OutputEscapingTest extends TestCase
 {
-    /**
-     * @dataProvider quoteProvider
-     *
-     * @param mixed $text
-     * @param mixed $expected
-     */
-    public function testOptionOfAQuoteIsEscaped($text, $expected)
+    #[DataProvider('quoteProvider')]
+    public function testOptionOfAQuoteIsEscaped(string $text, string $expected): void
     {
         $this->assertSame($expected, (new Manager())->parse($text));
     }
 
-    public function quoteProvider()
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function quoteProvider(): iterable
     {
         return [
             'quote' => [
@@ -68,18 +54,16 @@ class OutputEscapingTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    /**
-     * @dataProvider videoProvider
-     *
-     * @param mixed $text
-     * @param mixed $expected
-     */
-    public function testContentOfAVideoIsEscaped($text, $expected)
+    #[DataProvider('videoProvider')]
+    public function testContentOfAVideoIsEscaped(string $text, string $expected): void
     {
         $this->assertSame($expected, (new Manager())->parse($text));
     }
 
-    public function videoProvider()
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function videoProvider(): iterable
     {
         return [
             'v, no url' => [
@@ -109,20 +93,18 @@ class OutputEscapingTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    /**
-     * @dataProvider imageProvider
-     *
-     * @param mixed $text
-     * @param mixed $expected
-     */
-    public function testContentOfAnImageIsEscaped($text, $expected)
+    #[DataProvider('imageProvider')]
+    public function testContentOfAnImageIsEscaped(string $text, string $expected): void
     {
         $html = (new Manager())->parse($text, ['callbacks' => ['image' => ['force_check' => false]]]);
 
         $this->assertSame($expected, $html);
     }
 
-    public function imageProvider()
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function imageProvider(): iterable
     {
         return [
             'img, no url' => [
@@ -148,14 +130,8 @@ class OutputEscapingTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    /**
-     * @dataProvider emailProvider
-     *
-     * @param mixed $text
-     * @param mixed $contained
-     * @param mixed $notContained
-     */
-    public function testTextOfAProtectedEmailStaysInsideTheScriptString($text, $contained, $notContained)
+    #[DataProvider('emailProvider')]
+    public function testTextOfAProtectedEmailStaysInsideTheScriptString(string $text, string $contained, ?string $notContained): void
     {
         $html = (new Manager())->parse($text, ['callbacks' => ['email_content' => ['protect_email' => true]]]);
 
@@ -170,7 +146,10 @@ class OutputEscapingTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(1, substr_count(strtolower($html), '</script>'));
     }
 
-    public function emailProvider()
+    /**
+     * @return iterable<string, array{string, string, string|null}>
+     */
+    public static function emailProvider(): iterable
     {
         return [
             'quote ends the string' => [

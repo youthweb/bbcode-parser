@@ -229,18 +229,20 @@ final class BBCodeLinkTagsTest extends TestCase
     }
 
     /**
-     * With protect_email the text lands in a javascript string. 1.x leaves quotes, backslashes and line breaks
-     * in it, so a text like `x');alert(1);//` runs as script. The new engine writes them as entities.
+     * With protect_email the text lands in a javascript string. The parser writes quotes and backslashes as
+     * escape sequences, the engine writes them as entities. Neither lets the text end the string.
      */
     public function testProtectedEmailTextCannotBreakOutOfTheScript(): void
     {
         $config = ['callbacks' => ['email_content' => ['protect_email' => true]]];
         $input = "[email=a@b.de]x');alert(1);//\\ l1\nl2[/email]";
 
-        $this->assertStringContainsString("x');alert(1);//", $this->old($input, $config));
+        $old = $this->old($input, $config);
+        $this->assertStringContainsString('x\\u0027);alert(1);//', $old);
+        $this->assertStringNotContainsString("x');alert(1);//", $old);
         $this->assertSame(
             '<p><script type="text/javascript">(function() {var user = "a";var at = "@";var server = "b.de";'
-            . "document.write('<a href=\"' + 'mail' + 'to:' + user + at + server + '\">x&#39;);alert(1);//&#92; l1<br />&#10;l2</a>');})();</script></p>",
+            . "document.write('<a href=\"' + 'mail' + 'to:' + user + at + server + '\">x&#39;);alert(1);//&#92; l1\\u003Cbr /\\u003E&#10;l2</a>');})();</script></p>",
             $this->new($input, $config),
         );
     }
