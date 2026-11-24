@@ -26,6 +26,7 @@ use JBBCode\ElementNode;
 use Art4\UrlLinker\UrlLinker;
 use Youthweb\BBCodeParser\Config;
 use Youthweb\BBCodeParser\Html;
+use Youthweb\BBCodeParser\HtmlTextNode;
 
 /**
  * Url Visitor
@@ -60,16 +61,25 @@ class VisitorUrl implements VisitorInterface
 
     public function visitTextNode(TextNode $text_node)
     {
+        $linked = false;
+
         $urllinker = new UrlLinker([
             'emailLinkCreator' => fn($email, $content)
                 // Email-Adressen sollen nicht verlinkt werden
                 => $email,
-            'htmlLinkCreator' => fn($url, $content)
+            'htmlLinkCreator' => function ($url, $content) use (&$linked) {
+                $linked = true;
+
                 // Wir vergeben extra zweimal $url, weil $content durch UrlLinker gekürzt wird
-                => Html::anchorFromConfig($url, $url, $this->config),
+                return Html::anchorFromConfig($url, $url, $this->config);
+            },
         ]);
 
         $text_node->setValue($urllinker->linkUrlsAndEscapeHtml($text_node->getValue()));
+
+        if ($linked) {
+            $this->markAsHtml($text_node);
+        }
     }
 
     public function visitElementNode(ElementNode $element_node)
@@ -79,6 +89,31 @@ class VisitorUrl implements VisitorInterface
             foreach ($element_node->getChildren() as $child) {
                 $child->accept($this);
             }
+        }
+    }
+
+    /**
+     * Replaces the text node by a node with finished HTML, so a formatting tag does not escape the link again
+     */
+    private function markAsHtml(TextNode $text_node): void
+    {
+        $parent = $text_node->getParent();
+
+        // The text of the document itself is not escaped again
+        if (! $parent instanceof ElementNode || $parent instanceof DocumentElement) {
+            return;
+        }
+
+        // A node cannot be replaced in place: the children are removed and added again in their order.
+        // The old node is dropped, the parent of every added node is set by addChild().
+        $children = $parent->getChildren();
+
+        foreach ($children as $child) {
+            $parent->removeChild($child);
+        }
+
+        foreach ($children as $child) {
+            $parent->addChild($child === $text_node ? new HtmlTextNode($text_node->getValue()) : $child);
         }
     }
 }

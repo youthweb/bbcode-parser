@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Fixed
 
+- A bare url inside `[b]`, `[i]`, `[u]`, `[size]` and `[color]` is a link again and no longer shows the markup of the link as escaped text; the text around it stays escaped, see [#121](https://github.com/youthweb/bbcode-parser/issues/121)
 - Stop raising PHP deprecations for `[color]`, `[email]`, `[list]`, `[q]`, `[size]` and `[url]` tags without a parameter (passing `null` to `trim()` and `preg_match()`); the produced HTML is unchanged
 
 ### Removed

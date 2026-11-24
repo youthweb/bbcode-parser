@@ -42,6 +42,7 @@ final class BBCodeLinkTagsTest extends TestCase
     public static function identicalProvider(): iterable
     {
         yield 'url' => ['[url]http://a.de[/url]'];
+        yield 'bare url in a tag' => ['[b]http://a.de[/b]'];
         yield 'url with option' => ['[url=http://a.de]x[/url]'];
         yield 'url with quoted option' => ['[url="http://a.de"]q[/url]'];
         yield 'url with nested tag' => ['[url=http://a.de][b]x[/b][/url]'];
@@ -210,11 +211,6 @@ final class BBCodeLinkTagsTest extends TestCase
             'bare http://a.de/x?a=1&b=2',
             '<p>bare <a target="_blank" href="http://a.de/x?a=1&amp;b=2">http://a.de/x?a=1&b=2</a></p>',
             '<p>bare <a target="_blank" href="http://a.de/x?a=1&amp;b=2">http://a.de/x?a=1&amp;b=2</a></p>',
-        ];
-        yield 'bare url in a tag is a link, the parser renders escaped html' => [
-            '[b]http://a.de[/b]',
-            '<p><b>&lt;a target=&quot;_blank&quot; href=&quot;http://a.de&quot;&gt;http://a.de&lt;/a&gt;</b></p>',
-            '<p><b><a target="_blank" href="http://a.de">http://a.de</a></b></p>',
         ];
         yield 'empty url renders an empty paragraph, the parser renders nothing' => [
             '[url][/url]',

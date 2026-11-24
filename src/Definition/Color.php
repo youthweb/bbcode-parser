@@ -24,6 +24,7 @@ use JBBCode\CodeDefinition;
 use JBBCode\ElementNode;
 use Youthweb\BBCodeParser\Config;
 use Youthweb\BBCodeParser\Html;
+use Youthweb\BBCodeParser\HtmlTextNode;
 
 /**
  * Implements a [color] code definition that provides the following syntax:
@@ -52,7 +53,7 @@ class Color extends CodeDefinition
         $content = '';
 
         foreach ($el->getChildren() as $child) {
-            if ($child->isTextNode()) {
+            if ($child->isTextNode() && ! $child instanceof HtmlTextNode) {
                 $content .= Html::escapeSpecialChars($child->getAsHTML());
             } else {
                 $content .= $child->getAsHTML();

@@ -83,16 +83,6 @@ parser: <p><strong>a</p><p>b</strong></p>
 engine: <p><strong>a</strong></p><p>b[/b]</p>
 ```
 
-### D07 A bare url inside another tag is a link
-
-The parser shows the link markup as text when the url stands inside a tag like `[b]`.
-
-```text
-[b]http://example.org[/b]
-parser: <p><strong>&lt;a target=&quot;_blank&quot; href=&quot;http://example.org&quot;&gt;http://example.org&lt;/a&gt;</strong></p>
-engine: <p><strong><a target="_blank" href="http://example.org">http://example.org</a></strong></p>
-```
-
 ### D08 Text is shown as typed
 
 The engine treats the input as text: an `&` is always written as `&amp;`, also where it starts something that looks like an entity. What someone types is what the reader sees. The parser left entities such as `&amp;`, `&copy;` or `&#60;` alone, so the browser showed `&`, © and `<`, and it wrote a raw `&` in the text of a link. Code is shown as typed too.

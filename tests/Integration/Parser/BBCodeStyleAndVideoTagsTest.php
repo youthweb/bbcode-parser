@@ -39,6 +39,7 @@ final class BBCodeStyleAndVideoTagsTest extends TestCase
     public static function identicalProvider(): iterable
     {
         yield 'color' => ['[color=red]x[/color]'];
+        yield 'color with a bare url' => ['[color=red]see http://a.de/x[/color]'];
         yield 'color, uppercase tag' => ['[COLOR=red]x[/COLOR]'];
         yield 'color, mixed case name' => ['[color=gReEn]x[/color]'];
         yield 'color, every allowed name' => ['[color=Red]a[/color][color=Green]b[/color][color=Blue]c[/color][color=Yellow]d[/color][color=Black]e[/color][color=White]f[/color][color=Orange]g[/color][color=Grey]h[/color]'];
@@ -133,11 +134,6 @@ final class BBCodeStyleAndVideoTagsTest extends TestCase
         yield 'youtube without content' => ['[youtube][/youtube]', '', '<p></p>'];
         yield 'color, option with spaces' => ['[color= blue ]x[/color]', '<p><span style="color:Red;">x</span></p>', '<p><span style="color:Blue;">x</span></p>'];
         yield 'color with an ampersand entity' => ['[color=red]&amp;[/color]', '<p><span style="color:Red;">&amp;</span></p>', '<p><span style="color:Red;">&amp;amp;</span></p>'];
-        yield 'color with a bare url' => [
-            '[color=red]see http://a.de/x[/color]',
-            '<p><span style="color:Red;">see &lt;a target=&quot;_blank&quot; href=&quot;http://a.de/x&quot;&gt;http://a.de/x&lt;/a&gt;</span></p>',
-            '<p><span style="color:Red;">see <a target="_blank" href="http://a.de/x">http://a.de/x</a></span></p>',
-        ];
         yield 'video with spaces' => ['[v]  http://a.de/v  [/v]', '<p>http://a.de/v</p>', '<p>  http://a.de/v  </p>'];
         yield 'video, url with a special character' => [
             '[v]http://a.de/?a=1&b=2[/v]',
