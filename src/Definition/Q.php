@@ -21,6 +21,7 @@ namespace Youthweb\BBCodeParser\Definition;
 
 use JBBCode\CodeDefinition;
 use JBBCode\ElementNode;
+use Youthweb\BBCodeParser\Html;
 
 /**
  * Implements a [q] code definition that provides the following syntax:
@@ -56,7 +57,7 @@ class Q extends CodeDefinition
             $param = array_shift($param);
         }
 
-        $param = (string) trim($param);
+        $param = Html::escapeSpecialChars((string) trim($param));
 
         if (preg_match('/^\<blockquote/', trim($content)) == 0) {
             $content = '<cite>' . $param . '</cite>' . $content;

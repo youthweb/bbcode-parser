@@ -88,7 +88,7 @@ class Image extends CodeDefinition
 
         // Wenn die URL nicht gültig ist, zeigen wir nur den Text
         if ($url === '' or ! $this->config->getValidation()->isValidUrl($url)) {
-            return $content;
+            return Html::escapeSpecialChars($content);
         }
 
         // Prüfen, ob die URL wirklich auf ein Bild zeigt
@@ -96,7 +96,7 @@ class Image extends CodeDefinition
         if ($this->config->get('callbacks.image.force_check') and ! $this->config->getValidation()->isValidImageUrl($url)) {
             // Bild nicht verlinken
             if (! $use_anchor) {
-                return $content;
+                return Html::escapeSpecialChars($content);
             }
 
             // Bild nur verlinken
