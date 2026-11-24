@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - Experimental parser engine: the tags `[list]`, `[quote]`, `[q]`, the deprecated `[Z]` and `[noparse]`, rendered as valid HTML (a quote is no longer inside a `<p>`, lists and quotes nest up to five levels, the option of a quote is read up to the bracket and escaped), see [#50](https://github.com/youthweb/bbcode-parser/issues/50)
 - Experimental parser engine: the tags `[color]`, `[size]`, `[video]`, `[v]` and `[youtube]` with the validation and config keys of 1.x; a tag without content renders nothing, and the url of a video is linked with its text escaped, see [#51](https://github.com/youthweb/bbcode-parser/issues/51)
 - Experimental parser engine: Markdown input and the entry point `Engine::toHtml()` with `InputMode` to choose BBCode or Markdown per call; both render through the same renderers, raw HTML is escaped, and headings and thematic breaks can be switched off, see [#52](https://github.com/youthweb/bbcode-parser/issues/52)
+- Experimental parser engine: extension points for projects: `Engine` takes league extensions, the nodes of the tags are public (`@experimental`), and there are the nodes `Smiley`, `Username` and `TrustedHtml` and the base class `TextReplacementListener`; a renderer with a higher priority replaces the filters of 1.x, see [docs/extension-points.md](docs/extension-points.md) and [#53](https://github.com/youthweb/bbcode-parser/issues/53)
 
 ### Changed
 

@@ -8,8 +8,8 @@ use Art4\UrlLinker\UrlLinker;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Node\Inline\Text;
+use League\CommonMark\Node\Node;
 use Youthweb\BBCodeParser\Config;
-use Youthweb\BBCodeParser\Extension\Node\Email;
 use Youthweb\BBCodeParser\Extension\Renderer\LinkRenderer;
 
 /**
@@ -21,14 +21,11 @@ use Youthweb\BBCodeParser\Extension\Renderer\LinkRenderer;
  * @experimental
  * @internal
  */
-final readonly class AutolinkListener
+final class AutolinkListener extends TextReplacementListener
 {
-    /** Key in the data of a text that is left alone, like the content of `[noparse]` */
-    public const RAW = 'raw';
-
     private const MARKER = "\x1A";
 
-    public function __construct(private Config $config) {}
+    public function __construct(private readonly Config $config) {}
 
     public function __invoke(DocumentParsedEvent $event): void
     {
@@ -36,36 +33,13 @@ final readonly class AutolinkListener
             return;
         }
 
-        $texts = [];
-
-        foreach ($event->getDocument()->iterator() as $node) {
-            if ($node instanceof Text && ! $node->data->has(self::RAW) && ! $this->isInsideLink($node)) {
-                $texts[] = $node;
-            }
-        }
-
-        foreach ($texts as $text) {
-            $this->link($text);
-        }
+        parent::__invoke($event);
     }
 
-    private function isInsideLink(Text $text): bool
+    protected function replace(string $text): array
     {
-        for ($parent = $text->parent(); $parent instanceof \League\CommonMark\Node\Node; $parent = $parent->parent()) {
-            if ($parent instanceof Link || $parent instanceof Email) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private function link(Text $text): void
-    {
-        $literal = $text->getLiteral();
-
-        if (str_contains($literal, self::MARKER)) {
-            return;
+        if (str_contains($text, self::MARKER)) {
+            return [$text];
         }
 
         /** @var list<array{bool, string}> $tokens */
@@ -82,18 +56,19 @@ final readonly class AutolinkListener
             'emailLinkCreator' => static fn(string $email): string => $marker(false, $email),
         ]);
 
-        $html = $linker->linkUrlsAndEscapeHtml($literal);
+        $html = $linker->linkUrlsAndEscapeHtml($text);
 
         if ($tokens === []) {
-            return;
+            return [$text];
         }
 
+        $result = [];
         $parts = preg_split('~' . self::MARKER . '(\d+)' . self::MARKER . '~', $html, -1, PREG_SPLIT_DELIM_CAPTURE);
 
         foreach ($parts ?: [] as $i => $part) {
             if ($i % 2 === 0) {
                 if ($part !== '') {
-                    $text->insertBefore(new Text(html_entity_decode($part, ENT_QUOTES | ENT_HTML5, 'UTF-8')));
+                    $result[] = html_entity_decode($part, ENT_QUOTES | ENT_HTML5, 'UTF-8');
                 }
 
                 continue;
@@ -102,7 +77,7 @@ final readonly class AutolinkListener
             [$isLink, $value] = $tokens[(int) $part];
 
             if (! $isLink) {
-                $text->insertBefore(new Text($value));
+                $result[] = $value;
 
                 continue;
             }
@@ -110,9 +85,9 @@ final readonly class AutolinkListener
             $link = new Link($value);
             $link->data->set(LinkRenderer::AUTOLINK, true);
             $link->appendChild(new Text($value));
-            $text->insertBefore($link);
+            $result[] = $link;
         }
 
-        $text->detach();
+        return $result;
     }
 }

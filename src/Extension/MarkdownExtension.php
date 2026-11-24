@@ -52,6 +52,9 @@ final readonly class MarkdownExtension implements ConfigurableExtensionInterface
     /** Quotes and lists may be nested up to this depth, like in the BBCode mode. */
     public const MAX_DEPTH = 5;
 
+    /** The priority of the listener that builds the tree: it runs before the autolinker and the listeners of a project. */
+    public const TREE_PRIORITY = 110;
+
     public function __construct(private Config $config) {}
 
     public function configureSchema(ConfigurationBuilderInterface $builder): void
@@ -84,7 +87,7 @@ final readonly class MarkdownExtension implements ConfigurableExtensionInterface
             ->addDelimiterProcessor(new StrikethroughDelimiterProcessor())
             ->addRenderer(Code::class, new CodeRenderer())
             ->addRenderer(Strikethrough::class, new StrikethroughRenderer())
-            ->addEventListener(DocumentParsedEvent::class, new MarkdownTreeListener(), 10);
+            ->addEventListener(DocumentParsedEvent::class, new MarkdownTreeListener(), self::TREE_PRIORITY);
 
         if ($this->config->get('markdown.headings', true)) {
             $environment

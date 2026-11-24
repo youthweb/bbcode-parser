@@ -59,3 +59,5 @@ The config is read when the `Engine` is built for the Markdown mode, so build a 
 | `soft_break` | `<br />` | HTML of a soft break, Markdown mode only |
 
 The keys of this table are as experimental as the engine. Their defaults are applied where the keys are read, they are not part of the default config of `Config`. The other keys (`parse_urls`, `callbacks.url_content.*`, `callbacks.image.*`) work as in the BBCode mode.
+
+A project adds its own extensions (smileys, mentions of users, filters for images and videos) to the `Engine`, see [extension-points.md](extension-points.md).

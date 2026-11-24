@@ -29,7 +29,10 @@ use Youthweb\BBCodeParser\Extension\Node\Color;
 use Youthweb\BBCodeParser\Extension\Node\Email;
 use Youthweb\BBCodeParser\Extension\Node\Image;
 use Youthweb\BBCodeParser\Extension\Node\Size;
+use Youthweb\BBCodeParser\Extension\Node\Smiley;
+use Youthweb\BBCodeParser\Extension\Node\TrustedHtml;
 use Youthweb\BBCodeParser\Extension\Node\Underline;
+use Youthweb\BBCodeParser\Extension\Node\Username;
 use Youthweb\BBCodeParser\Extension\Node\Video;
 use Youthweb\BBCodeParser\Extension\Renderer\ColorRenderer;
 use Youthweb\BBCodeParser\Extension\Renderer\EmailRenderer;
@@ -38,7 +41,10 @@ use Youthweb\BBCodeParser\Extension\Renderer\LinkRenderer;
 use Youthweb\BBCodeParser\Extension\Renderer\ListRenderer;
 use Youthweb\BBCodeParser\Extension\Renderer\QuoteRenderer;
 use Youthweb\BBCodeParser\Extension\Renderer\SizeRenderer;
+use Youthweb\BBCodeParser\Extension\Renderer\SmileyRenderer;
+use Youthweb\BBCodeParser\Extension\Renderer\TrustedHtmlRenderer;
 use Youthweb\BBCodeParser\Extension\Renderer\UnderlineRenderer;
+use Youthweb\BBCodeParser\Extension\Renderer\UsernameRenderer;
 use Youthweb\BBCodeParser\Extension\Renderer\VideoRenderer;
 
 /**
@@ -49,6 +55,9 @@ use Youthweb\BBCodeParser\Extension\Renderer\VideoRenderer;
  */
 final readonly class BBCodeExtension implements ExtensionInterface
 {
+    /** The priority of the autolinker: higher than the default priority 0 of the listeners of a project. */
+    public const AUTOLINK_PRIORITY = 100;
+
     public function __construct(private Config $config) {}
 
     public function register(EnvironmentBuilderInterface $environment): void
@@ -72,6 +81,10 @@ final readonly class BBCodeExtension implements ExtensionInterface
             ->addRenderer(IndentedCode::class, new IndentedCodeRenderer())
             ->addRenderer(BlockQuote::class, new QuoteRenderer())
             ->addRenderer(BBList::class, new ListRenderer())
-            ->addEventListener(DocumentParsedEvent::class, new AutolinkListener($this->config));
+            ->addRenderer(Smiley::class, new SmileyRenderer())
+            ->addRenderer(Username::class, new UsernameRenderer())
+            ->addRenderer(TrustedHtml::class, new TrustedHtmlRenderer())
+            // The listeners of an extension of a project run after it, with the default priority 0
+            ->addEventListener(DocumentParsedEvent::class, new AutolinkListener($this->config), self::AUTOLINK_PRIORITY);
     }
 }

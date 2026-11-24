@@ -10,6 +10,5 @@ use League\CommonMark\Node\Inline\AbstractStringContainer;
  * An image, created by `[img]` and `[PIC]`. The literal is the raw content of the tag.
  *
  * @experimental
- * @internal
  */
 final class Image extends AbstractStringContainer {}
