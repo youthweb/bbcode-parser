@@ -31,8 +31,9 @@ use Youthweb\BBCodeParser\Html;
  * [code]<span>some html</span>[/code]
  *
  * @internal
+ *
+ * @deprecated 1.10.0, part of the parser, which {@see \Youthweb\BBCodeParser\Engine} replaces
  */
-
 class Code extends CodeDefinition
 {
     public function __construct()

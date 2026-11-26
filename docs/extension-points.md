@@ -99,3 +99,8 @@ The engine runs its own listeners first: the Markdown tree (priority 110) and th
 - `parse_urls` still switches the autolinker.
 - `embed_videos`, `embed_maxwidth` and `embed_maxheight` stay in `Config`. The engine does not read them, like the parser, but an extension such as a video filter may read them from the `Config` it was given.
 - The library has no list of smileys. The project brings its own.
+- `parse_default` has no effect on the engine, it always renders the tags.
+
+## What the engine does not do
+
+The parser turns ` yw ` into `<acronym title="Youthweb">YW</acronym>`. The engine does not, and `<acronym>` is obsolete HTML. A project that wants it replaces the text with a listener that extends `TextReplacementListener`, see [Smileys and usernames](#smileys-and-usernames), and returns a `TrustedHtml` node with `<abbr title="Youthweb">YW</abbr>`.

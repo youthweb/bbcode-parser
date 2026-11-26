@@ -28,8 +28,9 @@ use Youthweb\BBCodeParser\Config;
  * [video]http://www.youtube.com/watch?v=x_O0YiUFtxc[/video]
  *
  * @internal
+ *
+ * @deprecated 1.10.0, part of the parser, which {@see \Youthweb\BBCodeParser\Engine} replaces
  */
-
 class Video extends V
 {
     public function __construct(Config $config)

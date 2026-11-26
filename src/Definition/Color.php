@@ -32,8 +32,9 @@ use Youthweb\BBCodeParser\HtmlTextNode;
  * [color=green]green text comes here[/color]
  *
  * @internal
+ *
+ * @deprecated 1.10.0, part of the parser, which {@see \Youthweb\BBCodeParser\Engine} replaces
  */
-
 class Color extends CodeDefinition
 {
     public $config;

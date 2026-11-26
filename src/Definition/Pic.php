@@ -29,8 +29,9 @@ use Youthweb\BBCodeParser\Config;
  * [PIC]321654[/PIC]
  *
  * @internal
+ *
+ * @deprecated 1.10.0, part of the parser, which {@see \Youthweb\BBCodeParser\Engine} replaces
  */
-
 class Pic extends Image
 {
     public function __construct(Config $config)

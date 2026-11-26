@@ -32,8 +32,9 @@ use Youthweb\BBCodeParser\HtmlTextNode;
  * [size=75]small text[/size]
  *
  * @internal
+ *
+ * @deprecated 1.10.0, part of the parser, which {@see \Youthweb\BBCodeParser\Engine} replaces
  */
-
 class Size extends CodeDefinition
 {
     public $config;

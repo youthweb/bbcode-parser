@@ -32,8 +32,9 @@ use Youthweb\BBCodeParser\HtmlTextNode;
  * Url Visitor
  *
  * Dieser Visitor macht Links anklickbar
+ *
+ * @deprecated 1.10.0, the {@see \Youthweb\BBCodeParser\Engine} links bare urls itself
  */
-
 class VisitorUrl implements VisitorInterface
 {
     private ?\Youthweb\BBCodeParser\Config $config = null;

@@ -28,8 +28,9 @@ namespace Youthweb\BBCodeParser\Definition;
  * [/Z]
  *
  * @internal
+ *
+ * @deprecated 1.10.0, part of the parser, which {@see \Youthweb\BBCodeParser\Engine} replaces
  */
-
 class ZOption extends Z
 {
     public function __construct()

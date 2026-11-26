@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 - The engine (`Engine`, `InputMode`, the public nodes and `TextReplacementListener`) is no longer `@experimental` and is covered by the [backward compatibility promise](docs/bc-promise.md), also its config keys and the Markdown syntax; the classes in `Parser\`, the renderers, extensions and listeners are `@internal`, and `Parser\SpikeHtmlRenderer` is now `Parser\BBCodeHtmlRenderer`, see [#144](https://github.com/youthweb/bbcode-parser/issues/144)
 
+### Deprecated
+
+- The parser built on `jbbcode/jbbcode`, replaced by the `Engine`: `Manager`, `Visitor\`, `Filter\` and the config keys `filter.image`, `filter.video`, `visitor.smiley`, `visitor.url`, `parse_smilies` and `parse_default`; creating a `Manager` and setting one of these keys triggers a silenced `E_USER_DEPRECATED` notice, see [#147](https://github.com/youthweb/bbcode-parser/issues/147)
+
 ### Added
 
 - Engine: the tags `[h1]` to `[h6]` with the config key `parse_headlines`, rendered as `<h1>` to `<h6>` outside of a `<p>`, see [#142](https://github.com/youthweb/bbcode-parser/issues/142)

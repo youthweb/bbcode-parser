@@ -29,8 +29,9 @@ use Youthweb\BBCodeParser\DefinitionSet\HeadlineSet;
 
 /**
  * Diese Klasse verwaltet das Parsen von BBCodes mithilfe der JBBCode Library
+ *
+ * @deprecated 1.10.0, use {@see Engine}
  */
-
 class Manager
 {
     /**
@@ -45,6 +46,8 @@ class Manager
      */
     public function __construct(?VisitorCollectionInterface $visitorCollection = null)
     {
+        @trigger_error(sprintf('Since youthweb/bbcode-parser 1.10.0: "%s" is deprecated, use "%s" instead.', self::class, Engine::class), E_USER_DEPRECATED);
+
         if (!$visitorCollection instanceof \Youthweb\BBCodeParser\Visitor\VisitorCollectionInterface) {
             $visitorCollection = new VisitorCollection();
         }

@@ -28,8 +28,9 @@ use Youthweb\BBCodeParser\Config;
  * [email=mail@example.com]Mail me[/email]
  *
  * @internal
+ *
+ * @deprecated 1.10.0, part of the parser, which {@see \Youthweb\BBCodeParser\Engine} replaces
  */
-
 class EmailOption extends Email
 {
     public function __construct(Config $config)
