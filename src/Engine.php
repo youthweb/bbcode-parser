@@ -61,7 +61,7 @@ final class Engine
 
     private function bbcodeToHtml(string $input): string
     {
-        $this->bbcodeParser ??= new BBCodeTreeParser();
+        $this->bbcodeParser ??= new BBCodeTreeParser((bool) $this->config->get('parse_headlines', false));
         $this->bbcodeRenderer ??= new SpikeHtmlRenderer($this->config, $this->extensions);
 
         return $this->bbcodeRenderer->render($this->bbcodeParser->parse($input));

@@ -7,8 +7,8 @@ namespace Youthweb\BBCodeParser\Parser;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Emphasis;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
+use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Block\Document;
-use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Node\Inline\Newline;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Node\Node;
@@ -25,7 +25,7 @@ use Youthweb\BBCodeParser\Extension\Node\Video;
  *
  * @experimental
  */
-final class BBCodeTreeParser
+final readonly class BBCodeTreeParser
 {
     /** The tag takes no option: with an option it stays text, like in `Manager`. */
     private const NO_OPTION = 'none';
@@ -61,6 +61,11 @@ final class BBCodeTreeParser
         'youtube' => ['node' => Video::class, 'option' => self::NO_OPTION, 'raw' => true],
     ];
 
+    /**
+     * @param bool $parseHeadlines whether `[h1]` to `[h6]` are tags, like the config `parse_headlines`
+     */
+    public function __construct(private bool $parseHeadlines = false) {}
+
     public function parse(string $input): Document
     {
         // The control character marks raw text while parsing, so it cannot come from the input.
@@ -69,8 +74,10 @@ final class BBCodeTreeParser
         $builder = new BlockTreeBuilder($document, $this->parseInline(...));
         $offset = 0;
 
+        $blockTags = 'quote|q|z|list|code|noparse|\*' . ($this->parseHeadlines ? '|h[1-6]' : '');
+
         preg_match_all(
-            '~\[(/)?(quote|q|z|list|code|noparse|\*)(?:=([^\]]*))?\]~i',
+            '~\[(/)?(' . $blockTags . ')(?:=([^\]]*))?\]~i',
             $input,
             $matches,
             PREG_SET_ORDER | PREG_OFFSET_CAPTURE,
@@ -90,6 +97,13 @@ final class BBCodeTreeParser
             $closing = $match[1][0] === '/';
             $name = strtolower($match[2][0]);
             $arg = isset($match[3]) ? trim($match[3][0], " \t\"'") : null;
+
+            if (! $closing && $name !== 'noparse' && $builder->isInHeading()) {
+                // A heading holds inline content only: blocks and further headings stay text.
+                $builder->addText($full);
+
+                continue;
+            }
 
             if ($name === 'code' || $name === 'noparse') {
                 if ($closing || $arg !== null) {
@@ -126,6 +140,13 @@ final class BBCodeTreeParser
                 $arg === null ? $builder->nextItem($full) : $builder->addText($full);
             } elseif ($name === 'list') {
                 $builder->openList($arg, $full);
+            } elseif ($name[0] === 'h') {
+                // Without an option and with a closing tag later on, otherwise it stays text.
+                if ($arg === null && preg_match('~\[/' . $name . '\]~i', $input, $close, 0, $offset) === 1) {
+                    $builder->openHeading((int) $name[1], $name);
+                } else {
+                    $builder->addText($full);
+                }
             } else {
                 $builder->openQuote($name, $arg, $full);
             }
@@ -140,7 +161,7 @@ final class BBCodeTreeParser
     /**
      * @param list<string> $raws the raw texts, the placeholders in the text point to them
      */
-    private function parseInline(string $text, Paragraph $paragraph, array $raws): void
+    private function parseInline(string $text, AbstractBlock $paragraph, array $raws): void
     {
         /** @var list<array{string, Node}> $stack */
         $stack = [];
