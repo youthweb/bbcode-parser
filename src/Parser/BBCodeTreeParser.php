@@ -25,7 +25,7 @@ use Youthweb\BBCodeParser\Extension\Node\Video;
  *
  * @experimental
  */
-final class BBCodeTreeParser
+final readonly class BBCodeTreeParser
 {
     /** The tag takes no option: with an option it stays text, like in `Manager`. */
     private const NO_OPTION = 'none';
@@ -64,7 +64,7 @@ final class BBCodeTreeParser
     /**
      * @param bool $parseHeadlines whether `[h1]` to `[h6]` are tags, like the config `parse_headlines`
      */
-    public function __construct(private readonly bool $parseHeadlines = false) {}
+    public function __construct(private bool $parseHeadlines = false) {}
 
     public function parse(string $input): Document
     {
