@@ -60,6 +60,6 @@ _Done_: the release page shows the version with its description.
 
 **8. Aftermath**
 - Packagist picks the tag up through its webhook; no action is needed. Check that `https://packagist.org/packages/youthweb/bbcode-parser` shows the new version.
-- Work off what the release unlocks. Right now: ticket #40 "Compare the BC check against the newest tag again after the next release" (remove `--from=d5057e5` from `.github/workflows/bc-check.yml`), and #39 "Update the known issues in AGENTS.md".
+- Work off what the release unlocks: search the open tickets for ones that wait for this release, for example the removal of a temporary exception.
 
 _Done_: the new version is on Packagist and the follow-up tickets are worked or planned.
