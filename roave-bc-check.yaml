@@ -1,0 +1,9 @@
+# Read by the wrapper of the nyholm/roave-bc-check-ga image used in .github/workflows/bc-check.yml.
+#
+# Roave does not know `@experimental`. The engine was marked so up to 1.9.0, and these two classes of it
+# changed on the way to 1.10.0 (#144). Roave compares against the latest tag, so after the tag 1.10.0
+# the entries match nothing: remove them then.
+parameters:
+    ignoreErrors:
+        - '#Class Youthweb\\BBCodeParser\\Parser\\SpikeHtmlRenderer has been deleted#'
+        - '#Youthweb\\BBCodeParser\\Parser\\BBCodeTreeParser was marked "@internal"#'
