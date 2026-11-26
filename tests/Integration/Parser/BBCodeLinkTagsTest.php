@@ -19,14 +19,14 @@ use Youthweb\BBCodeParser\Manager;
 use Youthweb\BBCodeParser\Tests\Fixtures\MockHttpStreamWrapper;
 use Youthweb\BBCodeParser\Tests\Fixtures\ValidationMock;
 use Youthweb\BBCodeParser\Parser\BBCodeTreeParser;
-use Youthweb\BBCodeParser\Parser\SpikeHtmlRenderer;
+use Youthweb\BBCodeParser\Parser\BBCodeHtmlRenderer;
 
 /**
  * Back-to-back test of the link, email and image tags and of the autolinking (#49):
  * the parser against the engine.
  */
 #[CoversClass(BBCodeTreeParser::class)]
-#[CoversClass(SpikeHtmlRenderer::class)]
+#[CoversClass(BBCodeHtmlRenderer::class)]
 #[CoversClass(BBCodeExtension::class)]
 #[CoversClass(AutolinkListener::class)]
 #[CoversClass(Email::class)]
@@ -166,7 +166,7 @@ final class BBCodeLinkTagsTest extends TestCase
             $old = (new Manager())->parse($input);
 
             ValidationMock::resetImageCounter();
-            $new = (new SpikeHtmlRenderer())->render((new BBCodeTreeParser())->parse($input));
+            $new = (new BBCodeHtmlRenderer())->render((new BBCodeTreeParser())->parse($input));
         } finally {
             stream_wrapper_restore('http');
             ValidationMock::resetImageCounter();
@@ -270,7 +270,7 @@ final class BBCodeLinkTagsTest extends TestCase
         $object = new Config();
         $object->mergeRecursive($config);
 
-        $html = (new SpikeHtmlRenderer($object))->render((new BBCodeTreeParser())->parse($input));
+        $html = (new BBCodeHtmlRenderer($object))->render((new BBCodeTreeParser())->parse($input));
 
         // The markup of the inline tags is covered by BBCodeTreeParserTest
         return strtr($html, ['<strong>' => '<b>', '</strong>' => '</b>']);

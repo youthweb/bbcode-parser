@@ -8,7 +8,5 @@ use League\CommonMark\Node\Block\AbstractBlock;
 
 /**
  * An item of a list, created by `[*]`. It is a container of blocks.
- *
- * @experimental
  */
 final class BBListItem extends AbstractBlock {}

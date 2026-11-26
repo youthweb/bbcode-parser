@@ -11,7 +11,5 @@ use League\CommonMark\Node\Inline\AbstractStringContainer;
  *
  * The parser never creates it, only an extension does. Use it only for HTML that the extension has
  * made itself or trusts, never for text from a user: it can carry a script.
- *
- * @experimental
  */
 final class TrustedHtml extends AbstractStringContainer {}

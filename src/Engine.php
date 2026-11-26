@@ -11,7 +11,7 @@ use League\CommonMark\Renderer\HtmlRenderer;
 use Youthweb\BBCodeParser\Extension\BBCodeExtension;
 use Youthweb\BBCodeParser\Extension\MarkdownExtension;
 use Youthweb\BBCodeParser\Parser\BBCodeTreeParser;
-use Youthweb\BBCodeParser\Parser\SpikeHtmlRenderer;
+use Youthweb\BBCodeParser\Parser\BBCodeHtmlRenderer;
 
 /**
  * Renders a text with the engine that is built on league/commonmark.
@@ -24,8 +24,6 @@ use Youthweb\BBCodeParser\Parser\SpikeHtmlRenderer;
  * mode only, the BBCode mode has its own parser. The extensions are added after the ones of the engine, so a renderer
  * with a higher priority than 0 replaces a default renderer and a listener with the default priority runs after the
  * listeners of the engine.
- *
- * @experimental
  */
 final class Engine
 {
@@ -36,7 +34,7 @@ final class Engine
 
     private ?BBCodeTreeParser $bbcodeParser = null;
 
-    private ?SpikeHtmlRenderer $bbcodeRenderer = null;
+    private ?BBCodeHtmlRenderer $bbcodeRenderer = null;
 
     private ?MarkdownParser $markdownParser = null;
 
@@ -62,7 +60,7 @@ final class Engine
     private function bbcodeToHtml(string $input): string
     {
         $this->bbcodeParser ??= new BBCodeTreeParser((bool) $this->config->get('parse_headlines', false));
-        $this->bbcodeRenderer ??= new SpikeHtmlRenderer($this->config, $this->extensions);
+        $this->bbcodeRenderer ??= new BBCodeHtmlRenderer($this->config, $this->extensions);
 
         return $this->bbcodeRenderer->render($this->bbcodeParser->parse($input));
     }

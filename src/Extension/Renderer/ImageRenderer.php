@@ -16,7 +16,6 @@ use Youthweb\BBCodeParser\Html;
 /**
  * Renders `[img]` and `[PIC]` like the parser, without the image filter.
  *
- * @experimental
  * @internal
  */
 final readonly class ImageRenderer implements NodeRendererInterface

@@ -12,7 +12,6 @@ use Youthweb\BBCodeParser\Extension\Node\TrustedHtml;
 /**
  * Renders the HTML of the node as it is.
  *
- * @experimental
  * @internal
  */
 final class TrustedHtmlRenderer implements NodeRendererInterface

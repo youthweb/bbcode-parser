@@ -8,8 +8,6 @@ use League\CommonMark\Node\Block\AbstractBlock;
 
 /**
  * A list, created by `[list]` or `[list=…]`. The children are `BBListItem` nodes.
- *
- * @experimental
  */
 final class BBList extends AbstractBlock
 {

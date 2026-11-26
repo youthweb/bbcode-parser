@@ -15,7 +15,6 @@ use Youthweb\BBCodeParser\Html;
 /**
  * Renders `[email]` like the parser: an invalid address leaves the plain content.
  *
- * @experimental
  * @internal
  */
 final readonly class EmailRenderer implements NodeRendererInterface

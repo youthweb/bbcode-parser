@@ -22,7 +22,6 @@ use Youthweb\BBCodeParser\Extension\Renderer\QuoteRenderer;
  * turned into paragraphs when a container opens or closes. The inline tags of a paragraph are
  * left to the callback.
  *
- * @experimental
  * @internal
  */
 final class BlockTreeBuilder

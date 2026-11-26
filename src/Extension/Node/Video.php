@@ -8,7 +8,5 @@ use League\CommonMark\Node\Inline\AbstractStringContainer;
 
 /**
  * A video, created by `[video]`, `[v]` and `[youtube]`. The literal is the raw content of the tag.
- *
- * @experimental
  */
 final class Video extends AbstractStringContainer {}

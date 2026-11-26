@@ -10,15 +10,15 @@ use Youthweb\BBCodeParser\Extension\Node\Underline;
 use Youthweb\BBCodeParser\Extension\Renderer\UnderlineRenderer;
 use Youthweb\BBCodeParser\Manager;
 use Youthweb\BBCodeParser\Parser\BBCodeTreeParser;
-use Youthweb\BBCodeParser\Parser\SpikeHtmlRenderer;
+use Youthweb\BBCodeParser\Parser\BBCodeHtmlRenderer;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
- * Back-to-back test of the spike (#45): the parser against the engine.
+ * Back-to-back test of the BBCode tree parser (#45): the parser against the engine.
  */
 #[CoversClass(BBCodeTreeParser::class)]
-#[CoversClass(SpikeHtmlRenderer::class)]
+#[CoversClass(BBCodeHtmlRenderer::class)]
 #[CoversClass(BBCodeExtension::class)]
 #[CoversClass(Underline::class)]
 #[CoversClass(UnderlineRenderer::class)]
@@ -165,6 +165,6 @@ final class BBCodeTreeParserTest extends TestCase
 
     private function new(string $input): string
     {
-        return (new SpikeHtmlRenderer())->render((new BBCodeTreeParser())->parse($input));
+        return (new BBCodeHtmlRenderer())->render((new BBCodeTreeParser())->parse($input));
     }
 }

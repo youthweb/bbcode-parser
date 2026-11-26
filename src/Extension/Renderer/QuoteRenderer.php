@@ -14,7 +14,6 @@ use League\CommonMark\Util\Xml;
 /**
  * Renders a quote with its cite as first element. The cite is the option of the tag and is always escaped.
  *
- * @experimental
  * @internal
  */
 final class QuoteRenderer implements NodeRendererInterface

@@ -13,11 +13,11 @@ use Youthweb\BBCodeParser\Config;
 use Youthweb\BBCodeParser\Extension\BBCodeExtension;
 
 /**
- * Spike: renders a node tree with an environment that has no Markdown extension.
+ * Renders a node tree with an environment that has no Markdown extension.
  *
- * @experimental
+ * @internal
  */
-final readonly class SpikeHtmlRenderer
+final readonly class BBCodeHtmlRenderer
 {
     private Environment $environment;
 

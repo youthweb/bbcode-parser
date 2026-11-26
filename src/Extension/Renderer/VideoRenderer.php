@@ -13,7 +13,6 @@ use Youthweb\BBCodeParser\Html;
 /**
  * Renders `[video]`, `[v]` and `[youtube]` like the parser without a video filter: as a link of the url.
  *
- * @experimental
  * @internal
  */
 final readonly class VideoRenderer implements NodeRendererInterface

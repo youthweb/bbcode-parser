@@ -52,7 +52,6 @@ use Youthweb\BBCodeParser\Extension\Renderer\VideoRenderer;
 /**
  * Renderers for the node tree of the BBCode engine, without the Markdown extensions.
  *
- * @experimental
  * @internal
  */
 final readonly class BBCodeExtension implements ExtensionInterface
