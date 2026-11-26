@@ -24,8 +24,9 @@ namespace Youthweb\BBCodeParser\Visitor;
  * VisitorCollection
  *
  * @since v1.4
+ *
+ * @deprecated 1.10.0, give league extensions to the {@see \Youthweb\BBCodeParser\Engine}
  */
-
 final class VisitorCollection implements VisitorCollectionInterface
 {
     private array $visitors = [];

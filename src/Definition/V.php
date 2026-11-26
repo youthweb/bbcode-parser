@@ -35,8 +35,9 @@ use Youthweb\BBCodeParser\Filter\FilterException;
  * [v]https://youtu.be/x_O0YiUFtxc[/v]
  *
  * @internal
+ *
+ * @deprecated 1.10.0, part of the parser, which {@see \Youthweb\BBCodeParser\Engine} replaces
  */
-
 class V extends CodeDefinition
 {
     public $config;

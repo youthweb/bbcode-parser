@@ -31,9 +31,15 @@ BBCode-Parser follows [Semantic Versioning 2](https://semver.org). This document
 1. A minor release deprecates the part: the CHANGELOG lists it under *Deprecated*, the code carries `@deprecated` with the replacement, and the replacement is available in the same release.
 2. The next major release may remove it, at the earliest one minor release after the deprecation. There is no fixed time span. The CHANGELOG lists the removal as **BREAKING**.
 
-A deprecation does not trigger a runtime notice. A later minor release may add an `E_USER_DEPRECATED` notice to a deprecated part; that is not a breaking change.
+A deprecated part may trigger a silenced `E_USER_DEPRECATED` notice (`@trigger_error()`), in the release that deprecates it or in a later minor release; that is not a breaking change.
 
 The tags `[F]`, `[K]` and `[Z]` are deprecated, with removal at the earliest in the next major release.
+
+Since 1.10.0 the parser built on `jbbcode/jbbcode` is deprecated, the [Engine](extension-points.md) replaces it. The next major release may remove it (see #148):
+
+- `Manager`, `Visitor\VisitorInterface`, `Visitor\VisitorCollectionInterface`, `Visitor\VisitorCollection`, `Filter\FilterInterface` and `Filter\FilterException`, and with them `Visitor\VisitorSmiley` and `Visitor\VisitorUrl`;
+- the config keys `filter.image`, `filter.video`, `visitor.smiley`, `visitor.url`, `parse_smilies` and `parse_default`;
+- the dependency `jbbcode/jbbcode`.
 
 ## Supported PHP versions
 

@@ -28,8 +28,9 @@ use Youthweb\BBCodeParser\Config;
  * [size=75]small text[/size]
  *
  * @internal
+ *
+ * @deprecated 1.10.0, part of the parser, which {@see \Youthweb\BBCodeParser\Engine} replaces
  */
-
 class SizeOption extends Size
 {
     public function __construct(Config $config)

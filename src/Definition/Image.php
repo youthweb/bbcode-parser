@@ -35,8 +35,9 @@ use Youthweb\BBCodeParser\Filter\FilterException;
  * [img]321654[/img]
  *
  * @internal
+ *
+ * @deprecated 1.10.0, part of the parser, which {@see \Youthweb\BBCodeParser\Engine} replaces
  */
-
 class Image extends CodeDefinition
 {
     public $config;

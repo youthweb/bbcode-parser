@@ -28,8 +28,9 @@ use Youthweb\BBCodeParser\Config;
 
 /**
  * Visitor interface
+ *
+ * @deprecated 1.10.0, extend {@see \Youthweb\BBCodeParser\Extension\TextReplacementListener} and add it to the {@see \Youthweb\BBCodeParser\Engine}
  */
-
 interface VisitorInterface extends NodeVisitor
 {
     /**

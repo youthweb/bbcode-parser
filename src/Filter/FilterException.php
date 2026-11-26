@@ -24,6 +24,7 @@ use RuntimeException;
 
 /**
  * Filter exception
+ *
+ * @deprecated 1.10.0, a renderer of the {@see \Youthweb\BBCodeParser\Engine} returns `null`
  */
-
 class FilterException extends RuntimeException {}

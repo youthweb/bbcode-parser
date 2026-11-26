@@ -28,8 +28,9 @@ use Youthweb\BBCodeParser\Config;
  * [url=example.com]Click me[/url]
  *
  * @internal
+ *
+ * @deprecated 1.10.0, part of the parser, which {@see \Youthweb\BBCodeParser\Engine} replaces
  */
-
 class UrlOption extends Url
 {
     public function __construct(Config $config)

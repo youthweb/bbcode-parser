@@ -30,8 +30,9 @@ namespace Youthweb\BBCodeParser\Definition;
  * [/list]
  *
  * @internal
+ *
+ * @deprecated 1.10.0, part of the parser, which {@see \Youthweb\BBCodeParser\Engine} replaces
  */
-
 class ListOption extends ListDefinition
 {
     public function __construct()

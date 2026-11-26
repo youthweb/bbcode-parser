@@ -25,8 +25,9 @@ use Youthweb\BBCodeParser\Config;
 
 /**
  * Filter interface
+ *
+ * @deprecated 1.10.0, add a renderer with a higher priority to the {@see \Youthweb\BBCodeParser\Engine}
  */
-
 interface FilterInterface
 {
     /**

@@ -28,6 +28,16 @@ use Youthweb\BBCodeParser\Visitor\VisitorUrl;
 
 class Config
 {
+    /** Keys that only the deprecated parser reads. */
+    private const DEPRECATED_KEYS = [
+        'filter.image',
+        'filter.video',
+        'visitor.smiley',
+        'visitor.url',
+        'parse_smilies',
+        'parse_default',
+    ];
+
     /**
      * @var array The config data
      */
@@ -49,10 +59,12 @@ class Config
         'cacheitempool' => null,
         /*
          * Sollen die Standard BBCodes ersetzt werden?
+         * Deprecated since 1.10.0: only the parser reads it.
          */
         'parse_default' => true,
         /*
          * Sollen Smilies ersetzt werden?
+         * Deprecated since 1.10.0: only the parser reads it.
          */
         'parse_smilies' => true,
         /*
@@ -81,6 +93,7 @@ class Config
         'embed_maxwidth' => 425,
         /*
          * Filter für Image und Video Einbettung (FilterInterface oder null)
+         * Deprecated since 1.10.0: only the parser reads it.
          */
         'filter' => [
             'image' => null,
@@ -88,6 +101,7 @@ class Config
         ],
         /*
          * Visitors als VisitorInterface, JBBCode\NodeVisitor oder null
+         * Deprecated since 1.10.0: only the parser reads it.
          */
         'visitor' => [
             'smiley' => null,
@@ -128,7 +142,9 @@ class Config
     {
         $this->data = $this->default_config;
 
-        $this->set('visitor.url', new VisitorUrl());
+        // The default for the deprecated parser, it goes with it (#148). Not through set():
+        // the library sets it itself, that is no use of a deprecated key.
+        $this->data['visitor']['url'] = new VisitorUrl(); // @phpstan-ignore new.deprecatedClass
     }
 
     /**
@@ -141,6 +157,14 @@ class Config
      */
     public function set($key, $value)
     {
+        $nested = $value;
+
+        foreach (array_reverse(explode('.', $key)) as $part) {
+            $nested = [$part => $nested];
+        }
+
+        $this->triggerDeprecations($nested);
+
         $keys = explode('.', $key);
 
         $array = &$this->data;
@@ -231,8 +255,32 @@ class Config
      */
     public function mergeRecursive(array $config)
     {
+        $this->triggerDeprecations($config);
+
         $this->data = array_replace_recursive($this->data, $config);
 
         return $this;
+    }
+
+    /**
+     * Triggers a deprecation for every deprecated key that the caller sets.
+     *
+     * @param array<mixed> $config
+     */
+    private function triggerDeprecations(array $config): void
+    {
+        foreach (self::DEPRECATED_KEYS as $key) {
+            $value = $config;
+
+            foreach (explode('.', $key) as $part) {
+                if (! is_array($value) || ! array_key_exists($part, $value)) {
+                    continue 2;
+                }
+
+                $value = $value[$part];
+            }
+
+            @trigger_error(sprintf('Since youthweb/bbcode-parser 1.10.0: the config key "%s" is deprecated, "%s" does not read it.', $key, Engine::class), E_USER_DEPRECATED);
+        }
     }
 }

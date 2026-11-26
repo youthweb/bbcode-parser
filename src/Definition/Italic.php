@@ -32,8 +32,9 @@ use Youthweb\BBCodeParser\HtmlTextNode;
  * [i]this text will be italic[/i]
  *
  * @internal
+ *
+ * @deprecated 1.10.0, part of the parser, which {@see \Youthweb\BBCodeParser\Engine} replaces
  */
-
 class Italic extends CodeDefinition
 {
     public function __construct()

@@ -32,8 +32,9 @@ use Youthweb\BBCodeParser\Validation;
  * [url]example.com[/url]
  *
  * @internal
+ *
+ * @deprecated 1.10.0, part of the parser, which {@see \Youthweb\BBCodeParser\Engine} replaces
  */
-
 class Url extends CodeDefinition
 {
     public $config;

@@ -31,8 +31,9 @@ use Youthweb\BBCodeParser\Html;
  * [noparse][b]some bbcode[/b][/noparse]
  *
  * @internal
+ *
+ * @deprecated 1.10.0, part of the parser, which {@see \Youthweb\BBCodeParser\Engine} replaces
  */
-
 class Noparse extends CodeDefinition
 {
     public function __construct()

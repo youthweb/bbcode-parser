@@ -32,8 +32,9 @@ use Youthweb\BBCodeParser\HtmlTextNode;
  * [u]this text will be underlined[/u]
  *
  * @internal
+ *
+ * @deprecated 1.10.0, part of the parser, which {@see \Youthweb\BBCodeParser\Engine} replaces
  */
-
 class Underline extends CodeDefinition
 {
     public function __construct()

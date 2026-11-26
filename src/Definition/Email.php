@@ -32,8 +32,9 @@ use Youthweb\BBCodeParser\Validation;
  * [email]mail@example.com[/email]
  *
  * @internal
+ *
+ * @deprecated 1.10.0, part of the parser, which {@see \Youthweb\BBCodeParser\Engine} replaces
  */
-
 class Email extends CodeDefinition
 {
     public $config;

@@ -29,8 +29,9 @@ use Youthweb\BBCodeParser\Config;
  * Smiley Visitor
  *
  * Dieser Visitor dient als Beispiel für einen Visitor
+ *
+ * @deprecated 1.10.0, extend {@see \Youthweb\BBCodeParser\Extension\TextReplacementListener} and create {@see \Youthweb\BBCodeParser\Extension\Node\Smiley} nodes
  */
-
 class VisitorSmiley implements VisitorInterface
 {
     /**

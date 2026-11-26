@@ -32,8 +32,9 @@ use Youthweb\BBCodeParser\HtmlTextNode;
  * [b]this text will be bold[/b]
  *
  * @internal
+ *
+ * @deprecated 1.10.0, part of the parser, which {@see \Youthweb\BBCodeParser\Engine} replaces
  */
-
 class Bold extends CodeDefinition
 {
     public function __construct()

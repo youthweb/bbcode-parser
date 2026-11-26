@@ -28,8 +28,9 @@ use Youthweb\BBCodeParser\Config;
  * [color=green]green text comes here[/color]
  *
  * @internal
+ *
+ * @deprecated 1.10.0, part of the parser, which {@see \Youthweb\BBCodeParser\Engine} replaces
  */
-
 class ColorOption extends Color
 {
     public function __construct(Config $config)
