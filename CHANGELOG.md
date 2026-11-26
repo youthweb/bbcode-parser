@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased](https://github.com/youthweb/bbcode-parser/compare/1.9.0...master)
 
+### Added
+
+- Experimental engine: the tags `[h1]` to `[h6]` with the config key `parse_headlines`, rendered as `<h1>` to `<h6>` outside of a `<p>`, see [#142](https://github.com/youthweb/bbcode-parser/issues/142)
+
 ## [1.9.0](https://github.com/youthweb/bbcode-parser/compare/1.8.1...1.9.0) - 2026-11-24
 
 ### Added

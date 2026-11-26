@@ -24,6 +24,7 @@ use League\CommonMark\Renderer\Block\ParagraphRenderer;
 use League\CommonMark\Renderer\Inline\NewlineRenderer;
 use League\CommonMark\Renderer\Inline\TextRenderer;
 use Youthweb\BBCodeParser\Config;
+use Youthweb\BBCodeParser\Extension\Node\BBHeading;
 use Youthweb\BBCodeParser\Extension\Node\BBList;
 use Youthweb\BBCodeParser\Extension\Node\Color;
 use Youthweb\BBCodeParser\Extension\Node\Email;
@@ -34,6 +35,7 @@ use Youthweb\BBCodeParser\Extension\Node\TrustedHtml;
 use Youthweb\BBCodeParser\Extension\Node\Underline;
 use Youthweb\BBCodeParser\Extension\Node\Username;
 use Youthweb\BBCodeParser\Extension\Node\Video;
+use Youthweb\BBCodeParser\Extension\Renderer\BBHeadingRenderer;
 use Youthweb\BBCodeParser\Extension\Renderer\ColorRenderer;
 use Youthweb\BBCodeParser\Extension\Renderer\EmailRenderer;
 use Youthweb\BBCodeParser\Extension\Renderer\ImageRenderer;
@@ -81,6 +83,7 @@ final readonly class BBCodeExtension implements ExtensionInterface
             ->addRenderer(IndentedCode::class, new IndentedCodeRenderer())
             ->addRenderer(BlockQuote::class, new QuoteRenderer())
             ->addRenderer(BBList::class, new ListRenderer())
+            ->addRenderer(BBHeading::class, new BBHeadingRenderer())
             ->addRenderer(Smiley::class, new SmileyRenderer())
             ->addRenderer(Username::class, new UsernameRenderer())
             ->addRenderer(TrustedHtml::class, new TrustedHtmlRenderer())

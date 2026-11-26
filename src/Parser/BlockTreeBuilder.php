@@ -6,9 +6,11 @@ namespace Youthweb\BBCodeParser\Parser;
 
 use League\CommonMark\Extension\CommonMark\Node\Block\BlockQuote;
 use League\CommonMark\Extension\CommonMark\Node\Block\IndentedCode;
+use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Node\Node;
+use Youthweb\BBCodeParser\Extension\Node\BBHeading;
 use Youthweb\BBCodeParser\Extension\Node\BBList;
 use Youthweb\BBCodeParser\Extension\Node\BBListItem;
 use Youthweb\BBCodeParser\Extension\Renderer\QuoteRenderer;
@@ -48,7 +50,7 @@ final class BlockTreeBuilder
     private array $raws = [];
 
     /**
-     * @param \Closure(string, Paragraph, list<string>): void $inlineParser parses the inline tags of a paragraph text
+     * @param \Closure(string, AbstractBlock, list<string>): void $inlineParser parses the inline tags of the text of a paragraph or heading
      */
     public function __construct(
         private readonly Document $document,
@@ -103,6 +105,22 @@ final class BlockTreeBuilder
         }
 
         $this->push($name, $quote);
+    }
+
+    /**
+     * Opens a heading. Its content is inline only, the parser keeps blocks out of it, see `isInHeading()`.
+     */
+    public function openHeading(int $level, string $name): void
+    {
+        $this->push($name, new BBHeading($level));
+    }
+
+    /**
+     * Whether the innermost open tag is a heading.
+     */
+    public function isInHeading(): bool
+    {
+        return $this->current() instanceof BBHeading;
     }
 
     /**
@@ -220,7 +238,7 @@ final class BlockTreeBuilder
             $node = $entry['node'];
 
             // An item that was only opened by `[list]`, and a list without items, leave no trace.
-            if ($node !== null && ! $node->hasChildren() && ($entry['implicit'] || $node instanceof BBList)) {
+            if ($node !== null && ! $node->hasChildren() && ($entry['implicit'] || $node instanceof BBList || $node instanceof BBHeading)) {
                 $node->detach();
             }
         }
@@ -251,6 +269,19 @@ final class BlockTreeBuilder
     {
         $text = $this->buffer;
         $this->buffer = '';
+
+        $current = $this->current();
+
+        if ($current instanceof BBHeading) {
+            // One line of inline content: a blank line is a line break like any other.
+            $text = trim((string) preg_replace('~\n[ \t]*(?:\n[ \t]*)+~', "\n", $text));
+
+            if ($text !== '') {
+                ($this->inlineParser)($text, $current, $this->raws);
+            }
+
+            return;
+        }
 
         foreach (preg_split('~\n[ \t]*\n~', $text) ?: [] as $part) {
             if (trim($part) === '') {

@@ -38,8 +38,10 @@ final class EngineCorpusTest extends TestCase
     #[DataProvider('corpusProvider')]
     public function testEngineMatchesOldEngineOrIsListed(string $name, string $input): void
     {
-        $old = HtmlNormalizer::normalize($this->renderLegacy($input));
-        $new = HtmlNormalizer::normalize($this->renderEngine($input));
+        // The cases in `headlines/` run with the option that switches `[h1]` to `[h6]` on.
+        $options = str_starts_with($name, 'headlines/') ? ['parse_headlines' => true] : [];
+        $old = HtmlNormalizer::normalize($this->renderLegacy($input, $options));
+        $new = HtmlNormalizer::normalize($this->renderEngine($input, $options));
         $differences = $this->differences();
 
         if (isset($differences[$name])) {
@@ -100,17 +102,23 @@ final class EngineCorpusTest extends TestCase
         return $differences;
     }
 
-    private function renderLegacy(string $input): string
+    /**
+     * @param array<string, mixed> $options
+     */
+    private function renderLegacy(string $input, array $options): string
     {
         // The image check would ask the network.
-        return (new Manager())->parse($input, ['callbacks' => ['image' => ['force_check' => false]]]);
+        return (new Manager())->parse($input, $options + ['callbacks' => ['image' => ['force_check' => false]]]);
     }
 
-    private function renderEngine(string $input): string
+    /**
+     * @param array<string, mixed> $options
+     */
+    private function renderEngine(string $input, array $options): string
     {
         // The image check would ask the network.
         $config = new Config();
-        $config->mergeRecursive(['callbacks' => ['image' => ['force_check' => false]]]);
+        $config->mergeRecursive($options + ['callbacks' => ['image' => ['force_check' => false]]]);
 
         return (new Engine($config))->toHtml($input);
     }
