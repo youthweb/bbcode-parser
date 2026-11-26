@@ -15,7 +15,6 @@ use Youthweb\BBCodeParser\Extension\Node\Username;
 /**
  * Renders a mention as a link to the profile. An unsafe url leaves the mention as text.
  *
- * @experimental
  * @internal
  */
 final class UsernameRenderer implements NodeRendererInterface

@@ -21,9 +21,9 @@ use Youthweb\BBCodeParser\Extension\Node\Underline;
 use Youthweb\BBCodeParser\Extension\Node\Video;
 
 /**
- * Spike: parses BBCode into a league/commonmark node tree.
+ * Parses BBCode into a league/commonmark node tree.
  *
- * @experimental
+ * @internal
  */
 final readonly class BBCodeTreeParser
 {

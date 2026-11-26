@@ -23,7 +23,6 @@ use Youthweb\BBCodeParser\Extension\Node\Image;
  * The alt text and the title of an image are dropped, like `[img]` has none. The code of Markdown ends with a
  * line break, the code of `[code]` does not: the last line break is cut, so that both give the same HTML.
  *
- * @experimental
  * @internal
  */
 final readonly class MarkdownTreeListener

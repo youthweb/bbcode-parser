@@ -15,7 +15,7 @@ use Youthweb\BBCodeParser\Extension\Renderer\QuoteRenderer;
 use Youthweb\BBCodeParser\Manager;
 use Youthweb\BBCodeParser\Parser\BBCodeTreeParser;
 use Youthweb\BBCodeParser\Parser\BlockTreeBuilder;
-use Youthweb\BBCodeParser\Parser\SpikeHtmlRenderer;
+use Youthweb\BBCodeParser\Parser\BBCodeHtmlRenderer;
 
 /**
  * Back-to-back test of the list, quote and noparse tags (#50): the parser against the engine.
@@ -24,7 +24,7 @@ use Youthweb\BBCodeParser\Parser\SpikeHtmlRenderer;
  */
 #[CoversClass(BBCodeTreeParser::class)]
 #[CoversClass(BlockTreeBuilder::class)]
-#[CoversClass(SpikeHtmlRenderer::class)]
+#[CoversClass(BBCodeHtmlRenderer::class)]
 #[CoversClass(BBCodeExtension::class)]
 #[CoversClass(BBList::class)]
 #[CoversClass(BBListItem::class)]
@@ -291,7 +291,7 @@ final class BBCodeBlockTagsTest extends TestCase
 
     private function new(string $input): string
     {
-        $html = (new SpikeHtmlRenderer())->render((new BBCodeTreeParser())->parse($input));
+        $html = (new BBCodeHtmlRenderer())->render((new BBCodeTreeParser())->parse($input));
 
         // The markup of the inline tags is covered by BBCodeTreeParserTest
         return strtr($html, ['<strong>' => '<b>', '</strong>' => '</b>']);

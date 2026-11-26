@@ -17,13 +17,13 @@ use Youthweb\BBCodeParser\Extension\Renderer\SizeRenderer;
 use Youthweb\BBCodeParser\Extension\Renderer\VideoRenderer;
 use Youthweb\BBCodeParser\Manager;
 use Youthweb\BBCodeParser\Parser\BBCodeTreeParser;
-use Youthweb\BBCodeParser\Parser\SpikeHtmlRenderer;
+use Youthweb\BBCodeParser\Parser\BBCodeHtmlRenderer;
 
 /**
  * Back-to-back test of the color, size and video tags (#51): the parser against the engine.
  */
 #[CoversClass(BBCodeTreeParser::class)]
-#[CoversClass(SpikeHtmlRenderer::class)]
+#[CoversClass(BBCodeHtmlRenderer::class)]
 #[CoversClass(BBCodeExtension::class)]
 #[CoversClass(Color::class)]
 #[CoversClass(Size::class)]
@@ -181,7 +181,7 @@ final class BBCodeStyleAndVideoTagsTest extends TestCase
         $object = new Config();
         $object->mergeRecursive($config);
 
-        $html = (new SpikeHtmlRenderer($object))->render((new BBCodeTreeParser())->parse($input));
+        $html = (new BBCodeHtmlRenderer($object))->render((new BBCodeTreeParser())->parse($input));
 
         // The markup of the inline tags is covered by BBCodeTreeParserTest
         return strtr($html, ['<strong>' => '<b>', '</strong>' => '</b>']);

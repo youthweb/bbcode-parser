@@ -20,8 +20,6 @@ use Youthweb\BBCodeParser\Extension\Node\Email;
  *
  * The engine runs its own listeners first: bare urls are links already when a listener with the default
  * priority runs. A higher priority runs earlier.
- *
- * @experimental
  */
 abstract class TextReplacementListener
 {

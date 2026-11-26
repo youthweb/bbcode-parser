@@ -16,7 +16,6 @@ use Youthweb\BBCodeParser\Html;
 /**
  * Renders `[url]`, `[YWLINK]` and autolinked urls like the parser: an invalid or unsafe url leaves the plain content.
  *
- * @experimental
  * @internal
  */
 final readonly class LinkRenderer implements NodeRendererInterface

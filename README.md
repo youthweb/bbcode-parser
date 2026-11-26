@@ -21,7 +21,7 @@ The library has two parts that run side by side:
 - **The engine** (`Engine`) is the default for new code. It is built on [league/commonmark](https://commonmark.thephpleague.com), renders BBCode and Markdown and writes valid HTML.
 - **The parser** (`Manager`) is the original implementation. It stays for compatibility with existing code.
 
-The API of the engine is `@experimental` until the marks are removed, see the [backward compatibility promise](docs/bc-promise.md). The API of the parser is covered by the promise.
+The API of the engine and of the parser is covered by the [backward compatibility promise](docs/bc-promise.md).
 
 ### Engine (default)
 

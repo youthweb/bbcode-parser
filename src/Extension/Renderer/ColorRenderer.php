@@ -16,7 +16,6 @@ use Youthweb\BBCodeParser\Html;
  *
  * Without content nothing is rendered.
  *
- * @experimental
  * @internal
  */
 final readonly class ColorRenderer implements NodeRendererInterface

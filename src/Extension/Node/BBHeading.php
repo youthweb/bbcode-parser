@@ -10,8 +10,6 @@ use League\CommonMark\Node\Block\AbstractBlock;
  * A heading of the tags `[h1]` to `[h6]`. Its children are inline nodes.
  *
  * Unlike a Markdown heading it is rendered with the level as written, the config `heading_offset` does not apply.
- *
- * @experimental
  */
 final class BBHeading extends AbstractBlock
 {

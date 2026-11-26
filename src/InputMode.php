@@ -6,8 +6,6 @@ namespace Youthweb\BBCodeParser;
 
 /**
  * The syntax of a text. A text is in one mode, the modes are not mixed.
- *
- * @experimental
  */
 enum InputMode
 {

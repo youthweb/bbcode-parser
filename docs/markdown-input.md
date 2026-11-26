@@ -1,6 +1,6 @@
-# Markdown input (experimental)
+# Markdown input
 
-The engine built on `league/commonmark` renders BBCode and Markdown. The syntax is chosen per call, a text is either BBCode or Markdown, they are not mixed. The API is `@experimental`, see [bc-promise.md](bc-promise.md).
+The engine built on `league/commonmark` renders BBCode and Markdown. The syntax is chosen per call, a text is either BBCode or Markdown, they are not mixed. The API is covered by the [backward compatibility promise](bc-promise.md): the config keys below and the Markdown syntax of this page.
 
 ```php
 use Youthweb\BBCodeParser\Config;
@@ -58,6 +58,6 @@ The config is read when the `Engine` is built for the Markdown mode, so build a 
 | `heading_offset` | `2` | levels to move headings down |
 | `soft_break` | `<br />` | HTML of a soft break, Markdown mode only |
 
-The keys of this table are as experimental as the engine. Their defaults are applied where the keys are read, they are not part of the default config of `Config`. The other keys (`parse_urls`, `callbacks.url_content.*`, `callbacks.image.*`) work as in the BBCode mode.
+Their defaults are applied where the keys are read, they are not part of the default config of `Config`. The other keys (`parse_urls`, `callbacks.url_content.*`, `callbacks.image.*`) work as in the BBCode mode.
 
 A project adds its own extensions (smileys, mentions of users, filters for images and videos) to the `Engine`, see [extension-points.md](extension-points.md).

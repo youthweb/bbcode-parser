@@ -11,7 +11,6 @@ use League\CommonMark\Util\HtmlElement;
 use Youthweb\BBCodeParser\Extension\Node\Underline;
 
 /**
- * @experimental
  * @internal
  */
 final class UnderlineRenderer implements NodeRendererInterface

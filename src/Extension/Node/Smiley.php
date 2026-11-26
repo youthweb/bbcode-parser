@@ -8,8 +8,6 @@ use League\CommonMark\Node\Inline\AbstractInline;
 
 /**
  * A smiley: the code in the text and the url of its image. An extension creates it, the parser does not.
- *
- * @experimental
  */
 final class Smiley extends AbstractInline
 {

@@ -18,7 +18,6 @@ use Youthweb\BBCodeParser\Extension\Renderer\LinkRenderer;
  * Only the public API of urllinker is used: its creators return markers, and the markers are split into nodes.
  * Email addresses stay text. Text inside a link or an email tag is left alone.
  *
- * @experimental
  * @internal
  */
 final class AutolinkListener extends TextReplacementListener

@@ -14,7 +14,6 @@ use Youthweb\BBCodeParser\Config;
 /**
  * Renders a heading, moved down by the config `heading_offset`: the level stops at 6.
  *
- * @experimental
  * @internal
  */
 final readonly class HeadingRenderer implements NodeRendererInterface

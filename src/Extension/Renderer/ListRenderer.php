@@ -19,7 +19,6 @@ use Youthweb\BBCodeParser\Html;
  *
  * An item with a single paragraph is tight: the paragraph is rendered without `<p>`.
  *
- * @experimental
  * @internal
  */
 final class ListRenderer implements NodeRendererInterface

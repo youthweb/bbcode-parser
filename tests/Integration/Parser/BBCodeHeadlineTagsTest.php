@@ -15,7 +15,7 @@ use Youthweb\BBCodeParser\Extension\Node\BBHeading;
 use Youthweb\BBCodeParser\Extension\Renderer\BBHeadingRenderer;
 use Youthweb\BBCodeParser\Parser\BBCodeTreeParser;
 use Youthweb\BBCodeParser\Parser\BlockTreeBuilder;
-use Youthweb\BBCodeParser\Parser\SpikeHtmlRenderer;
+use Youthweb\BBCodeParser\Parser\BBCodeHtmlRenderer;
 
 /**
  * The tags `[h1]` to `[h6]` and the option `parse_headlines` in the engine (#142).
@@ -23,7 +23,7 @@ use Youthweb\BBCodeParser\Parser\SpikeHtmlRenderer;
 #[CoversClass(Engine::class)]
 #[CoversClass(BBCodeTreeParser::class)]
 #[CoversClass(BlockTreeBuilder::class)]
-#[CoversClass(SpikeHtmlRenderer::class)]
+#[CoversClass(BBCodeHtmlRenderer::class)]
 #[CoversClass(BBCodeExtension::class)]
 #[CoversClass(BBHeading::class)]
 #[CoversClass(BBHeadingRenderer::class)]

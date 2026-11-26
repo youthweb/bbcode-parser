@@ -13,7 +13,6 @@ use Youthweb\BBCodeParser\Extension\Node\BBHeading;
 /**
  * Renders the heading of `[h1]` to `[h6]` as `<h1>` to `<h6>`.
  *
- * @experimental
  * @internal
  */
 final class BBHeadingRenderer implements NodeRendererInterface

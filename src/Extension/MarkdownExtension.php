@@ -44,7 +44,6 @@ use Youthweb\BBCodeParser\Extension\Renderer\HeadingRenderer;
  * be switched off with the config keys `markdown.headings` and `markdown.thematic_breaks`.
  * Quotes and lists are nested at most as deep as in the BBCode mode.
  *
- * @experimental
  * @internal
  */
 final readonly class MarkdownExtension implements ConfigurableExtensionInterface

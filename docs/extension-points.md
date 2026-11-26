@@ -1,6 +1,6 @@
-# Extension points of the engine (experimental)
+# Extension points of the engine
 
-The engine built on `league/commonmark` has no visitor and filter interfaces like `Manager`. A project adds league extensions to the `Engine`. Their renderers and their listeners on the `DocumentParsedEvent` work in both modes, BBCode and Markdown. Inline and block parsers work in the Markdown mode only, the BBCode mode has its own parser. The API is `@experimental`, see [bc-promise.md](bc-promise.md).
+The engine built on `league/commonmark` has no visitor and filter interfaces like `Manager`. A project adds league extensions to the `Engine`. Their renderers and their listeners on the `DocumentParsedEvent` work in both modes, BBCode and Markdown. Inline and block parsers work in the Markdown mode only, the BBCode mode has its own parser. The API is covered by the [backward compatibility promise](bc-promise.md).
 
 ```php
 use Youthweb\BBCodeParser\Config;
@@ -16,13 +16,14 @@ An extension implements `League\CommonMark\Extension\ExtensionInterface`. Inside
 
 ## The nodes
 
-These nodes are public (`@experimental`). The renderers and listeners of the engine are internal.
+These nodes are public and covered by the [backward compatibility promise](bc-promise.md). The renderers and listeners of the engine are internal.
 
 | Node | Created by | Content |
 | --- | --- | --- |
 | `Image` | `[img]`, `[PIC]`, `![](…)` | `getLiteral()`: the content of the tag or the url |
 | `Video` | `[video]`, `[v]`, `[youtube]` | `getLiteral()`: the content of the tag |
 | `Email`, `Underline`, `Color`, `Size`, `BBList`, `BBListItem` | the tags of the same name | |
+| `BBHeading` | `[h1]` to `[h6]` | `getLevel()`: the level as written, `heading_offset` does not apply |
 | `Smiley` | an extension | `getCode()`, `getUrl()`: rendered as `<img src="url" alt="code" title="code" />` |
 | `Username` | an extension | `getName()` without the `@`, `getUrl()`: rendered as `<a href="url">@name</a>` |
 | `TrustedHtml` | an extension | `getLiteral()`: HTML that is rendered as it is |

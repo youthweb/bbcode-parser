@@ -19,7 +19,6 @@ use League\Config\ConfigurationInterface;
  *
  * The line stays text otherwise. A quote and a list count one level each, like the tags in the BBCode mode.
  *
- * @experimental
  * @internal
  */
 final readonly class DepthLimitedStartParser implements BlockStartParserInterface, ConfigurationAwareInterface

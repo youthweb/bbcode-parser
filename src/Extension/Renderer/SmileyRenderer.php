@@ -15,7 +15,6 @@ use Youthweb\BBCodeParser\Extension\Node\Smiley;
 /**
  * Renders a smiley as an image with the code as alt text and title. An unsafe url leaves the code as text.
  *
- * @experimental
  * @internal
  */
 final class SmileyRenderer implements NodeRendererInterface
