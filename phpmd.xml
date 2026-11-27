@@ -91,7 +91,12 @@
     </rule>
 
     <rule ref="rulesets/unusedcode.xml">
-        <!-- Not yet: 2 findings. -->
         <exclude name="UnusedFormalParameter"/>
+    </rule>
+    <rule ref="rulesets/unusedcode.xml/UnusedFormalParameter">
+        <properties>
+            <!-- The signature of league's NodeRendererInterface::render() fixes $childRenderer. -->
+            <property name="exceptions" value="childRenderer"/>
+        </properties>
     </rule>
 </ruleset>
