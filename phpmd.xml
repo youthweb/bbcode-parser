@@ -15,8 +15,6 @@
         <exclude name="ElseExpression"/>
         <!-- Not yet: 48 findings. -->
         <exclude name="StaticAccess"/>
-        <!-- Not yet: 3 findings. -->
-        <exclude name="ErrorControlOperator"/>
         <exclude name="MissingImport"/>
     </rule>
     <rule ref="rulesets/cleancode.xml/MissingImport">

@@ -21,6 +21,8 @@
 namespace Youthweb\BBCodeParser;
 
 use Cache\Adapter\Void\VoidCachePool;
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\CleanCode\ErrorControlOperator;
 use Psr\Cache\CacheItemPoolInterface;
 
 /**
@@ -79,6 +81,8 @@ class Validation implements ValidationInterface
      * @param mixed $val
      * @param mixed $force_check
      */
+    // fopen() warns for an url that cannot be read; its result is checked instead.
+    #[SuppressWarnings(ErrorControlOperator::class)]
     public function isValidImageUrl($val, $force_check = true)
     {
         $cache_identifier = 'img_urls.' . md5($val);

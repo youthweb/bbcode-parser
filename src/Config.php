@@ -20,6 +20,8 @@
 
 namespace Youthweb\BBCodeParser;
 
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\CleanCode\ErrorControlOperator;
 use Youthweb\BBCodeParser\Visitor\VisitorUrl;
 
 /**
@@ -267,6 +269,8 @@ class Config
      *
      * @param array<mixed> $config
      */
+    // A deprecation notice is silenced: only an error handler that asks for it sees it.
+    #[SuppressWarnings(ErrorControlOperator::class)]
     private function triggerDeprecations(array $config): void
     {
         foreach (self::DEPRECATED_KEYS as $key) {
