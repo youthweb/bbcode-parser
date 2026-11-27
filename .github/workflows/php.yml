@@ -94,6 +94,27 @@ jobs:
     - name: Run PHPStan
       run: vendor/bin/phpstan analyse --no-progress
 
+  phpmd:
+    name: PHPMD
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    # PHP 8.2 is the lowest supported version, the analysis runs on it like the code does.
+    - name: Setup PHP, with composer
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        tools: composer
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
+
+    # The rules and limits come from phpmd.xml; any violation fails the job.
+    - name: Run PHPMD
+      run: vendor/bin/phpmd analyze src --ruleset phpmd.xml --no-progress --format github
+
   rector:
     name: Rector
     runs-on: ubuntu-latest

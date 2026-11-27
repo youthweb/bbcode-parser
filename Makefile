@@ -10,7 +10,7 @@ WORKDIR := /app
 DOCKER_RUN_ARGS := run --rm --user "$(shell id -u):$(shell id -g)" --env "HOME=/tmp" --volume "$(CURDIR):$(WORKDIR)" --workdir "$(WORKDIR)"
 DOCKER_RUN := $(DOCKER) $(DOCKER_RUN_ARGS)
 
-.PHONY: build check-docker clean codestyle composer coverage coverage-floor install phpstan phpunit rector shell test
+.PHONY: build check-docker clean codestyle composer coverage coverage-floor install phpmd phpstan phpunit rector shell test
 
 .DEFAULT_GOAL := test
 
@@ -31,6 +31,9 @@ shell: build
 
 phpunit: build
 	$(DOCKER_RUN) "$(TAG)" vendor/bin/phpunit --no-coverage
+
+phpmd: build
+	$(DOCKER_RUN) "$(TAG)" composer phpmd
 
 phpstan: build
 	$(DOCKER_RUN) "$(TAG)" composer phpstan

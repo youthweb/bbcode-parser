@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<ruleset name="bbcode-parser"
+         xmlns="https://phpmd.org/xml/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://phpmd.org/xml/ruleset/1.0.0 http://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd">
+    <description>
+        The rules of PHPMD for src/. "Not yet:" marks a rule that still reports findings. The limit of a metric rule only falls.
+        "controversial" is left out: its naming rules overlap the code style fixer.
+    </description>
+
+    <rule ref="rulesets/cleancode.xml">
+        <!-- Not yet: 9 findings. -->
+        <exclude name="BooleanArgumentFlag"/>
+        <!-- Not yet: 25 findings. -->
+        <exclude name="ElseExpression"/>
+        <!-- Not yet: 48 findings. -->
+        <exclude name="StaticAccess"/>
+        <!-- Not yet: 3 findings. -->
+        <exclude name="ErrorControlOperator"/>
+        <exclude name="MissingImport"/>
+    </rule>
+    <rule ref="rulesets/cleancode.xml/MissingImport">
+        <properties>
+            <!-- Global classes are written with their leading backslash, without an import. -->
+            <property name="ignore-global" value="true"/>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/codesize.xml">
+        <exclude name="CyclomaticComplexity"/>
+        <exclude name="NPathComplexity"/>
+        <exclude name="ExcessiveClassComplexity"/>
+    </rule>
+    <rule ref="rulesets/codesize.xml/CyclomaticComplexity">
+        <properties>
+            <!-- recommended: 10. Current peak: 21 (Youthweb\BBCodeParser\Parser\BBCodeTreeParser::parse). -->
+            <property name="maximum" value="21"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/codesize.xml/NPathComplexity">
+        <properties>
+            <!-- recommended: 200. Current peak: 3586 (Youthweb\BBCodeParser\Parser\BBCodeTreeParser::parse). -->
+            <property name="maximum" value="3586"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/codesize.xml/ExcessiveClassComplexity">
+        <properties>
+            <!-- recommended: 50. Current peak: 51 (Youthweb\BBCodeParser\Parser\BBCodeTreeParser). -->
+            <property name="maximum" value="51"/>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/design.xml">
+        <!-- Not yet: 2 findings. -->
+        <exclude name="CountInLoopExpression"/>
+        <!-- Not yet: 2 findings. -->
+        <exclude name="EmptyCatchBlock"/>
+        <exclude name="CouplingBetweenObjects"/>
+    </rule>
+    <rule ref="rulesets/design.xml/CouplingBetweenObjects">
+        <properties>
+            <!-- recommended: 13. Current peak: 44 (Youthweb\BBCodeParser\Extension\BBCodeExtension). -->
+            <property name="maximum" value="44"/>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/naming.xml">
+        <exclude name="ShortClassName"/>
+        <exclude name="ShortVariable"/>
+        <exclude name="ShortMethodName"/>
+        <exclude name="LongVariable"/>
+    </rule>
+    <rule ref="rulesets/naming.xml/ShortClassName">
+        <properties>
+            <!-- The classes of the tags are named like the tags: Q, V, Z. -->
+            <property name="minimum" value="1"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/naming.xml/ShortVariable">
+        <properties>
+            <!-- $el is the node in the signatures of the jbbcode definitions. -->
+            <property name="minimum" value="2"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/naming.xml/ShortMethodName">
+        <properties>
+            <!-- Html::ul() and Html::ol() are named like the HTML elements. -->
+            <property name="minimum" value="2"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/naming.xml/LongVariable">
+        <properties>
+            <property name="maximum" value="22"/>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/unusedcode.xml">
+        <!-- Not yet: 1 findings. -->
+        <exclude name="UnusedLocalVariable"/>
+        <!-- Not yet: 2 findings. -->
+        <exclude name="UnusedFormalParameter"/>
+    </rule>
+</ruleset>

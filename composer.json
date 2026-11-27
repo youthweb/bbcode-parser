@@ -22,6 +22,7 @@
     "require-dev": {
         "art4/rector-bc-library": "^1.4",
         "friendsofphp/php-cs-fixer": "^3.86",
+        "phpmd/phpmd": "^3.0",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "phpunit/phpunit": "^11.5 || ^12.5 || ^13.3",
@@ -39,6 +40,7 @@
     },
     "scripts": {
         "php-cs-fixer": "vendor/bin/php-cs-fixer fix",
+        "phpmd": "vendor/bin/phpmd analyze src --ruleset phpmd.xml --no-progress",
         "rector": "vendor/bin/rector process",
         "phpstan": "vendor/bin/phpstan analyse --no-progress"
     },
