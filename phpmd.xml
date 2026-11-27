@@ -5,8 +5,7 @@
          xsi:schemaLocation="https://phpmd.org/xml/ruleset/1.0.0 http://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd">
     <description>
         The rules of PHPMD for src/. "Not yet:" marks a rule that still reports findings. The limit of a metric rule only falls.
-        Code style and naming are the job of PHP CS Fixer: the rule set "naming" is left out, like
-        "controversial", and so are the style rules of "cleancode".
+        "controversial" is left out: its naming rules overlap the code style fixer.
     </description>
 
     <rule ref="rulesets/cleancode.xml">
@@ -16,10 +15,13 @@
         <exclude name="ElseExpression"/>
         <!-- Not yet: 48 findings. -->
         <exclude name="StaticAccess"/>
-        <!-- Code style, the job of PHP CS Fixer. -->
         <exclude name="MissingImport"/>
-        <!-- Code style, the job of PHP CS Fixer. -->
-        <exclude name="ShortOpenTag"/>
+    </rule>
+    <rule ref="rulesets/cleancode.xml/MissingImport">
+        <properties>
+            <!-- Global classes are written with their leading backslash, without an import. -->
+            <property name="ignore-global" value="true"/>
+        </properties>
     </rule>
 
     <rule ref="rulesets/codesize.xml">
@@ -53,6 +55,36 @@
         <properties>
             <!-- recommended: 13. Current peak: 44 (Youthweb\BBCodeParser\Extension\BBCodeExtension). -->
             <property name="maximum" value="44"/>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/naming.xml">
+        <exclude name="ShortClassName"/>
+        <exclude name="ShortVariable"/>
+        <exclude name="ShortMethodName"/>
+        <exclude name="LongVariable"/>
+    </rule>
+    <rule ref="rulesets/naming.xml/ShortClassName">
+        <properties>
+            <!-- The classes of the tags are named like the tags: Q, V, Z. -->
+            <property name="minimum" value="1"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/naming.xml/ShortVariable">
+        <properties>
+            <!-- $el is the node in the signatures of the jbbcode definitions. -->
+            <property name="minimum" value="2"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/naming.xml/ShortMethodName">
+        <properties>
+            <!-- Html::ul() and Html::ol() are named like the HTML elements. -->
+            <property name="minimum" value="2"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/naming.xml/LongVariable">
+        <properties>
+            <property name="maximum" value="22"/>
         </properties>
     </rule>
 
