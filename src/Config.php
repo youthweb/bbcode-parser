@@ -169,7 +169,7 @@ class Config
 
         $array = &$this->data;
 
-        while (count($keys) > 1) {
+        while (isset($keys[1])) {
             $_key = array_shift($keys);
 
             if (ctype_digit($_key)) {

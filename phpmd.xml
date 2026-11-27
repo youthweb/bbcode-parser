@@ -52,8 +52,6 @@
 
     <rule ref="rulesets/design.xml">
         <!-- Not yet: 2 findings. -->
-        <exclude name="CountInLoopExpression"/>
-        <!-- Not yet: 2 findings. -->
         <exclude name="EmptyCatchBlock"/>
         <exclude name="CouplingBetweenObjects"/>
     </rule>
