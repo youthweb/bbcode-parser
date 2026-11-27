@@ -95,8 +95,6 @@
     </rule>
 
     <rule ref="rulesets/unusedcode.xml">
-        <!-- Not yet: 1 findings. -->
-        <exclude name="UnusedLocalVariable"/>
         <!-- Not yet: 2 findings. -->
         <exclude name="UnusedFormalParameter"/>
     </rule>

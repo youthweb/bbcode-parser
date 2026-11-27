@@ -74,8 +74,6 @@ class Url extends CodeDefinition
             return '';
         }
 
-        $short_url = $this->config->get('callbacks.url_content.short_url');
-
         // Url finden
         if ($param === '') {
             // Die Url steht im Content
@@ -86,7 +84,6 @@ class Url extends CodeDefinition
         } else {
             // Die Url steht im Parameter
             $url = $param;
-            $short_url = false;
 
             $content = '';
 
