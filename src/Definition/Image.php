@@ -22,6 +22,8 @@ namespace Youthweb\BBCodeParser\Definition;
 
 use JBBCode\CodeDefinition;
 use JBBCode\ElementNode;
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\Design\EmptyCatchBlock;
 use Youthweb\BBCodeParser\Config;
 use Youthweb\BBCodeParser\Html;
 use Youthweb\BBCodeParser\Validation;
@@ -52,6 +54,8 @@ class Image extends CodeDefinition
         $this->config = $config;
     }
 
+    // A filter throws a FilterException to say the element is not for it, the definition then goes on.
+    #[SuppressWarnings(EmptyCatchBlock::class)]
     public function asHtml(ElementNode $el)
     {
         // Try to execute the image filter
