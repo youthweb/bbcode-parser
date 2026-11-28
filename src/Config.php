@@ -20,6 +20,8 @@
 
 namespace Youthweb\BBCodeParser;
 
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\CleanCode\ErrorControlOperator;
 use Youthweb\BBCodeParser\Visitor\VisitorUrl;
 
 /**
@@ -169,7 +171,7 @@ class Config
 
         $array = &$this->data;
 
-        while (count($keys) > 1) {
+        while (isset($keys[1])) {
             $_key = array_shift($keys);
 
             if (ctype_digit($_key)) {
@@ -267,6 +269,8 @@ class Config
      *
      * @param array<mixed> $config
      */
+    // A deprecation notice is silenced: only an error handler that asks for it sees it.
+    #[SuppressWarnings(ErrorControlOperator::class)]
     private function triggerDeprecations(array $config): void
     {
         foreach (self::DEPRECATED_KEYS as $key) {

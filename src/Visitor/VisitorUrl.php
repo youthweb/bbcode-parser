@@ -65,13 +65,13 @@ class VisitorUrl implements VisitorInterface
         $linked = false;
 
         $urllinker = new UrlLinker([
-            'emailLinkCreator' => fn($email, $content)
+            'emailLinkCreator' => fn($email)
                 // Email-Adressen sollen nicht verlinkt werden
                 => $email,
-            'htmlLinkCreator' => function ($url, $content) use (&$linked) {
+            'htmlLinkCreator' => function ($url) use (&$linked) {
                 $linked = true;
 
-                // Wir vergeben extra zweimal $url, weil $content durch UrlLinker gekürzt wird
+                // Wir vergeben extra zweimal $url, weil UrlLinker den Linktext kürzt
                 return Html::anchorFromConfig($url, $url, $this->config);
             },
         ]);

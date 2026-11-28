@@ -21,6 +21,8 @@
 namespace Youthweb\BBCodeParser;
 
 use JBBCode\Parser;
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\CleanCode\ErrorControlOperator;
 use Youthweb\BBCodeParser\Visitor\VisitorCollection;
 use Youthweb\BBCodeParser\Visitor\VisitorCollectionInterface;
 use Youthweb\BBCodeParser\Visitor\VisitorInterface;
@@ -44,6 +46,8 @@ class Manager
     /**
      * Create the Manager
      */
+    // A deprecation notice is silenced: only an error handler that asks for it sees it.
+    #[SuppressWarnings(ErrorControlOperator::class)]
     public function __construct(?VisitorCollectionInterface $visitorCollection = null)
     {
         @trigger_error(sprintf('Since youthweb/bbcode-parser 1.10.0: "%s" is deprecated, use "%s" instead.', self::class, Engine::class), E_USER_DEPRECATED);

@@ -212,11 +212,10 @@ class Html
      * @param string $href the url
      * @param string|null $text the text value
      * @param array $attr the attributes array
-     * @param bool|null $secure true to force https, false to force http
      *
      * @return string the html link
      */
-    public static function anchor($href, $text = null, $attr = [], $secure = null)
+    public static function anchor($href, $text = null, $attr = [])
     {
         if (! preg_match('#^(javascript:|\#)# i', $href)) {
             $href = static::buildUrl($href);

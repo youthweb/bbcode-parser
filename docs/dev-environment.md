@@ -28,6 +28,7 @@ make test
 | `make test` | Run the PHPUnit test suite (default target) |
 | `make phpunit` | Run PHPUnit |
 | `make phpstan` | Run PHPStan (`composer phpstan`) |
+| `make phpmd` | Run PHPMD (`composer phpmd`) with the rules and limits of `phpmd.xml` |
 | `make codestyle` | **Fix** the code style with PHP CS Fixer (`composer php-cs-fixer`); it rewrites files, check `git diff` afterwards |
 | `make rector` | Run Rector (`composer rector`) with the PHP 8.2, dead code, code quality and PHPUnit code quality rule sets and the backward-compatible type declaration rules (`art4/rector-bc-library`); it **rewrites files**, so check `git diff` afterwards. `make rector ARGS="--dry-run"` only shows the changes |
 | `make coverage` | Run PHPUnit with an HTML coverage report in `build/code-coverage/` |

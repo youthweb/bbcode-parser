@@ -18,4 +18,8 @@ below. Ideas for a refactoring are left on it as comments. A new task goes above
 - Look for a newer PER-CS version than the one `.php-cs-fixer.dist.php` pins (`vendor/bin/php-cs-fixer
   list-sets` inside `make shell`); where there is one, switch to it, measure, and set each rule that
   now reports findings to `false` with `Not yet:` and its count. Only the config changes, never the code.
+- Measure PHPMD again: where the peak of a metric rule lies below its limit in `phpmd.xml`, set the
+  limit to the peak and update the comment beside it; only the config changes, never the code. After the
+  dependency update run `make phpmd` and look for rules a new version added to the rule sets in use: set
+  a new metric rule to today's peak with the comment, fix or suppress any other new finding.
 - Create the next Housekeeping ticket from this file, due one week from today.

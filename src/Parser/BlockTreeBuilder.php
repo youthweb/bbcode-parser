@@ -230,7 +230,7 @@ final class BlockTreeBuilder
      */
     private function closeFrom(int $index): void
     {
-        while (count($this->stack) > $index) {
+        while (isset($this->stack[$index])) {
             $this->flush();
 
             $entry = array_pop($this->stack);
